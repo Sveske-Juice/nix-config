@@ -31,11 +31,31 @@
                 inputs.home-manager.nixosModules.default
             ];
         in {
-            server-vm = nixpkgs.lib.nixosSystem {
+            waltherbox = nixpkgs.lib.nixosSystem {
                 specialArgs = { inherit inputs; };
                 modules = [
-                    (import ./disko.nix {
-                        lib = pkgs.lib;
+                    ./hosts/waltherbox/default.nix
+
+                    (import ./hosts/common/optional/zfsraid-disko.nix {
+                        pkgs = pkgs;
+                        swap-size = "16G";
+                        root-disk = "/dev/nvme0n1";
+                        raid-disks = [
+                            "sda"
+                            "sdb"
+                            "sdc"
+                        ];
+                    })
+                ] ++ modules;
+            };
+            waltherbox-vm = nixpkgs.lib.nixosSystem {
+                specialArgs = { inherit inputs; };
+                modules = [
+                    ./hosts/waltherbox/default.nix
+                    ./hosts/waltherbox/vm-hardware-configuration.nix
+
+                    (import ./hosts/common/optional/zfsraid-disko.nix {
+                        pkgs = pkgs;
                         swap-size = -1; # no swap in vm
                         root-disk = "/dev/vda";
                         raid-disks = [
@@ -44,34 +64,8 @@
                             "vdd"
                         ];
                     })
-
-                    ./vm-hardware-configuration.nix
-                    ./configuration.nix
                 ] ++ modules;
             };
-
-            server = nixpkgs.lib.nixosSystem {
-                specialArgs = {inherit inputs;};
-                modules =
-                  [
-                    (import ./disko.nix {
-                      lib = pkgs.lib;
-                      swap-size = "128G";
-                      root-disk = "/dev/nvme0n1";
-                      raid-disks = [
-                        "sda"
-                        "sdb"
-                        "sdc"
-                        "sdd"
-                      ];
-                    })
-
-                    # ./modules/networking-metal.nix
-                    ./hardware-configuration.nix
-                    ./configuration.nix
-                  ]
-                  ++ modules;
-              };
         };
     };
 }

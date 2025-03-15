@@ -1,10 +1,18 @@
 {
-    lib,
+    pkgs,
     root-disk ? throw "Expected a mf disk brother",
     raid-disks ? [],
     swap-size ? -1,
     ...
-}: {
+}: let
+    lib = pkgs.lib;
+in{
+    boot.zfs.devNodes = "/dev/disk/by-path";
+
+    environment.systemPackages = with pkgs; [
+        zfs
+    ];
+
     disko.devices = {
         disk = {
             main = {

@@ -1,18 +1,21 @@
-{main-user ? throw "No main user"}: {
+{
     pkgs,
     inputs,
     ...
-}: {
+}: let
+    main-user = "walther";
+in
+{
     home-manager = {
         extraSpecialArgs = {inherit inputs;};
         users = {
-            ${main-user} = import ../home.nix {username = main-user;};
+            ${main-user} = import ../../home/waltherbox/home.nix;
         };
     };
 
     users.users.${main-user} = {
         isNormalUser = true;
-        hashedPassword = import ../password.nix;
+        hashedPassword = import ../../password.nix;
         extraGroups = [
             "networkmanager"
             "audio"
