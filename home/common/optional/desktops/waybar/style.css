@@ -1,0 +1,119 @@
+* {
+    font-size: 15px;
+    transition: background-color .3s ease-out;
+}
+
+window#waybar {
+    background: transparent;
+    /* opacity: 0.75; */
+    color: @theme_text_color;
+    transition: background-color .5s;
+}
+
+/* make window module transparent when no windows present */
+window#waybar.empty .modules-center {
+    background-color: transparent;
+    background: transparent;
+    margin: 0;
+    padding: 0;
+}
+
+.modules-left,
+.modules-center,
+.modules-right
+{
+    background: rgba(0, 0, 0, .7);
+    margin: 5px;
+    margin-top: 5px;
+    margin-bottom: 0px;
+    padding: 3px 5px;
+}
+.modules-left {
+    padding: 0;
+}
+.modules-center {
+    padding: 0 10px;
+}
+
+#clock,
+#battery,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#wireplumber,
+#custom-media,
+#tray,
+#mode,
+#idle_inhibitor,
+#scratchpad,
+#power-profiles-daemon,
+#language,
+#custom-powermenu,
+#mpd {
+    padding: 5px 5px;
+    border-radius: 10px;
+    margin: 0 5px;
+}
+
+#clock:hover,
+#battery:hover,
+#cpu:hover,
+#memory:hover,
+#disk:hover,
+#temperature:hover,
+#backlight:hover,
+#network:hover,
+#pulseaudio:hover,
+#wireplumber:hover,
+#custom-media:hover,
+#tray:hover,
+#mode:hover,
+#idle_inhibitor:hover,
+#scratchpad:hover,
+#power-profiles-daemon:hover,
+#language:hover,
+#custom-powermenu:hover,
+#mpd:hover {
+    background: @theme_selected_bg_color;
+}
+
+#wireplumber.muted {
+    background: #ff0000;
+}
+
+#battery.plugged,
+#battery.charging,
+#battery.good {
+    background: #00aa00;
+}
+
+#temperature.critical {
+    background: #ff0000;
+}
+
+#custom-powermenu {
+    color: #cc0000;
+    padding-left: 10px;
+}
+
+#workspaces button {
+  background: transparent;
+  font-size: 13pt;
+  padding-right: 13px;
+  border:none;
+  border-radius: 15px;
+}
+
+#workspaces button.active {
+    background: @theme_selected_bg_color;
+}
+
+#workspaces button:hover {
+  background: @theme_selected_bg_color;
+  color: @theme_fg_color;
+  box-shadow: none;
+}
