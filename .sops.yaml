@@ -1,7 +1,4 @@
-keys:
-  - &waltrh age1fnh6vz0z89yu6qse6y5vl6nhjltm8h3a04ye03c8sstfk40dy9hsht86ph
 creation_rules:
   - path_regex: secrets.yaml$
     key_groups:
     - age:
-      - *ta
