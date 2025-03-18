@@ -4,10 +4,7 @@
   swap-size ? -1,
   ...
 }: {
-  # boot.initrd.luks.devices = {
-  #   luksroot.device = "${root-disk}${if swap-size != -1 then "3" else "2"}";
-  # };
-  # boot.initrd.luks.devices.cryptroot.device = root-disk;
+  
   disko.devices = {
     disk = {
       main = {

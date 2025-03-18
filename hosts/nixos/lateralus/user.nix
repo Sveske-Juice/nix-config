@@ -2,18 +2,22 @@
   lib,
   pkgs,
   inputs,
+  config,
   ...
 }: {
+  sops.secrets.sveske-password.neededForUsers = true;
+  users.mutableUsers = false;
+
   home-manager = {
     extraSpecialArgs = {inherit inputs;};
     users = {
-      "sveske" = import ../../../home/lateralus/home.nix;
+      "sveske" = import ../../../home/sveske/home.nix;
     };
   };
 
   users.users.sveske = {
     isNormalUser = true;
-    hashedPassword = import ./password.nix;
+    hashedPasswordFile = config.sops.secrets.sveske-password.path;
     description = "Sveske Juice";
     extraGroups = ["networkmanager" "wheel" "audio"];
     shell = pkgs.fish;

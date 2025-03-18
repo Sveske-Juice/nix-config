@@ -1,4 +1,11 @@
+keys:
+  - &users:
+    - &sveske age1wtfxq7s78lqejxy75ljcag0zqxtq4gpl4gh3jndj70y0ya3t5qhq0ss6l6
+  - &hosts:
+    - &lateralus age1ykjyd8srsl3w6u4ca7l38xkygcpw44rd4lv64588qdhnneevep6qmezzh9
 creation_rules:
   - path_regex: secrets.yaml$
     key_groups:
     - age:
+      - *sveske
+      - *lateralus

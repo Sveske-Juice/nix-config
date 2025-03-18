@@ -4,4 +4,7 @@
     ...
 }:
 {
+	imports = [
+		./sops.nix
+	];
 }

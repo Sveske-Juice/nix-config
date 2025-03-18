@@ -23,6 +23,8 @@ in {
     ../common/optional/programs/ocr.nix
 
     ../common/optional/desktops/hyprland
+
+    ./sops.nix
   ];
 
   home.username = username;
@@ -41,6 +43,7 @@ in {
     libnotify
     grimblast
     python3
+    sops
   ];
 
   stylix.targets.waybar.enable = false;
@@ -55,6 +58,6 @@ in {
     EDITOR = "vim";
   };
 
-  home.stateVersion = "24.11";
+  home.stateVersion = "24.05";
   programs.home-manager.enable = true;
 }
