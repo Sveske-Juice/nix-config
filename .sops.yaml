@@ -1,13 +1,12 @@
 keys:
-  - &users:
-    - &sveske age1wtfxq7s78lqejxy75ljcag0zqxtq4gpl4gh3jndj70y0ya3t5qhq0ss6l6
-  - &hosts:
-    - &lateralus age1ykjyd8srsl3w6u4ca7l38xkygcpw44rd4lv64588qdhnneevep6qmezzh9
-    - &SussyBox age1pl5mu7ae2q6vnuljea0nfu2sgj0v8v3l8fxfkp7y3gr79aka5edqd9yej4
+  - users:
+      - &tmp test123
+  - hosts:
+      - &SussyBox age103p4534fyaqcdgp0tuvydp4ex92thlry483yvgauvf5denzs7gssugurue
+      - &waltherbox age1u3cls43238kr2v0gkgjfezzrcr3lqa2sfkkzw46ey6md6gnln30quhelg8
 creation_rules:
   - path_regex: secrets.yaml$
     key_groups:
-    - age:
-      - *sveske
-      - *lateralus
-      - *SussyBox
+      - age:
+          - *SussyBox
+          - *waltherbox

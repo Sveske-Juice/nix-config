@@ -6,6 +6,8 @@ in
     imports = [
         # Required
         ../common/core/default.nix
+
+        # ./sops.nix
     ];
 
     home.username = username;

@@ -7,6 +7,7 @@
   main-user = "walther";
 in {
   sops.secrets.walther-password.neededForUsers = true;
+  users.mutableUsers = false;
 
   home-manager = {
     extraSpecialArgs = {inherit inputs;};
@@ -17,6 +18,7 @@ in {
 
   users.users.${main-user} = {
     isNormalUser = true;
+    # password = "123";
     hashedPasswordFile = config.sops.secrets.walther-password.path;
     extraGroups = [
       "networkmanager"
@@ -24,6 +26,11 @@ in {
       "wheel"
     ];
 
+    shell = pkgs.fish;
+  };
+
+  users.users.root = {
+    password = "123";
     shell = pkgs.fish;
   };
 
@@ -36,7 +43,7 @@ in {
 
   # Authorized SSH keys
   users.extraUsers.${main-user}.openssh.authorizedKeys.keys = [
-    sops.secrets."public_keys/sveske"
-    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCdL+xxxty9n3W2DuXWlq+ciD+K4MMQ24zRFJjGTTlTE9Vnj4CwHClba4lQ7fNwZcLrUrWdTs3HOz0hGrXYQDw6gp3F28U5TIMfyLiUdPwj73Gx/Vom/Ub5Tr7VQT11Jb22WpqrGcUVbmwPUBvUva9L4GD0D+Q1w85Ze2K+9EsWQ4ODeVVsdEivw2NafMYDBUx2bcuNM/Wv2R1hf7uw4OI9oLenMmHBmW/25/G4dg/0OIUG8WVfUXEaC6Bp3hbval8miCx5aIse8pZ5nvPHXHTdW0iA53K3WmFiGONuwCq5NuFlRoqaa8TCXWkQ5MfbhvYKbOr6QDkveN9t/NnywEQC5K4nZR8Hs4VxOxYsg/LxbtOX7GpL1l7r9N5OrSINA0GPBRc15WGvqkaXLRJAD3XLB3eVEoZkoRZDxZkN411Uqi2iWKMdRasA3Hbx1ZD+8LlVcr4dpP+XuZ46oqUT+JWz8YV17RTjKdW3Mr/8U7v5enu2Kew6Ren5Svv77LHtuO8= redux@Sussybox"
+    (builtins.readFile ../../common/keys/id_sveske.pub)
+    (builtins.readFile ../../common/keys/id_redux.pub)
   ];
 }
