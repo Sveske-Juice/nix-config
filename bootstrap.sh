@@ -1,4 +1,44 @@
 #! /usr/bin/env bash
+# This file should be used when installing NixOS onto a remote machine using nixos-anywhere
+#
+# PROBLEM:
+# The problem is that we need to have a prober secret management system. And when we rebuild
+# on an exisiting host, this isn't a problem since that host already have some valid ssh host key
+# or a user age key for decrypting the secrets.
+# But when we are installing to a fresh system (ex. NixOS Installer ISO), that system doesn't
+# have any valid ssh host key nor any valid user age key. So we need some way registering
+# new valid keys for this target and sending them over before nixos-anywhere is run.
+#
+# SOLUTION:
+# * You manually generate a new SSH host keypair for the remote target:
+#   $ ssh-keygen -t ed25519 -C root@<hostname>
+# * You then copy the generated private ssh host key into the secrets under private_host_keys/<hostname>
+#   This means that the host machine needs to have access to the secrets. To edit the secrets:
+#   $ sops secrets.yaml
+# * After adding the target's private ssh host key. We run this script, it will:
+# * Get the public ssh host key from the secrets you just added, and convert it into a age key with ssh-to-age
+# * Then it will add the ssh-derived public age key to the list of valid hosts age keys in $SOPS_FILE
+# * Then it will generate a new age key for the primary user ($target_user)
+# * It will add the public age key to the list of valid user age keys
+# * Then it will add the private user age key to the secrets, so that later when we run nixos-anywhere, the
+#   configuration can extract this private user age key to ~/.config/sops/age/key.txt. This is so that
+#   the $target_user can also decrypt the secrets (ex. when running `nixos-rebuild` etc.).
+# * Then it will copy the host ssh key pair to the target with SCP (so it can decrypt during the installation)
+# * Finally when a valid key has been moved to the target machine, we run nixos-anywhere
+#
+# NOTES:
+# * Before rebuilding the target machine, you need to git push the changes this script makes
+#   to the secrets and sops config file. Otherwise the target machine will have a version where their
+#   keys aren't valid.
+# * We need to SSH into the target as root, so you have to set a password for the root account.
+#   If you use a NixOS ISO, you can type:
+#   $ sudo passwd root
+#   And just set it to "1" or something temporary
+# 
+# EXAMPLES:
+# $ ./bootstrap.sh -n <hostname> -d <ip> -u <primary_user> --ssh-user root --host <flake_host>
+#
+# $ ./bootstrap.sh -n waltherbox -d 192.168.100.210 -u walther --ssh-user root --host waltherbox-vm
 set -euo pipefail
 
 SOPS_FILE=".sops.yaml"
@@ -125,6 +165,7 @@ if [ -z "$target_hostname" ] || [ -z "$target_destination" ] || [ -z "$ssh_user"
 fi
 
 temp_dir=$(mktemp -d)
+trap "rm -rf $temp_dir" exit
 mkdir -p $temp_dir/ssh
 
 ssh_host_key=$(sops -d secrets.yaml | yq ".private_host_keys.${target_hostname}" -)
