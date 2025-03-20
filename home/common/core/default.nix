@@ -6,6 +6,10 @@
     ...
 }:
 {
+    imports = [
+        ../../../modules/common/host-spec.nix
+    ];
+    
     # Our required packages that I expect on every system
     home.packages = with pkgs; [
         wget

@@ -12,7 +12,10 @@ in{
   users.mutableUsers = false;
 
   home-manager = {
-    extraSpecialArgs = {inherit inputs;};
+    extraSpecialArgs = {
+        inherit inputs;
+        inherit (config) hostSpec;
+    };
     users = {
       "sveske" = import ../../../home/sveske/home.nix;
     };

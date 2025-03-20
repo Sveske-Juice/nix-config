@@ -1,27 +1,24 @@
-{pkgs, ...}:
-let
-    username = "walther";
-in
 {
-    imports = [
-        # Required
-        ../common/core/default.nix
+  pkgs,
+  config,
+  hostSpec,
+  ...
+}: {
+  imports = [
+    # Required
+    ../common/core
 
-        ./sops.nix
-    ];
+    ./sops.nix
+  ];
 
-    home.username = username;
-    home.homeDirectory = "/home/${username}";
+  home.username = hostSpec.username;
+  home.homeDirectory = hostSpec.home;
 
-    programs.home-manager.enable = true;
+  programs.home-manager.enable = true;
 
-    home.packages = with pkgs; [
-        dig
-    ];
+  home.sessionVariables = {
+    EDITOR = "vim";
+  };
 
-    home.sessionVariables = {
-        EDITOR = "vim";
-    };
-
-    home.stateVersion = "24.11";
+  home.stateVersion = "24.11";
 }

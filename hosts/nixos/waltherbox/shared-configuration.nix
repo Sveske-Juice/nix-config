@@ -3,6 +3,7 @@
   pkgs,
   inputs,
   lib,
+  config,
   ...
 }: {
   imports = [
@@ -18,11 +19,20 @@
       ];
     })
 
-    (import ../../common/optional/networking-shared.nix {hostname = "waltherbox";})
+    (import ../../common/optional/networking-shared.nix {hostname = config.hostSpec.hostName;})
 
     # Waltherbox specifics
     ./user.nix
   ];
+
+  hostSpec = rec {
+    hostName = "waltherbox";
+    username = "walther"; # primary user
+    email = "carl.benjamin.dreyer@gmail.com";
+    domain = "deprived.dev";
+    userFullName = "Walther";
+    handle = username;
+  };
 
   boot.loader = {
     systemd-boot.enable = true;

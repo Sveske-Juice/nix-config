@@ -13,9 +13,6 @@ in {
     validateSopsFiles = false;
 
     secrets = {
-      "private_keys/walther" = {
-        path = "${homeDir}/.ssh/id_ed25519";
-      };
     };
   };
 }
