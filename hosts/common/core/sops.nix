@@ -27,11 +27,11 @@ builtins.trace ("Does temp key exist? " + (if useTmpKey then "true" else "false"
     };
 
     secrets = {
-        "private_host_keys/waltherbox" = {
-            owner = "root";
-            group = "root";
-            path = "/etc/ssh/ssh_host_ed25519_key";
-        };
+        # "private_host_keys/waltherbox" = {
+        #     owner = "root";
+        #     group = "root";
+        #     path = "/etc/ssh/ssh_host_ed25519_key";
+        # };
     };
   };
 }

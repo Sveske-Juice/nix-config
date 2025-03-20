@@ -7,7 +7,7 @@ in
         # Required
         ../common/core/default.nix
 
-        # ./sops.nix
+        ./sops.nix
     ];
 
     home.username = username;

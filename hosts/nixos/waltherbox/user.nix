@@ -5,8 +5,10 @@
   ...
 }: let
   main-user = "walther";
+  passwd = "passwords/waltherbox/${main-user}";
+  rootpasswd = "passwords/waltherbox/root";
 in {
-  sops.secrets.walther-password.neededForUsers = true;
+  sops.secrets.${passwd}.neededForUsers = true;
   users.mutableUsers = false;
 
   home-manager = {
@@ -18,8 +20,7 @@ in {
 
   users.users.${main-user} = {
     isNormalUser = true;
-    # password = "123";
-    hashedPasswordFile = config.sops.secrets.walther-password.path;
+    hashedPasswordFile = config.sops.secrets.${passwd}.path;
     extraGroups = [
       "networkmanager"
       "audio"
@@ -30,7 +31,7 @@ in {
   };
 
   users.users.root = {
-    password = "123";
+    hashedPasswordFile = config.sops.secrets.${rootpasswd}.path;
     shell = pkgs.fish;
   };
 

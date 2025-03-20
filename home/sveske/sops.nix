@@ -14,9 +14,6 @@
     validateSopsFiles = false;
 
     secrets = {
-      "private_keys/sveske" = {
-        path = "/home/sveske/.ssh/id_ed25519";
-      };
     };
   };
 }

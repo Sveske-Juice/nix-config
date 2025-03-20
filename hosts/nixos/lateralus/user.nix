@@ -4,8 +4,11 @@
   inputs,
   config,
   ...
-}: {
-  sops.secrets.sveske-password.neededForUsers = true;
+}:
+let
+    passwd = "passwords/lateralus/sveske"; 
+in{
+  sops.secrets.${passwd}.neededForUsers = true;
   users.mutableUsers = false;
 
   home-manager = {
@@ -17,7 +20,7 @@
 
   users.users.sveske = {
     isNormalUser = true;
-    hashedPasswordFile = config.sops.secrets.sveske-password.path;
+    hashedPasswordFile = config.sops.secrets.${passwd}.path;
     description = "Sveske Juice";
     extraGroups = ["networkmanager" "wheel" "audio"];
     shell = pkgs.fish;
