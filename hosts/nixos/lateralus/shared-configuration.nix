@@ -14,10 +14,8 @@
     inputs.stylix.nixosModules.stylix
 
     # Optional
-    ../../../modules/locales/en_dk.nix
-    ../../../modules/drivers/pipewire.nix
-    (import ../../../modules/drivers/bluetooth.nix { mpris-proxy = true; inherit lib; inherit pkgs; })
-    ../../../modules/fonts.nix
+    ../../common/optional/drivers/pipewire.nix
+    (import ../../common/optional/drivers/bluetooth.nix { mpris-proxy = true; inherit lib; inherit pkgs; })
 
     ../../../hosts/common/optional/services/greetd.nix
     ../../../hosts/common/optional/services/syncthing.nix
@@ -27,7 +25,7 @@
     ../../../home/common/optional/desktops/qt.nix
     # ../../home/common/optional/desktops/gtk.nix
 
-    ../../../hosts/common/optional/hyprland.nix
+    ../../common/optional/hyprland.nix
 
     # Laptop specifics
     ./user.nix
@@ -36,17 +34,22 @@
     ./pkgs.nix
   ];
 
+  hostSpec = {
+    hostName = "lateralus";
+    username = "sveske"; # primary user
+    handle = "Sveske-Juice";
+    email = "carl.benjamin.dreyer@gmail.com";
+    domain = "deprived.dev";
+    userFullName = "Sveske Juice";
+  };
+
   # kernel
   boot.kernelPackages = pkgs.linuxPackages_zen;
-  nixpkgs.config.allowBroken = true;
-
-  nix.settings.experimental-features = ["nix-command" "flakes"];
-  nixpkgs.config.allowUnfree = true;
 
   environment.sessionVariables = {
     # https://discussion.fedoraproject.org/t/gdk-message-error-71-protocol-error-dispatching-to-wayland-display/127927/1
     GSK_RENDERER = "gl";
   };
 
-  system.stateVersion = "24.11"; # 24.05
+  system.stateVersion = "24.11";
 }

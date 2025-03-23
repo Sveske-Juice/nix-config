@@ -15,8 +15,9 @@
   ];
 
   sops = {
-    defaultSopsFile = ../../../secrets.yaml;
+    defaultSopsFile = ../../../secrets/${config.hostSpec.hostName}.yaml;
     validateSopsFiles = false;
+
     age = {
       # Generate the age key from the ssh host key
       # This generated age key was added to the list
@@ -31,7 +32,7 @@
     # We need to extract this private age key for the users from the secrets so home manager
     # can use it for decrypting.
     secrets = {
-      "keys/age/${config.hostSpec.username}" = {
+      "keys/age-key" = {
         owner = config.users.users.${config.hostSpec.username}.name;
         inherit (config.users.users.${config.hostSpec.username}) group;
         # We need to ensure the entire directory structure is that of the user...

@@ -8,6 +8,8 @@
 {
     imports = [
         ../../../modules/common/host-spec.nix
+
+        ./fish.nix
     ];
     
     # Our required packages that I expect on every system

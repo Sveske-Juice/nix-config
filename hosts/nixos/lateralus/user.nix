@@ -6,26 +6,32 @@
   ...
 }:
 let
-    passwd = "passwords/lateralus/sveske"; 
+    passwd = "passwords/${config.hostSpec.username}"; 
+    rootpasswd = "passwords/root";
 in{
   sops.secrets.${passwd}.neededForUsers = true;
+  sops.secrets.${rootpasswd}.neededForUsers = true;
   users.mutableUsers = false;
 
   home-manager = {
     extraSpecialArgs = {
         inherit inputs;
-        inherit (config) hostSpec;
+        inherit (config) hostSpec; # Pass hostSpec to home manager configurations
     };
     users = {
-      "sveske" = import ../../../home/sveske/home.nix;
+      ${config.hostSpec.username} = import ../../../home/${config.hostSpec.username}/home.nix;
     };
   };
 
-  users.users.sveske = {
+  users.users.${config.hostSpec.username} = {
     isNormalUser = true;
     hashedPasswordFile = config.sops.secrets.${passwd}.path;
-    description = "Sveske Juice";
     extraGroups = ["networkmanager" "wheel" "audio"];
+    shell = pkgs.fish;
+  };
+
+  users.users.root = {
+    hashedPasswordFile = config.sops.secrets.${rootpasswd}.path;
     shell = pkgs.fish;
   };
 

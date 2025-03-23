@@ -10,12 +10,7 @@
 # new valid keys for this target and sending them over before nixos-anywhere is run.
 #
 # SOLUTION:
-# * You manually generate a new SSH host keypair for the remote target:
-#   $ ssh-keygen -t ed25519 -C root@<hostname>
-# * You then copy the generated private ssh host key into the secrets under private_host_keys/<hostname>
-#   This means that the host machine needs to have access to the secrets. To edit the secrets:
-#   $ sops secrets.yaml
-# * After adding the target's private ssh host key. We run this script, it will:
+# * After following the prerequisits, we run this script, and it will:
 # * Get the public ssh host key from the secrets you just added, and convert it into a age key with ssh-to-age
 # * Then it will add the ssh-derived public age key to the list of valid hosts age keys in $SOPS_FILE
 # * Then it will generate a new age key for the primary user ($target_user)
@@ -25,6 +20,16 @@
 #   the $target_user can also decrypt the secrets (ex. when running `nixos-rebuild` etc.).
 # * Then it will copy the host ssh key pair to the target with SCP (so it can decrypt during the installation)
 # * Finally when a valid key has been moved to the target machine, we run nixos-anywhere
+#
+# PREREQUISITS:
+# * Create a SSH host keypair for the remote target:
+#   $ ssh-keygen -t ed25519 -C root@<hostname>
+# * Create a secrets file intended to store secrets for the new host:
+#   $ sops secrets/<hostname>.yaml
+# * The secrets file must contain the following:
+#   - host-key: <private_ssh_host_key> # The one generated just above
+# * git add the secrets file so nix can find it
+# * Make sure to clean up temporary files like the generated ssh keypair. Just `rm` them
 #
 # NOTES:
 # * Before rebuilding the target machine, you need to git push the changes this script makes
@@ -42,7 +47,8 @@
 set -euo pipefail
 
 SOPS_FILE=".sops.yaml"
-SOPS_SECRETS="secrets.yaml";
+SOPS_SECRETS_DIR="secrets"
+SOPS_SECRETS_SHARED="$SOPS_SECRETS_DIR/shared.yaml"
 SCP_OPTS="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
 
 # UTILITIES
@@ -168,7 +174,14 @@ temp_dir=$(mktemp -d)
 trap "rm -rf $temp_dir" exit
 mkdir -p $temp_dir/ssh
 
-ssh_host_key=$(sops -d secrets.yaml | yq ".private_host_keys.${target_hostname}" -)
+hostname_sops_secret_file="$SOPS_SECRETS_DIR/$target_hostname.yaml"
+
+if [ ! -f "$hostname_sops_secret_file" ]; then
+    red "No hostname secrets file! $hostname_sops_secret_file. Read pre-requisits for help"
+    exit 1
+fi
+
+ssh_host_key=$(sops -d "$hostname_sops_secret_file" | yq ".host-key" -)
 
 green "Getting public key from private key..."
 echo "$ssh_host_key" > "$temp_dir/ssh/ssh_host_ed25519_key"
@@ -198,11 +211,24 @@ sops_update_age_key "users" "$target_user" "$public_user_age_key"
 sops_add_to_keygroup "$target_hostname"
 sops_add_to_keygroup "$target_user"
 
-green "Adding private user age key to $SOPS_SECRETS"
-sops set $SOPS_SECRETS "[\"keys\"][\"age\"]" "{\"$target_user\": \"$private_user_age_key\"}"
+green "Adding private user age key to $hostname_sops_secret_file"
+# Check if system already has a primary user age key
+if [[ $(sops -d "$hostname_sops_secret_file" | yq ".keys") != "null" ]]; then
+    yellow "$hostname_sops_secret_file already contains age key. Overwriting with new..."
+    sops set "$hostname_sops_secret_file" "[\"keys\"]" "{\"age-key\": \"$private_user_age_key\"}"
+else
+    decrypted=$(sops -d "$hostname_sops_secret_file")
+    decrypted+=$(echo -e "\nkeys:\n  age-key: ${private_user_age_key}")
+    echo "${decrypted}" > $hostname_sops_secret_file
+    # re-encrypt
+    encrypted=$(sops encrypt "$hostname_sops_secret_file")
+    echo "$encrypted" > "$hostname_sops_secret_file"
+fi
 
 green "Updaing keys to secrets"
-sops updatekeys --yes "$SOPS_SECRETS"
+for file in $(ls $SOPS_SECRETS_DIR/*.yaml); do
+    sops updatekeys -y $file;
+done
 
 green "Copying ssh host keypair to target..."
 scp -r -P $ssh_port $SCP_OPTS $temp_dir/ssh/* $ssh_user@$target_destination:/etc/ssh/

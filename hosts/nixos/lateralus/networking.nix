@@ -4,6 +4,6 @@
   pkgs,
   ...
 }: {
-  networking.hostName = "lateralus";
+  networking.hostName = config.hostSpec.hostName;
   networking.networkmanager.enable = true;
 }

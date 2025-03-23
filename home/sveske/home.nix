@@ -2,10 +2,9 @@
   pkgs,
   inputs,
   lib,
+  hostSpec,
   ...
-}: let
-  username = "sveske";
-in {
+}: {
   imports = [
     # Required
     ../common/core/default.nix
@@ -27,8 +26,8 @@ in {
     ./sops.nix
   ];
 
-  home.username = username;
-  home.homeDirectory = "/home/${username}";
+  home.username = hostSpec.username;
+  home.homeDirectory = hostSpec.home;
 
   home.packages = with pkgs; [
     firefox
@@ -43,7 +42,6 @@ in {
     libnotify
     grimblast
     python3
-    sops
   ];
 
   stylix.targets.waybar.enable = false;

@@ -4,16 +4,17 @@
   config,
   ...
 }: let
-  passwd = "passwords/${config.hostSpec.hostName}/${config.hostSpec.username}";
-  rootpasswd = "passwords/${config.hostSpec.hostName}/root";
+  passwd = "passwords/${config.hostSpec.username}";
+  rootpasswd = "passwords/root";
 in {
   sops.secrets.${passwd}.neededForUsers = true;
+  sops.secrets.${rootpasswd}.neededForUsers = true;
   users.mutableUsers = false;
 
   home-manager = {
     extraSpecialArgs = {
         inherit inputs;
-        inherit (config) hostSpec;
+        inherit (config) hostSpec; # Pass hostSpec to homemanager configurations
     };
     users = {
       ${config.hostSpec.username} = import ../../../home/${config.hostSpec.username}/home.nix;
@@ -33,8 +34,7 @@ in {
   };
 
   users.users.root = {
-    password = "123";
-    # hashedPasswordFile = config.sops.secrets.${rootpasswd}.path;
+    hashedPasswordFile = config.sops.secrets.${rootpasswd}.path;
     shell = pkgs.fish;
   };
 

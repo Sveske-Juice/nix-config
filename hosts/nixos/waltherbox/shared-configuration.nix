@@ -25,14 +25,16 @@
     ./user.nix
   ];
 
-  hostSpec = rec {
+  hostSpec = {
     hostName = "waltherbox";
     username = "walther"; # primary user
+    handle = "Sveske-Juice";
     email = "carl.benjamin.dreyer@gmail.com";
     domain = "deprived.dev";
     userFullName = "Walther";
-    handle = username;
   };
+
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
   boot.loader = {
     systemd-boot.enable = true;

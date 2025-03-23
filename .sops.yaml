@@ -1,12 +1,11 @@
 keys:
   - users:
-      - &tmp test123
-      - &walther age1c2uha6trz408nszjpg4qyxn2n8m2efm2rcv785syvsw6m0k3ms9sqq4sjs
+      - &walther age1h52qxdkr2l35qwxj2x62h46d3uvlkfq6q7rqcjle4y469ktchd0sfkgxmt
   - hosts:
       - &SussyBox age103p4534fyaqcdgp0tuvydp4ex92thlry483yvgauvf5denzs7gssugurue
       - &waltherbox age1u3cls43238kr2v0gkgjfezzrcr3lqa2sfkkzw46ey6md6gnln30quhelg8
 creation_rules:
-  - path_regex: secrets.yaml$
+  - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
     key_groups:
       - age:
           - *SussyBox

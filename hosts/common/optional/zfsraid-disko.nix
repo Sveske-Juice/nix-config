@@ -7,6 +7,10 @@
 }: let
     lib = pkgs.lib;
 in{
+    imports = [
+      ./zed.nix # Notification daemon
+    ];
+
     boot.zfs.devNodes = "/dev/disk/by-path";
 
     environment.systemPackages = with pkgs; [

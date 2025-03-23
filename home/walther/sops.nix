@@ -1,4 +1,4 @@
-{inputs, config, ...}:
+{inputs, config, hostSpec, ...}:
 let
   homeDir = config.home.homeDirectory;
 in {
@@ -7,9 +7,10 @@ in {
   ];
 
   sops = {
-    age.keyFile = "/var/lib/sops-nix/key.txt";
+    # FIXME: maybe /var/lib...?
+    age.keyFile = "${hostSpec.home}/.config/sops/age/key.txt";
 
-    defaultSopsFile = ../../secrets.yaml;
+    defaultSopsFile = ../../secrets/${hostSpec.hostName}.yaml;
     validateSopsFiles = false;
 
     secrets = {
