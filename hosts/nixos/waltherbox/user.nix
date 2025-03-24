@@ -38,13 +38,6 @@ in {
     shell = pkgs.fish;
   };
 
-  programs.fish = {
-    enable = true;
-    shellAbbrs = {
-      "nrb" = "sudo nixos-rebuild switch --flake /etc/nixos";
-    };
-  };
-
   # Authorized SSH keys
   users.extraUsers.${config.hostSpec.username}.openssh.authorizedKeys.keys = [
     (builtins.readFile ../../common/keys/id_sveske.pub)

@@ -198,6 +198,7 @@ echo "public age key for $target_hostname: $age_key"
 green "Adding host age key to $SOPS_FILE"
 sops_update_age_key "hosts" "$target_hostname" "$age_key"
 
+# TODO: if sops secrets already contains a age key for the user, just reuse that key
 green "Generating age key specific for $target_user..."
 mkdir -p $temp_dir/age
 age-keygen -o $temp_dir/age/key.txt
@@ -233,6 +234,8 @@ done
 green "Copying ssh host keypair to target..."
 scp -r -P $ssh_port $SCP_OPTS $temp_dir/ssh/* $ssh_user@$target_destination:/etc/ssh/
 
+# TODO: --generate-hardware-config support
+# TODO: extra flags custom flags
 green "Running nixos-anywhere..."
 sudo nix run github:nix-community/nixos-anywhere -- --target-host $ssh_user@$target_destination --flake .#$flake_host --copy-host-keys
 

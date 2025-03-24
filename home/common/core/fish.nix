@@ -5,6 +5,10 @@
 
   programs.fish = {
     enable = true;
+    shellAbbrs = {
+      "nrb" = "sudo nixos-rebuild switch --flake /etc/nixos";
+    };
+
     interactiveShellInit = ''
       set fish_greeting # Disable greeting
     '';
