@@ -10,6 +10,7 @@
         ../../../modules/common/host-spec.nix
 
         ./fish.nix
+        ./fonts.nix
     ];
     
     # Our required packages that I expect on every system
