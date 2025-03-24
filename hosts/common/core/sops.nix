@@ -27,17 +27,38 @@
       generateKey = true;
     };
 
-    # Home-manager also needs access to the secrets. But it doesn't have permission
-    # to read the ssh host key. So we have a seperate generated private age key per user.
-    # We need to extract this private age key for the users from the secrets so home manager
-    # can use it for decrypting.
     secrets = {
+      # Home-manager also needs access to the secrets. But it doesn't have permission
+      # to read the ssh host key. So we have a seperate generated private age key per user.
+      # We need to extract this private age key for the users from the secrets so home manager
+      # can use it for decrypting.
       "keys/age-key" = {
         owner = config.users.users.${config.hostSpec.username}.name;
         inherit (config.users.users.${config.hostSpec.username}) group;
         # We need to ensure the entire directory structure is that of the user...
         path = "${config.hostSpec.home}/.config/sops/age/keys.txt";
       };
+      
+      # Optional primary user's ssh key
+      "keys/${config.hostSpec.username}-ssh-key" = {
+        owner = config.users.users.${config.hostSpec.username}.name;
+        inherit (config.users.users.${config.hostSpec.username}) group;
+        path = "${config.hostSpec.home}/.ssh/id_ed25519";
+      };
+    };
+  };
+
+  # Generate the primary user's public ssh key if the private exists
+  system.activationScripts = {
+    genUserPublicSSHKey = {
+      text = let
+        keyPath = "${config.hostSpec.home}/.ssh/id_ed25519";
+      in ''
+        # Make sure there is a private key
+        if [ -f "${keyPath}" ]; then
+          ${pkgs.openssh}/bin/ssh-keygen -y -f "${keyPath}" > "${keyPath}.pub"
+        fi
+      '';
     };
   };
 
