@@ -100,6 +100,13 @@
       desc = "LSP References";
     }
     {
+      key = "<leader>ld";
+      mode = "n";
+      silent = true;
+      action = "<cmd>Telescope diagnostics<CR>";
+      desc = "Diagnostics";
+    }
+    {
       key = "<leader>lt";
       mode = "n";
       silent = true;

@@ -14,5 +14,6 @@
     ./which-key.nix
     ./zen-mode.nix
     ./todo-comments.nix
+    ./trouble.nix
   ];
 }
