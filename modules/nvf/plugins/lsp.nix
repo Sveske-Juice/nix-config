@@ -31,24 +31,81 @@
       lightbulb.enable = true;
       lsplines.enable = true;
 
+      # Remove all default bindings
       mappings = {
-        codeAction = "ga";
-        documentHighlight = "<leader>gH";
-        hover = "K";
-        signatureHelp = "<C-h>";
-
-        format = "<leader>lf";
-        goToDefinition = "gd";
-        goToDeclaration = "gD";
-        renameSymbol = "gR";
-
-        listReferences = "gr";
-        listDocumentSymbols = "gp";
-        listWorkspaceSymbols = "<leader>gp";
-
-        nextDiagnostic = "<leader>lgn";
-        previousDiagnostic = "<leader>lgp";
+        goToDeclaration = null;
+        goToDefinition = null;
+        goToType = null;
+        listImplementations = null;
+        listReferences = null;
+        nextDiagnostic = null;
+        previousDiagnostic = null;
+        openDiagnosticFloat = null;
+        documentHighlight = null;
+        listDocumentSymbols = null;
+        addWorkspaceFolder = null;
+        removeWorkspaceFolder = null;
+        listWorkspaceFolders = null;
+        listWorkspaceSymbols = null;
+        hover = null;
+        signatureHelp = null;
+        renameSymbol = null;
+        codeAction = null;
+        format = null;
+        toggleFormatOnSave = null;
       };
     };
+
+    # Define our own keymaps
+    keymaps = [
+      {
+        key = "ga";
+        mode = "n";
+        silent = true;
+        action = "vim.lsp.buf.code_action";
+        lua = true;
+        desc = "Code actions";
+      }
+      {
+        key = "K";
+        mode = "n";
+        silent = true;
+        action = "vim.lsp.buf.hover";
+        lua = true;
+        desc = "Hover";
+      }
+      {
+        key = "<C-h>";
+        mode = "i";
+        silent = true;
+        action = "vim.lsp.buf.signature_help";
+        lua = true;
+        desc = "Signature help";
+      }
+      {
+        key = "gd";
+        mode = "n";
+        silent = true;
+        action = "vim.lsp.buf.definition";
+        lua = true;
+        desc = "Go to definition";
+      }
+      {
+        key = "gD";
+        mode = "n";
+        silent = true;
+        action = "vim.lsp.buf.declaration";
+        lua = true;
+        desc = "Go to declaration";
+      }
+      {
+        key = "gR";
+        mode = "n";
+        silent = true;
+        action = "vim.lsp.buf.rename";
+        lua = true;
+        desc = "Rename symbol";
+      }
+    ];
   };
 }

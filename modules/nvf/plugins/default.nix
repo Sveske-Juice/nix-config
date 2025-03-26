@@ -11,5 +11,6 @@
     ./otter.nix
     ./wilder.nix
     ./neoscroll.nix
+    ./which-key.nix
   ];
 }
