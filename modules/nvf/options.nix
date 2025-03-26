@@ -3,10 +3,11 @@
     relativenumber = true;
     nu = true;
 
-    tabstop = 4;
-    softtabstop = 4;
-    shiftwidth = 4;
-    expandtab = true;
+    # set by .editorconfig hopefully...
+    # tabstop = 4;
+    # softtabstop = 4;
+    # shiftwidth = 4;
+    # expandtab = true;
 
     scrolloff = 8;
 
