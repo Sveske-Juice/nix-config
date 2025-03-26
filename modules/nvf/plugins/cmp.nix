@@ -55,6 +55,11 @@
           '')
           "fallback"
         ];
+
+        # Disable tab
+        "<Tab>" = ["fallback"];
+        "<S-Tab>" = ["fallback"];
+
         "<C-e>" = ["hide" "fallback"];
 
         "<CR>" = ["select_and_accept" "fallback"];

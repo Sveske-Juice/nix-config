@@ -1,5 +1,5 @@
 {
-  description = "Configuration for NAS";
+  description = "Flake for my NixOS configurations and programs";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
