@@ -12,5 +12,7 @@
     ./wilder.nix
     ./neoscroll.nix
     ./which-key.nix
+    ./zen-mode.nix
+    ./todo-comments.nix
   ];
 }

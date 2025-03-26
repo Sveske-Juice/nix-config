@@ -30,7 +30,10 @@
     };
 
     setupOpts = {
-      defaults.pickers.find_command = ["${pkgs.fzf}/bin/fzf"];
+      defaults = {
+        path_display = ["smart"];
+        pickers.find_command = ["${pkgs.fzf}/bin/fzf"];
+      };
     };
   };
 
