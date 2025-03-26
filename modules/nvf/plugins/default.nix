@@ -1,6 +1,7 @@
 {lib, ...}:
 {
   imports = [
+    ./mini.nix
     ./telescope.nix
     ./dressing.nix
     ./lsp.nix
