@@ -3,9 +3,8 @@
   pkgs,
   lib,
   ...
-}:
-{
-options.hostSpec = {
+}: {
+  options.hostSpec = {
     username = lib.mkOption {
       type = lib.types.str;
       description = "The username of the host";
@@ -33,11 +32,12 @@ options.hostSpec = {
     home = lib.mkOption {
       type = lib.types.str;
       description = "The home directory of the user";
-      default =
-        let
-          user = config.hostSpec.username;
-        in
-        if pkgs.stdenv.isLinux then "/home/${user}" else "/Users/${user}";
+      default = let
+        user = config.hostSpec.username;
+      in
+        if pkgs.stdenv.isLinux
+        then "/home/${user}"
+        else "/Users/${user}";
     };
   };
 }

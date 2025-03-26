@@ -37,6 +37,7 @@ in {
     hashedPasswordFile = config.sops.secrets.${rootpasswd}.path;
     shell = pkgs.fish;
   };
+  programs.fish.enable = true;
 
   # Authorized SSH keys
   users.extraUsers.${config.hostSpec.username}.openssh.authorizedKeys.keys = [

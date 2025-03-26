@@ -28,6 +28,11 @@
       url = "github:mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nvf = {
+      url = "github:notashelf/nvf";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -36,13 +41,17 @@
     ...
   } @ inputs: let
     inherit (nixpkgs) lib;
+    inherit (inputs) nvf;
     system = "x86_64-linux";
     pkgs = import nixpkgs {inherit system;};
 
     # Create a nixos configuration for specified host
     mkHost = host: {
       ${host} = lib.nixosSystem {
-        specialArgs = {inherit inputs;};
+        specialArgs = {
+          inherit self;
+          inherit inputs;
+        };
         modules = [./hosts/nixos/${host}];
       };
     };
@@ -55,61 +64,20 @@
   in {
     formatter.${system} = pkgs.alejandra;
 
+
+    # Custom packages
+    packages.${system} = {
+      "neovim" =
+        (nvf.lib.neovimConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          modules = [
+            ./modules/nvf
+          ];
+        })
+        .neovim;
+    };
+
+    # Automatically generate nixos configurations foreach sub directory under ./hosts
     nixosConfigurations = mkHostConfigs (readHosts "nixos");
-    # let
-    # in {
-    #   lateralus = nixpkgs.lib.nixosSystem {
-    #     specialArgs = {inherit inputs;};
-    #     modules = [
-    #       inputs.disko.nixosModules.default
-    #       inputs.home-manager.nixosModules.default
-    #       inputs.stylix.nixosModules.stylix
-    #
-    #       ./hosts/lateralus
-    #       ./hosts/common/optional/vm-hardware-configuration.nix
-    #     ];
-    #   };
-    #   waltherbox = nixpkgs.lib.nixosSystem {
-    #     specialArgs = {inherit inputs;};
-    #     modules = [
-    #       inputs.disko.nixosModules.default
-    #       inputs.home-manager.nixosModules.default
-    #
-    #       ./hosts/waltherbox
-    #
-    #       (import ./hosts/common/optional/zfsraid-disko.nix {
-    #         pkgs = pkgs;
-    #         swap-size = "16G";
-    #         root-disk = "/dev/nvme0n1";
-    #         raid-disks = [
-    #           "sda"
-    #           "sdb"
-    #           "sdc"
-    #         ];
-    #       })
-    #     ];
-    #   };
-    #   waltherbox-vm = nixpkgs.lib.nixosSystem {
-    #     specialArgs = {inherit inputs;};
-    #     modules = [
-    #       inputs.disko.nixosModules.default
-    #       inputs.home-manager.nixosModules.default
-    #
-    #       ./hosts/waltherbox
-    #       ./hosts/common/optional/vm-hardware-configuration.nix
-    #
-    #       (import ./hosts/common/optional/zfsraid-disko.nix {
-    #         pkgs = pkgs;
-    #         swap-size = -1; # no swap in vm
-    #         root-disk = "/dev/vda";
-    #         raid-disks = [
-    #           "vdb"
-    #           "vdc"
-    #           "vdd"
-    #         ];
-    #       })
-    #     ];
-    #   };
-    # };
   };
 }
