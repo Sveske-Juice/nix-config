@@ -25,19 +25,6 @@
         silent = true;
         action = ":m '<-2<CR>gv=gv";
       }
-      # Vertical Jumping
-      {
-        key = "<C-d>";
-        mode = "n";
-        silent = true;
-        action = "<C-d>zz";
-      }
-      {
-        key = "<C-u>";
-        mode = "n";
-        silent = true;
-        action = "<C-u>zz";
-      }
       # Clipboard
       {
         key = "<leader>p";

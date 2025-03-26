@@ -10,5 +10,6 @@
     ./lualine.nix
     ./otter.nix
     ./wilder.nix
+    ./neoscroll.nix
   ];
 }
