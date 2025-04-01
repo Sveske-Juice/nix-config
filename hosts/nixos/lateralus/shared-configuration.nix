@@ -15,7 +15,11 @@
 
     # Optional
     ../../common/optional/drivers/pipewire.nix
-    (import ../../common/optional/drivers/bluetooth.nix { mpris-proxy = true; inherit lib; inherit pkgs; })
+    (import ../../common/optional/drivers/bluetooth.nix {
+      mpris-proxy = true;
+      inherit lib;
+      inherit pkgs;
+    })
 
     ../../../hosts/common/optional/services/greetd.nix
     ../../../hosts/common/optional/services/syncthing.nix
@@ -26,6 +30,8 @@
     # ../../home/common/optional/desktops/gtk.nix
 
     ../../common/optional/hyprland.nix
+
+    ../../common/optional/git.nix
 
     # Laptop specifics
     ./user.nix

@@ -23,6 +23,8 @@
 
     (import ../../common/optional/networking-shared.nix {hostname = config.hostSpec.hostName;})
 
+    ../../common/optional/git.nix
+
     # Waltherbox specifics
     ./user.nix
   ];
