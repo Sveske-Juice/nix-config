@@ -1,9 +1,12 @@
 {...}: {
   vim.options = {
+    termguicolors = true;
     relativenumber = true;
     nu = true;
 
     # set by .editorconfig hopefully...
+    # TODO: fallback to 4 if no editorconfig overiddes
+
     # tabstop = 4;
     # softtabstop = 4;
     # shiftwidth = 4;

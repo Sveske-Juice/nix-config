@@ -19,6 +19,8 @@
       ];
     })
 
+    (import ../../common/optional/torrentvm)
+
     (import ../../common/optional/networking-shared.nix {hostname = config.hostSpec.hostName;})
 
     # Waltherbox specifics

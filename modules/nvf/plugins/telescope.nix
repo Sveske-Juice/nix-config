@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   vim.telescope = {
     enable = true;
 
@@ -35,11 +39,6 @@
         pickers.find_command = ["${pkgs.fzf}/bin/fzf"];
       };
     };
-  };
-
-  vim.binds.whichKey.register = {
-    "<leader>l" = "Telescope";
-    "<leader>lg" = "Telescope Git";
   };
 
   vim.keymaps = [
@@ -113,5 +112,5 @@
       action = "<cmd>Telescope treesitter<CR>";
       desc = "Treesitter";
     }
- ];
+  ];
 }

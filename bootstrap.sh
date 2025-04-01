@@ -39,7 +39,7 @@
 #   If you use a NixOS ISO, you can type:
 #   $ sudo passwd root
 #   And just set it to "1" or something temporary
-# 
+#
 # EXAMPLES:
 # $ ./bootstrap.sh -n <hostname> -d <ip> -u <primary_user> --ssh-user root --host <flake_host>
 #
@@ -53,38 +53,38 @@ SCP_OPTS="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
 
 # UTILITIES
 function red() {
-	echo -e "\x1B[31m[!] $1 \x1B[0m"
-	if [ -n "${2-}" ]; then
-		echo -e "\x1B[31m[!] $($2) \x1B[0m"
-	fi
+    echo -e "\x1B[31m[!] $1 \x1B[0m"
+    if [ -n "${2-}" ]; then
+        echo -e "\x1B[31m[!] $($2) \x1B[0m"
+    fi
 }
 
 function green() {
-	echo -e "\x1B[32m[+] $1 \x1B[0m"
-	if [ -n "${2-}" ]; then
-		echo -e "\x1B[32m[+] $($2) \x1B[0m"
-	fi
+    echo -e "\x1B[32m[+] $1 \x1B[0m"
+    if [ -n "${2-}" ]; then
+        echo -e "\x1B[32m[+] $($2) \x1B[0m"
+    fi
 }
 
 function blue() {
-	echo -e "\x1B[34m[*] $1 \x1B[0m"
-	if [ -n "${2-}" ]; then
-		echo -e "\x1B[34m[*] $($2) \x1B[0m"
-	fi
+    echo -e "\x1B[34m[*] $1 \x1B[0m"
+    if [ -n "${2-}" ]; then
+        echo -e "\x1B[34m[*] $($2) \x1B[0m"
+    fi
 }
 
 function yellow() {
-	echo -e "\x1B[33m[*] $1 \x1B[0m"
-	if [ -n "${2-}" ]; then
-		echo -e "\x1B[33m[*] $($2) \x1B[0m"
-	fi
+    echo -e "\x1B[33m[*] $1 \x1B[0m"
+    if [ -n "${2-}" ]; then
+        echo -e "\x1B[33m[*] $($2) \x1B[0m"
+    fi
 }
 
 # Updates the .sops.yaml file with a new host or user age key.
 function sops_update_age_key() {
-	field="$1"
-	keyname="$2"
-	key="$3"
+    field="$1"
+    keyname="$2"
+    key="$3"
 
     arr_idx=0
     if [ "$field" == "hosts" ]; then
@@ -93,19 +93,19 @@ function sops_update_age_key() {
         arr_idx=0
     fi
 
-	if [ ! "$field" == "hosts" ] && [ ! "$field" == "users" ]; then
-		red "Invalid field passed to sops_update_age_key. Must be either 'hosts' or 'users'."
-		exit 1
-	fi
+    if [ ! "$field" == "hosts" ] && [ ! "$field" == "users" ]; then
+        red "Invalid field passed to sops_update_age_key. Must be either 'hosts' or 'users'."
+        exit 1
+    fi
 
     if [[ -n $(yq ".keys[$arr_idx].$field" "$SOPS_FILE" | grep "$keyname") ]]; then
-		green "Updating existing ${keyname} key"
+        green "Updating existing ${keyname} key"
         yq -i "(.keys[$arr_idx].$field | .[] | select(anchor == \"$keyname\")) = \"$key\"" "$SOPS_FILE"
-	else
-		green "Adding new ${keyname} key"
+    else
+        green "Adding new ${keyname} key"
         yq -i ".keys[$arr_idx].$field += [\"&$keyname $key\"]" "$SOPS_FILE"
         sed -i "s/'\&$keyname $key'/\&$keyname $key/" "$SOPS_FILE"
-	fi
+    fi
 }
 
 function sops_add_to_keygroup() {
@@ -130,44 +130,44 @@ ssh_port=22
 # MAIN PROGRAM
 # Handle command-line arguments
 while [[ $# -gt 0 ]]; do
-	case "$1" in
-	-n)
-		shift
-		target_hostname=$1
-		;;
-	-d)
-		shift
-		target_destination=$1
-		;;
-	-u)
-		shift
-		target_user=$1
-		;;
-	--ssh-user)
-		shift
-		ssh_user=$1
-		;;
-    --host)
-        shift
-        flake_host=$1
-        ;;
-	--port)
-		shift
-		ssh_port=$1
-		;;
-	--debug)
-		set -x
-		;;
-	*)
-		red "ERROR: Invalid option detected."
-		;;
-	esac
-	shift
+    case "$1" in
+        -n)
+            shift
+            target_hostname=$1
+            ;;
+        -d)
+            shift
+            target_destination=$1
+            ;;
+        -u)
+            shift
+            target_user=$1
+            ;;
+        --ssh-user)
+            shift
+            ssh_user=$1
+            ;;
+        --host)
+            shift
+            flake_host=$1
+            ;;
+        --port)
+            shift
+            ssh_port=$1
+            ;;
+        --debug)
+            set -x
+            ;;
+        *)
+            red "ERROR: Invalid option detected."
+            ;;
+    esac
+    shift
 done
 
 if [ -z "$target_hostname" ] || [ -z "$target_destination" ] || [ -z "$ssh_user" ] || [ -z "$flake_host" ] || [ -z "$target_user" ]; then
-	red "ERROR: -n, -d, -u, --ssh-user,--host are required"
-	echo
+    red "ERROR: -n, -d, -u, --ssh-user,--host are required"
+    echo
 fi
 
 temp_dir=$(mktemp -d)
@@ -214,12 +214,12 @@ sops_add_to_keygroup "$target_user"
 
 green "Adding private user age key to $hostname_sops_secret_file"
 # Check if system already has a primary user age key
-if [[ $(sops -d "$hostname_sops_secret_file" | yq ".keys") != "null" ]]; then
+if [[ $(sops -d "$hostname_sops_secret_file" | yq ".age-keys") != "null" ]]; then
     yellow "$hostname_sops_secret_file already contains age key. Overwriting with new..."
-    sops set "$hostname_sops_secret_file" "[\"keys\"]" "{\"age-key\": \"$private_user_age_key\"}"
+    sops set "$hostname_sops_secret_file" "[\"age-keys\"]" "{\"$target_user\": \"$private_user_age_key\"}"
 else
     decrypted=$(sops -d "$hostname_sops_secret_file")
-    decrypted+=$(echo -e "\nkeys:\n  age-key: ${private_user_age_key}")
+    decrypted+=$(echo -e "\nage-keys:\n  age-key: ${private_user_age_key}")
     echo "${decrypted}" > $hostname_sops_secret_file
     # re-encrypt
     encrypted=$(sops encrypt "$hostname_sops_secret_file")

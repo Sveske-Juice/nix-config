@@ -32,15 +32,15 @@
       # to read the ssh host key. So we have a seperate generated private age key per user.
       # We need to extract this private age key for the users from the secrets so home manager
       # can use it for decrypting.
-      "keys/age-key" = {
+      "age-keys/${config.hostSpec.username}" = {
         owner = config.users.users.${config.hostSpec.username}.name;
         inherit (config.users.users.${config.hostSpec.username}) group;
         # We need to ensure the entire directory structure is that of the user...
         path = "${config.hostSpec.home}/.config/sops/age/keys.txt";
       };
-      
+
       # Optional primary user's ssh key
-      "keys/${config.hostSpec.username}-ssh-key" = {
+      "${config.hostSpec.username}-ssh-key" = {
         owner = config.users.users.${config.hostSpec.username}.name;
         inherit (config.users.users.${config.hostSpec.username}) group;
         path = "${config.hostSpec.home}/.ssh/id_ed25519";
