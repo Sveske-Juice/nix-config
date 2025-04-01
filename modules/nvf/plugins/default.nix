@@ -1,5 +1,4 @@
-{lib, ...}:
-{
+{lib, ...}: {
   imports = [
     ./mini.nix
     ./telescope.nix
@@ -15,5 +14,6 @@
     ./zen-mode.nix
     ./todo-comments.nix
     ./trouble.nix
+    ./vim-tmux-navigator.nix
   ];
 }

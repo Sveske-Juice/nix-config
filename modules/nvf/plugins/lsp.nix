@@ -74,14 +74,15 @@
         lua = true;
         desc = "Hover";
       }
-      {
-        key = "<C-h>";
-        mode = "i";
-        silent = true;
-        action = "vim.lsp.buf.signature_help";
-        lua = true;
-        desc = "Signature help";
-      }
+      # TODO: find keybind
+      # {
+      #   key = "<C-h>";
+      #   mode = "i";
+      #   silent = true;
+      #   action = "vim.lsp.buf.signature_help";
+      #   lua = true;
+      #   desc = "Signature help";
+      # }
       {
         key = "gd";
         mode = "n";
