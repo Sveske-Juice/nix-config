@@ -20,6 +20,7 @@
     ../common/optional/programs/alacritty.nix
     ../common/optional/programs/spicetify.nix
     ../common/optional/programs/ocr.nix
+    ../common/optional/programs/librewolf.nix
 
     ../common/optional/desktops/hyprland
 

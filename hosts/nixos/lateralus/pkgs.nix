@@ -6,6 +6,6 @@
 }: {
   environment.systemPackages = with pkgs; [
     brightnessctl
-    nvtop
+    nvtopPackages.full
   ];
 }
