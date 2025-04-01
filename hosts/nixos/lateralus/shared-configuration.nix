@@ -32,6 +32,7 @@
     ../../common/optional/hyprland.nix
 
     ../../common/optional/git.nix
+    ../../common/optional/neovim.nix
 
     # Laptop specifics
     ./user.nix
