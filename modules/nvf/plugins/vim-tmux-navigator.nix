@@ -10,25 +10,25 @@
       key = "<C-h>";
       mode = "n";
       silent = true;
-      action = "<cmd><C-U>TmuxNavigateLeft<CR>";
+      action = "<cmd>TmuxNavigateLeft<CR>";
     }
     {
       key = "<C-j>";
       mode = "n";
       silent = true;
-      action = "<cmd><C-U>TmuxNavigateDown<CR>";
+      action = "<cmd>TmuxNavigateDown<CR>";
     }
     {
       key = "<C-k>";
       mode = "n";
       silent = true;
-      action = "<cmd><C-U>TmuxNavigateUp<CR>";
+      action = "<cmd>TmuxNavigateUp<CR>";
     }
     {
       key = "<C-l>";
       mode = "n";
       silent = true;
-      action = "<cmd><C-U>TmuxNavigateRight<CR>";
+      action = "<cmd>TmuxNavigateRight<CR>";
     }
   ];
 }
