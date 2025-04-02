@@ -6,7 +6,15 @@
     ./sops.nix
   ];
 
+  # Automatic GC
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
+
   nix.settings.experimental-features = ["nix-command" "flakes"];
+
   nixpkgs.config.allowBroken = true;
   nixpkgs.config.allowUnfree = true;
 
