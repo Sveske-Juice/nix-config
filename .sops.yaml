@@ -1,6 +1,6 @@
 keys:
   - users:
-      - &walther age10u2afn34tqnel3cwtjyl59pml0rka3qy0u8xyk3vqhkczw30gy7s5wka74
+      - &walther age1fx7xu2x5zymlqax9u0d6yse6kd2m98z7akxhtskhp860zrhx2qqqs65ldz
       - &sveske age1xx02tc8pj9v6hd3vctw5pnm7840alzdz8t88qaefd4e7gddl9yhsdplsp7
   - hosts:
       - &SussyBox age103p4534fyaqcdgp0tuvydp4ex92thlry483yvgauvf5denzs7gssugurue

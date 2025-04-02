@@ -33,8 +33,6 @@ in {
   networking.firewall.allowedTCPPorts = [jackettPort];
   networking.firewall.allowedUDPPorts = [jackettPort];
 
-  sops.secrets."passwords/torrentvmroot".neeedForUsers = true;
-
   systemd.services."microvm-secret-access" = {
     enable = true;
     description = "Add microvm to the group of sops secrets, so VMs can mount secrets";
