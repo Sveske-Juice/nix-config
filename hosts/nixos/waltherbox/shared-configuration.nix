@@ -27,6 +27,10 @@
 
     ../../common/optional/git.nix
 
+    # Services
+    ../../common/optional/services/sonarr.nix
+    ../../common/optional/services/radarr.nix
+
     # Waltherbox specifics
     ./user.nix
   ];

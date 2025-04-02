@@ -1,5 +1,8 @@
-{pkgs, ...}: let
-  vm-index = 2; # 1 reserved for host
+{
+  vm-index ? throw "no index",
+  pkgs,
+  ...
+}: let
   mac = "00:00:00:00:00:01";
   vpnendpoint = "placeholder";
   host = "10.0.0.1";

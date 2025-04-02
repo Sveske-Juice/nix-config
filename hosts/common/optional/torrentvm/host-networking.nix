@@ -35,7 +35,11 @@ in {
     # The new LAN for VMs
     internalIPs = ["10.0.0.0/24"]; # subnet mask 255.255.255.0
     externalInterface = hostInterface;
-    forwardPorts = [
-    ];
+  };
+
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [];
+    allowedUDPPortRanges = [];
   };
 }

@@ -6,6 +6,8 @@
   ...
 }: let
   inherit (inputs) microvm;
+  vm-index = 2; # 1 reserved for host 10.0.0.1
+  jackettPort = 9117;
 in {
   # HOST IMPORTS
   imports = [
@@ -13,7 +15,25 @@ in {
     ./host-networking.nix
   ];
 
-  sops.secrets."passwords/torrentvmroot".neededForUsers = true;
+  # PORT FORWARDING
+  networking.nat.forwardPorts = [
+    {
+      destination = "10.0.0.${toString vm-index}:${toString jackettPort}";
+      proto = "tcp";
+      sourcePort = jackettPort;
+    }
+  ];
+
+  # IDK why we have to do this, see:
+  # https://github.com/NixOS/nixpkgs/issues/28721
+  networking.firewall.extraCommands = ''
+    iptables -t nat -A POSTROUTING -d 10.0.0.${toString vm-index} -p tcp -m tcp --dport ${toString jackettPort} -j MASQUERADE
+  '';
+
+  networking.firewall.allowedTCPPorts = [jackettPort];
+  networking.firewall.allowedUDPPorts = [jackettPort];
+
+  sops.secrets."passwords/torrentvmroot".neeedForUsers = true;
 
   systemd.services."microvm-secret-access" = {
     enable = true;
@@ -68,7 +88,11 @@ in {
 
       # VM IMPORTS
       imports = [
-        ./vm-networking.nix
+        (import ./vm-networking.nix {
+          inherit vm-index;
+          inherit pkgs;
+        })
+        (import ./jackett.nix {port = jackettPort;})
       ];
 
       microvm.shares = [
