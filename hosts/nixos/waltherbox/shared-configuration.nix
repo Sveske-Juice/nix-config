@@ -31,6 +31,7 @@
     ../../common/optional/services/radicale.nix
     ../../common/optional/services/sonarr.nix
     ../../common/optional/services/radarr.nix
+    ../../common/optional/services/jellyfin
 
     # Waltherbox specifics
     ./user.nix
