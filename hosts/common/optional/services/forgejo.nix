@@ -35,4 +35,16 @@ in {
       federation.ENABLED = false;
     };
   };
+  services.nginx.virtualHosts."git.deprived.dev" = {
+    forceSSL = true;
+    enableACME = true;
+    locations."/" = {
+      extraConfig = ''
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-Ip $remote_addr;
+        client_max_body_size 100M;
+        proxy_pass http://127.0.0.1:${toString port};
+      '';
+    };
+  };
 }

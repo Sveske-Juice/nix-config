@@ -62,6 +62,8 @@
           if [ -f "${keyPath}" ]; then
             ${pkgs.openssh}/bin/ssh-keygen -y -f "${keyPath}" > "${keyPath}.pub"
           fi
+          # Make sure known hosts file is there otherwise ssh will fail to add to that file
+          touch "${config.hostSpec.home}/.ssh/known_hosts"
         '';
     };
   };

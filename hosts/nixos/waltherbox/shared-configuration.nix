@@ -32,6 +32,8 @@
     ../../common/optional/services/sonarr.nix
     ../../common/optional/services/radarr.nix
     ../../common/optional/services/jellyfin
+    ../../common/optional/services/nginx.nix
+    ../../common/optional/services/forgejo.nix
 
     # Waltherbox specifics
     ./user.nix

@@ -6,6 +6,12 @@
   imports = [
     ./docker.nix
   ];
+
+  sops.secrets.forgejo-registration-token = {
+    owner = config.services.forgejo.user;
+    group = config.services.forgejo.group;
+  };
+
   services.gitea-actions-runner = {
     package = pkgs.forgejo-runner;
     instances = {
@@ -13,7 +19,7 @@
         enable = true;
         name = "kartoffel";
         url = "http://127.0.0.1:${toString config.services.forgejo.settings.server.HTTP_PORT}";
-        tokenFile = config.age.secrets.forgejo-runner-token.path;
+        tokenFile = config.sops.secrets.forgejo-registration-token.path;
         labels = [
           "native:host"
         ];
