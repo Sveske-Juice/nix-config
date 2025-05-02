@@ -237,5 +237,5 @@ scp -r -P $ssh_port $SCP_OPTS $temp_dir/ssh/* $ssh_user@$target_destination:/etc
 # TODO: --generate-hardware-config support
 # TODO: extra flags custom flags
 green "Running nixos-anywhere..."
-sudo nix run github:nix-community/nixos-anywhere -- --target-host $ssh_user@$target_destination --flake .#$flake_host --copy-host-keys
+nix shell nixpkgs#nixos-anywhere --command nixos-anywhere --target-host $ssh_user@$target_destination --flake .#$flake_host --copy-host-keys
 
