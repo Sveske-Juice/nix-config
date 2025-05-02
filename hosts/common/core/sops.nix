@@ -53,12 +53,16 @@
     genUserPublicSSHKey = {
       text = let
         keyPath = "${config.hostSpec.home}/.ssh/id_ed25519";
-      in ''
-        # Make sure there is a private key
-        if [ -f "${keyPath}" ]; then
-          ${pkgs.openssh}/bin/ssh-keygen -y -f "${keyPath}" > "${keyPath}.pub"
-        fi
-      '';
+      in
+        /*
+        bash
+        */
+        ''
+          # Make sure there is a private key
+          if [ -f "${keyPath}" ]; then
+            ${pkgs.openssh}/bin/ssh-keygen -y -f "${keyPath}" > "${keyPath}.pub"
+          fi
+        '';
     };
   };
 

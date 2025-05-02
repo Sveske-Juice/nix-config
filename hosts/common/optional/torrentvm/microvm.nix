@@ -8,6 +8,7 @@
   inherit (inputs) microvm;
   vm-index = 2; # 1 reserved for host 10.0.0.1
   jackettPort = 9117;
+  transmissionWebPort = 9091;
 in {
   # HOST IMPORTS
   imports = [
@@ -22,16 +23,22 @@ in {
       proto = "tcp";
       sourcePort = jackettPort;
     }
+    {
+      destination = "10.0.0.${toString vm-index}:${toString transmissionWebPort}";
+      proto = "tcp";
+      sourcePort = transmissionWebPort;
+    }
   ];
 
   # IDK why we have to do this, see:
   # https://github.com/NixOS/nixpkgs/issues/28721
   networking.firewall.extraCommands = ''
     iptables -t nat -A POSTROUTING -d 10.0.0.${toString vm-index} -p tcp -m tcp --dport ${toString jackettPort} -j MASQUERADE
+    iptables -t nat -A POSTROUTING -d 10.0.0.${toString vm-index} -p tcp -m tcp --dport ${toString transmissionWebPort} -j MASQUERADE
   '';
 
-  networking.firewall.allowedTCPPorts = [jackettPort];
-  networking.firewall.allowedUDPPorts = [jackettPort];
+  networking.firewall.allowedTCPPorts = [jackettPort transmissionWebPort];
+  networking.firewall.allowedUDPPorts = [jackettPort transmissionWebPort];
 
   systemd.services."microvm-secret-access" = {
     enable = true;
@@ -84,6 +91,18 @@ in {
       programs.nano.enable = lib.mkForce false;
       programs.vim.enable = true;
 
+      # Can only login if they already have access to server shell
+      # so no need for double security
+      # services.openssh = {
+      #   enable = true;
+      #   settings = {
+      #     PermitRootLogin = "yes";
+      #     AllowUsers = null;
+      #     PasswordAuthentication = true;
+      #     KbdInteractiveAuthentication = lib.mkForce true;
+      #   };
+      # };
+
       # VM IMPORTS
       imports = [
         (import ./vm-networking.nix {
@@ -91,6 +110,7 @@ in {
           inherit pkgs;
         })
         (import ./jackett.nix {port = jackettPort;})
+        ./transmission.nix
       ];
 
       microvm.shares = [

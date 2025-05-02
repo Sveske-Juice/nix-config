@@ -7,6 +7,7 @@
 }: {
   imports = [
     ./shared-configuration.nix
+    ./hardware-configuration.nix
 
     (import ../../common/optional/zfsraid-disko.nix {
       pkgs = pkgs;
@@ -19,5 +20,4 @@
       ];
     })
   ];
-
 }

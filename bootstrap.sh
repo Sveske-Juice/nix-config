@@ -126,6 +126,7 @@ target_user=""
 ssh_user=""
 flake_host=""
 ssh_port=22
+genhwcfg=false
 
 # MAIN PROGRAM
 # Handle command-line arguments
@@ -142,6 +143,9 @@ while [[ $# -gt 0 ]]; do
         -u)
             shift
             target_user=$1
+            ;;
+        -g)
+            genhwcfg=true
             ;;
         --ssh-user)
             shift
@@ -234,8 +238,10 @@ done
 green "Copying ssh host keypair to target..."
 scp -r -P $ssh_port $SCP_OPTS $temp_dir/ssh/* $ssh_user@$target_destination:/etc/ssh/
 
-# TODO: --generate-hardware-config support
 # TODO: extra flags custom flags
 green "Running nixos-anywhere..."
-nix shell nixpkgs#nixos-anywhere --command nixos-anywhere --target-host $ssh_user@$target_destination --flake .#$flake_host --copy-host-keys
-
+if $genhwcfg ; then
+    nix shell nixpkgs#nixos-anywhere --command nixos-anywhere --target-host "$ssh_user"@"$target_destination" --flake .#"$flake_host" --generate-hardware-config nixos-generate-config "./hosts/nixos/$flake_host/hardware-configuration.nix" --copy-host-keys
+else
+    nix shell nixpkgs#nixos-anywhere --command nixos-anywhere --target-host "$ssh_user"@"$target_destination" --flake .#"$flake_host" --copy-host-keys
+fi

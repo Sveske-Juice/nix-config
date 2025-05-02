@@ -8,6 +8,7 @@
   imports = [
     ../waltherbox/shared-configuration.nix
     ../../common/optional/vm-hardware-configuration.nix
+    ./hardware-configuration.nix
 
     (import ../../common/optional/zfsraid-disko.nix {
       pkgs = pkgs;
