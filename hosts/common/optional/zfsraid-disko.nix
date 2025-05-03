@@ -78,8 +78,9 @@ in {
         type = "zpool";
         rootFsOptions = {
           mountpoint = "none";
-          acltype = "posixacl";
-          xattr = "sa";
+          # Dont need SELinux - better IO performance
+          # acltype = "posixacl";
+          # xattr = "sa";
         };
 
         datasets = {
@@ -117,11 +118,9 @@ in {
         mode = "raidz";
 
         rootFsOptions = {
-          compression = "zstd";
           mountpoint = "none";
-          acltype = "posixacl";
-          xattr = "sa";
-          "com.sun:auto-snapshot" = "true";
+          # acltype = "posixacl";
+          # xattr = "sa";
         };
 
         datasets = {
@@ -133,4 +132,10 @@ in {
       };
     };
   };
+
+  # NOTE: this is important
+  # it's to stop both zfs and systemd of trying
+  # to mount /data, see here:
+  # https://github.com/nix-community/disko/issues/581
+  fileSystems."/data".options = ["noauto"];
 }
