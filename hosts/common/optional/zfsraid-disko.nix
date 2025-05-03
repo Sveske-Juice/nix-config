@@ -138,4 +138,22 @@ in {
   # to mount /data, see here:
   # https://github.com/nix-community/disko/issues/581
   fileSystems."/data".options = ["noauto"];
+
+  # HACK: For some reason `raid5` is not auto-imported,
+  # see here:
+  # https://github.com/nix-community/disko/issues/359
+  # So we do this workaround
+  system.activationScripts."importzfs" = ''
+    ${pkgs.zfs}/bin/zpool import -fa
+  '';
+
+  users.groups.data = {};
+
+  system.activationScripts."datadir" = {
+    deps = ["importzfs"];
+    text = ''
+      chgrp -R data /data
+      chmod -R u=rwx,g=rwx,o= /data
+    '';
+  };
 }

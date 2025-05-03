@@ -13,8 +13,8 @@ in {
 
   home-manager = {
     extraSpecialArgs = {
-        inherit inputs;
-        inherit (config) hostSpec; # Pass hostSpec to homemanager configurations
+      inherit inputs;
+      inherit (config) hostSpec; # Pass hostSpec to homemanager configurations
     };
     users = {
       ${config.hostSpec.username} = import ../../../home/${config.hostSpec.username}/home.nix;
@@ -28,6 +28,7 @@ in {
       "networkmanager"
       "audio"
       "wheel"
+      "data"
     ];
 
     shell = pkgs.fish;
