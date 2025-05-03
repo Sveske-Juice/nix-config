@@ -1,6 +1,6 @@
 {...}: let
   user = "radarr";
-  group = "radarr";
+  group = "data";
 in {
   users.groups.media.members = [user];
 

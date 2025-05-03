@@ -17,39 +17,29 @@ in {
   ];
 
   # PORT FORWARDING
-  networking.nat.forwardPorts = [
-    {
-      destination = "10.0.0.${toString vm-index}:${toString jackettPort}";
-      proto = "tcp";
-      sourcePort = jackettPort;
-    }
-    {
-      destination = "10.0.0.${toString vm-index}:${toString transmissionWebPort}";
-      proto = "tcp";
-      sourcePort = transmissionWebPort;
-    }
-  ];
-
   # IDK why we have to do this, see:
   # https://github.com/NixOS/nixpkgs/issues/28721
-  networking.firewall.extraCommands = ''
-    iptables -t nat -A POSTROUTING -d 10.0.0.${toString vm-index} -p tcp -m tcp --dport ${toString jackettPort} -j MASQUERADE
-    iptables -t nat -A POSTROUTING -d 10.0.0.${toString vm-index} -p tcp -m tcp --dport ${toString transmissionWebPort} -j MASQUERADE
+  networking.firewall.extraCommands = lib.mkForce ''
+    iptables -t nat -A PREROUTING -p tcp --dport ${toString jackettPort} -j DNAT --to-destination 10.0.0.${toString vm-index}:${toString jackettPort}
+    iptables -t nat -A POSTROUTING -p tcp -d 10.0.0.${toString vm-index} --dport ${toString jackettPort} -j MASQUERADE
+
+    iptables -A FORWARD -p tcp -d 10.0.0.${toString vm-index} --dport ${toString transmissionWebPort} -j ACCEPT
+    iptables -t nat -A POSTROUTING -p tcp -d 10.0.0.${toString vm-index} --dport ${toString transmissionWebPort} -j MASQUERADE
   '';
 
   networking.firewall.allowedTCPPorts = [jackettPort transmissionWebPort];
   networking.firewall.allowedUDPPorts = [jackettPort transmissionWebPort];
 
-  systemd.services."microvm-secret-access" = {
-    enable = true;
-    description = "Add microvm to the group of sops secrets, so VMs can mount secrets";
-    after = ["sops-nix.service"];
-    wantedBy = ["multi-user.target"];
-
-    serviceConfig = {
-      ExecStart = "${pkgs.coreutils}/bin/chown -R :${toString config.users.groups.secrets.gid} /run/secrets-for-users.d";
-    };
-  };
+  # systemd.services."microvm-secret-access" = {
+  #   enable = true;
+  #   description = "Add microvm to the group of sops secrets, so VMs can mount secrets";
+  #   after = ["sops-nix.service"];
+  #   wantedBy = ["multi-user.target"];
+  #
+  #   serviceConfig = {
+  #     ExecStart = "${pkgs.coreutils}/bin/chown -R :${toString config.users.groups.secrets.gid} /run/secrets-for-users.d";
+  #   };
+  # };
 
   users.groups.secrets.gid = 1069;
   users.users.microvm.extraGroups = ["secrets"];

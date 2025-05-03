@@ -1,6 +1,6 @@
 {...}: let
   user = "sonarr";
-  group = "sonarr";
+  group = "data";
 in {
   users.groups.media.members = [user];
 

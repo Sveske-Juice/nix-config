@@ -34,6 +34,7 @@
     ../../common/optional/services/jellyfin
     ../../common/optional/services/nginx.nix
     ../../common/optional/services/forgejo.nix
+    ../../common/optional/services/sftp-deprived.nix
 
     # Waltherbox specifics
     ./user.nix

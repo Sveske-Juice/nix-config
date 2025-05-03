@@ -9,6 +9,7 @@
     };
     banner = '''';
 
+    # Generate RSA key. Ed25519 key comes from sops
     hostKeys = [
       {
         bits = 4096;
@@ -16,6 +17,8 @@
         type = "rsa";
       }
     ];
+
+    allowSFTP = true;
   };
 
   programs.ssh.startAgent = true;

@@ -1,8 +1,7 @@
 # Networking configuration for the host
 {lib, ...}: let
   maxVMs = 32;
-  hostInterface = "enp11s0";
-  wgPort = 51820;
+  hostInterface = "enp5s0";
 in {
   networking.useNetworkd = true;
 
@@ -29,6 +28,12 @@ in {
       };
     }) (lib.genList (i: i + 1) maxVMs)
   );
+
+  # HACK: For some reason nnetworking.nat.enable does not correctly
+  # setup NAT so we add this mf
+  networking.firewall.extraCommands = ''
+    sudo iptables -t nat -A POSTROUTING -s 10.0.0.2 -o ${hostInterface} -j MASQUERADE
+  '';
 
   networking.nat = {
     enable = true;
