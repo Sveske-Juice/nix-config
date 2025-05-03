@@ -39,6 +39,8 @@
     ./user.nix
   ];
 
+  # Ensure we have a data directory
+
   hostSpec = {
     hostName = "waltherbox";
     username = "walther"; # primary user
