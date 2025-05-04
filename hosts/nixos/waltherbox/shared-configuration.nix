@@ -36,6 +36,8 @@
     ../../common/optional/services/forgejo.nix
     ../../common/optional/services/sftp-deprived.nix
 
+    ../../common/optional/services/deprived-site.nix
+
     # Waltherbox specifics
     ./user.nix
   ];

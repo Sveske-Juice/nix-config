@@ -9,6 +9,7 @@
   vm-index = 2; # 1 reserved for host 10.0.0.1
   jackettPort = 9117;
   transmissionWebPort = 9091;
+  proto = "9p"; # NOTE: use virtiofs for performance
 in {
   # HOST IMPORTS
   imports = [
@@ -41,12 +42,9 @@ in {
   #   };
   # };
 
-  users.groups.secrets.gid = 1069;
-  users.users.microvm.extraGroups = ["secrets"];
+  microvm.vms.torrentvm.config.users.groups.data.gid = config.users.groups.data.gid;
 
-  microvm.vms.torrentvm = let
-    passwdPath = config.sops.secrets."passwords/torrentvmroot".path;
-  in {
+  microvm.vms.torrentvm = {
     # Use host's nixpkgs
     inherit pkgs;
 
@@ -55,15 +53,6 @@ in {
 
       microvm.mem = 1024;
       microvm.vcpu = 2;
-
-      users.groups.microvm = {};
-      users.users.microvm = {
-        isSystemUser = true;
-        group = "microvm";
-        uid = config.users.users.microvm.uid;
-        extraGroups = ["secrets"];
-      };
-      users.groups.secrets.gid = config.users.groups.secrets.gid;
 
       # Users
       users.users.root = {
@@ -103,14 +92,43 @@ in {
         ./transmission.nix
       ];
 
+      # systemd.services.jackettperms = {
+      #   enable = true;
+      #   description = "Ensure permissions for jackett";
+      #   serviceConfig = {
+      #     Type = "simple";
+      #     ExecStart = ''
+      #       /bin/sh -c "chown -R ${config.services.jackett.user}:${config.services.jackett.group} /mnt/jackett
+      #     '';
+      #   };
+      #   before = ["jackett.service"];
+      # };
+
       microvm.shares = [
         {
           source = "/nix/store";
           mountPoint = "/nix/.ro-store";
           tag = "ro-store";
-          proto = "9p";
+          inherit proto;
         }
+        {
+          tag = "internaldata";
+          source = "/var/lib/torrentvm/";
+          mountPoint = "/mnt";
+          inherit proto;
+        }
+        # {
+        #   tag = "data";
+        #   source = "/data";
+        #   mountPoint = "/data";
+        #   inherit proto;
+        # }
       ];
     };
   };
+
+  system.activationScripts."jackettdatadir" = lib.stringAfter ["var"] ''
+    mkdir -p /var/lib/torrentvm/jackett
+    chown -R microvm:data /var/lib/torrentvm/jackett
+  '';
 }

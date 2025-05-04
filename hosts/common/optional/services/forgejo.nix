@@ -4,6 +4,9 @@ in {
   imports = [
     ./gitea-actions-runner.nix
   ];
+  environment.systemPackages = with pkgs; [
+    util-linux
+  ];
   services.forgejo = {
     enable = true;
 
