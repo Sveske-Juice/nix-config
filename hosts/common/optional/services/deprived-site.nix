@@ -23,7 +23,7 @@ in {
       users = ["deprivedbuilder"];
       commands = pkgs.lib.lists.forEach allowedBranches (
         branch: {
-          command = "/run/current-system/sw/bin/systemctl start build-deprived-website@${branch}";
+          command = "/run/current-system/sw/bin/systemctl start build-deprived-website-${branch}";
           options = ["SETENV" "NOPASSWD"];
         }
       );
@@ -53,6 +53,8 @@ in {
         Type = "oneshot";
         User = "deprivedbuilder";
         Group = "www";
+        StandardOutput = "file:/home/deprivedbuilder/latest_build.log";
+        StandardError = "inherit";
 
         RemainAfterExit = false;
       };
@@ -62,6 +64,9 @@ in {
         bash
         */
         ''
+          # Clear log
+          truncate -s 0 /home/deprivedbuilder/latest_build.log
+
           branch=$(echo "${serviceName}" | cut -d'-' -f4)
           echo "Building branch: $branch"
 
