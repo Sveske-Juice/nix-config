@@ -106,11 +106,18 @@
       desc = "Diagnostics";
     }
     {
-      key = "<leader>lt";
+      key = "<leader>ls";
       mode = "n";
       silent = true;
       action = "<cmd>Telescope treesitter<CR>";
       desc = "Treesitter";
+    }
+    {
+      key = "<leader>lt";
+      mode = "n";
+      silent = true;
+      action = "<cmd>TodoTelescope<CR>";
+      desc = "Todos";
     }
   ];
 }

@@ -1,5 +1,4 @@
-{...}:
-{
+{...}: {
   vim.notes.todo-comments = {
     enable = true;
     setupOpts = {
@@ -16,7 +15,7 @@
         FIX = {
           icon = " ";
           color = "error";
-          alt = [ "FIXME" "BUG" "FIXIT" "ISSUE" ];
+          alt = ["FIXME" "BUG" "FIXIT" "ISSUE"];
         };
         TODO = {
           icon = " ";
@@ -48,7 +47,7 @@
         };
       };
     };
-    
+
     # Disable default mappings
     mappings = {
       quickFix = null;
