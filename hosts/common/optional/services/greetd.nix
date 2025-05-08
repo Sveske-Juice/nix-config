@@ -28,6 +28,10 @@ in {
     };
   };
 
+  environment.sessionVariables = {
+    WLR_NO_HARDWARE_CURSORS = 1;
+  };
+
   environment.etc."greetd/environments".text = ''
     Hyprland
     ${pkgs.uwsm}/bin/uwsm start -S hyprland-uwsm.desktop

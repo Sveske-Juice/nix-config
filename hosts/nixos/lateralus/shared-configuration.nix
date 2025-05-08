@@ -33,6 +33,7 @@
 
     ../../common/optional/git.nix
     ../../common/optional/neovim.nix
+    ../../common/optional/vr
 
     # Laptop specifics
     ./user.nix

@@ -9,6 +9,6 @@
   ];
 
   stylix.enable = true;
-  stylix.image = ../../../../wallpapers/wallhaven-p2oowm.jpg;
+  stylix.image = ../../../../wallpapers/wallhaven-l8x1pr.jpg;
   stylix.polarity = "dark";
 }

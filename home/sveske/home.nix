@@ -31,7 +31,6 @@
   home.homeDirectory = hostSpec.home;
 
   home.packages = with pkgs; [
-    firefox
     legcord # Discord (armcord)
     pfetch
     nsxiv
@@ -43,6 +42,7 @@
     libnotify
     grimblast
     python3
+    blender
   ];
 
   stylix.targets.waybar.enable = false;
