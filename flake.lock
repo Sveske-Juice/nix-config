@@ -67,6 +67,26 @@
         "type": "github"
       }
     },
+    "declarative-jellyfin": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1746716802,
+        "narHash": "sha256-6KbgaZBfoGA+C5LdYLKcWkpHjKyLAU6WbnOLa17Pn0I=",
+        "ref": "refs/heads/main",
+        "rev": "9f5a00e32360751a476b77063f94f44d0307b932",
+        "revCount": 73,
+        "type": "git",
+        "url": "https://git.spoodythe.one/spoody/declarative-jellyfin.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.spoodythe.one/spoody/declarative-jellyfin.git"
+      }
+    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -552,6 +572,7 @@
     },
     "root": {
       "inputs": {
+        "declarative-jellyfin": "declarative-jellyfin",
         "disko": "disko",
         "home-manager": "home-manager",
         "microvm": "microvm",

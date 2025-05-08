@@ -44,6 +44,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    declarative-jellyfin = {
+      url = "git+https://git.spoodythe.one/spoody/declarative-jellyfin.git";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixpkgs-xr = {
       url = "github:nix-community/nixpkgs-xr";
       inputs.nixpkgs.follows = "nixpkgs";
