@@ -24,6 +24,7 @@
     ../../../hosts/common/optional/services/greetd.nix
     ../../../hosts/common/optional/services/syncthing.nix
     ../../../hosts/common/optional/programs/thunar.nix
+    ../../../hosts/common/optional/programs/mullvad-vpn.nix
 
     ../../../home/common/optional/stylix
     ../../../home/common/optional/desktops/qt.nix
@@ -34,6 +35,8 @@
     ../../common/optional/git.nix
     ../../common/optional/neovim.nix
     ../../common/optional/vr
+
+    ../../common/optional/services/virt-manager.nix
 
     # Laptop specifics
     ./user.nix
