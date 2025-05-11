@@ -40,7 +40,7 @@ in {
 
   # AMD VA-API and VDPAU should work out of the box with mesa
   hardware.graphics.enable = true;
-  users.users.jellyfin.extraGroups = ["video" "render"];
+  users.users.${config.services.jellyfin.user}.extraGroups = ["video" "render"];
 
   # SOPS -- Extract secrets foreach user
   sops.secrets = builtins.listToAttrs (map (user: {
