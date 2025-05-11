@@ -1,7 +1,7 @@
 {pkgs, ...}: let
   # configDir = "jellyfin"; # Relative from /etc/
   # configDirAbsolute = "/etc/${configDir}";
-  group = "media";
+  group = "data";
 in {
   environment.systemPackages = [
     pkgs.jellyfin
@@ -9,15 +9,15 @@ in {
     pkgs.jellyfin-ffmpeg
   ];
 
-  # AMD VA-API and VDPAU should work out of the box with mesa
-  hardware.graphics.enable = true;
-
   services.jellyfin = {
     enable = true;
     openFirewall = true;
     group = group;
     # configDir = configDirAbsolute;
   };
+
+  # AMD VA-API and VDPAU should work out of the box with mesa
+  hardware.graphics.enable = true;
 
   # Configuration
   # We could declare settings declaratively like this, but i will just use the GUI

@@ -31,12 +31,13 @@
     ../../common/optional/services/radicale.nix
     ../../common/optional/services/sonarr.nix
     ../../common/optional/services/radarr.nix
-    ../../common/optional/services/jellyfin
     ../../common/optional/services/nginx.nix
     ../../common/optional/services/forgejo.nix
     ../../common/optional/services/sftp-deprived.nix
 
     ../../common/optional/services/deprived-site.nix
+
+    ../../common/optional/services/declarative-jellyfin
 
     # Waltherbox specifics
     ./user.nix

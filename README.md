@@ -21,4 +21,5 @@
 * Setup series dir
 * Connect to jackett
 
-
+#### Jellyfin
+* Managed declaratively:) just start library scan
