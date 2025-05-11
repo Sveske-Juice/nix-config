@@ -91,5 +91,10 @@ in {
     forceSSL = true;
     enableACME = true;
     root = "/var/www/deprived/main";
+    extraConfig = ''
+      # Remove trailing slash
+      rewrite ^/(.*)/$ /$1 permanent;
+      try_files $uri $uri.html $uri/index.html =404;
+    '';
   };
 }
