@@ -59,6 +59,10 @@ in {
     enable = true;
     system = {
       IsStartupWizardCompleted = true;
+      TrickplayOptions = {
+        EnableHwAcceleration = true;
+        EnableHwEncoding = true;
+      };
     };
     Users =
       pkgs.lib.recursiveUpdate hashedPasswordDefinitions
