@@ -74,11 +74,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1746992696,
-        "narHash": "sha256-mJ2YBfimgxHxNldIP9ZA3wzkiX4O40deGj+J2kpCFkw=",
+        "lastModified": 1746995827,
+        "narHash": "sha256-/pFXiQCq1lq7NjsqavJAbCLB+/u+VzBU0VZgCbL7RGc=",
         "ref": "refs/heads/main",
-        "rev": "a9f69469d44787b88f7558fa154f1496775fd306",
-        "revCount": 83,
+        "rev": "4d7c22411d442156f0b888cf1a2cff0b930fe514",
+        "revCount": 85,
         "type": "git",
         "url": "https://git.spoodythe.one/spoody/declarative-jellyfin.git"
       },

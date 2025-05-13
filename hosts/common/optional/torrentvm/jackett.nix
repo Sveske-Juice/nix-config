@@ -5,7 +5,7 @@ in {
   services.jackett = {
     enable = true;
 
-    user = user;
+    # user = user;
     group = group;
     inherit port;
     dataDir = "/mnt/jackett";

@@ -2,7 +2,7 @@
   user = "sonarr";
   group = "data";
 in {
-  users.groups.media.members = [user];
+  users.groups.data.members = [user];
 
   services.sonarr = {
     enable = true;
