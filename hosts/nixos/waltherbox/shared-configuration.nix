@@ -31,6 +31,7 @@
     ../../common/optional/services/radicale.nix
     ../../common/optional/services/sonarr.nix
     ../../common/optional/services/radarr.nix
+    ../../common/optional/services/jellyseerr.nix
     ../../common/optional/services/nginx.nix
     ../../common/optional/services/forgejo.nix
     ../../common/optional/services/sftp-deprived.nix
