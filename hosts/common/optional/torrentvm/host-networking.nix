@@ -1,7 +1,7 @@
 # Networking configuration for the host
 {lib, ...}: let
   maxVMs = 32;
-  hostInterface = "enp5s0";
+  hostInterface = "enp6s0";
 in {
   networking.useNetworkd = true;
 

@@ -10,7 +10,7 @@
   jackettPort = 9117;
   transmissionWebPort = 9091;
   proto = "virtiofs"; # NOTE: use virtiofs for performance
-  internetFacingInterface = "enp5s0";
+  internetFacingInterface = "enp6s0";
 in {
   # HOST IMPORTS
   imports = [
@@ -107,8 +107,8 @@ in {
         }
         {
           tag = "data";
-          source = "/data";
-          mountPoint = "/data";
+          source = "/buffer";
+          mountPoint = "/buffer";
           inherit proto;
         }
       ];
