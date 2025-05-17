@@ -1,6 +1,5 @@
 {
   config,
-  pkgs,
   lib,
   ...
 }: let
@@ -21,16 +20,17 @@ in {
   services.syncthing = {
     enable = true;
     openDefaultPorts = true;
-    guiAddress = "0.0.0.0:${toString guiPort}";
+    guiAddress = "127.0.0.1:${toString guiPort}";
     overrideDevices = true;
     overrideFolders = true;
-    cert = config.sops.secrets."syncthing/certpem".path;
-    key = config.sops.secrets."syncthing/keypem".path;
+    # Wait for: https://github.com/NixOS/nixpkgs/issues/244059
+    # cert = config.sops.secrets."syncthing/certpem".path;
+    # key = config.sops.secrets."syncthing/keypem".path;
     settings = {
       devices = builtins.trace deviceIds deviceIds;
       gui = {
-        user = "admin";
-        password = "$2a$10$GQACCCfDo.BOWCh3nwL4C.PbP220YtqUwStGhgXRIxfjusCmIF4sy";
+        user = "test";
+        password = "$2b$05$DTs1vYGpJnO3NMA3JyfCaudoi8.vfUuB0D4pfZOoXi69m5s/HXIiK";
       };
     };
   };
