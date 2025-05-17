@@ -1,6 +1,6 @@
 {pkgs, ...}: let
-  downloadDir = "/data/torrents";
-  incompleteDir = "/data/torrents/.incomplete";
+  downloadDir = "/buffer/torrents";
+  incompleteDir = "/buffer/torrents/.incomplete";
 in {
   users.groups.data = {};
   services.transmission = {
