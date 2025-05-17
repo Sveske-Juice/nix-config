@@ -35,6 +35,8 @@
     ../../common/optional/services/nginx.nix
     ../../common/optional/services/forgejo.nix
     ../../common/optional/services/sftp-deprived.nix
+    ../../common/optional/services/grafana.nix
+    ../../common/optional/services/syncthing/waltherbox.nix
 
     ../../common/optional/services/deprived-site.nix
 
