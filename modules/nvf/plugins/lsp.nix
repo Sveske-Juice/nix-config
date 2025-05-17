@@ -29,7 +29,6 @@
 
     lsp = {
       lightbulb.enable = true;
-      lsplines.enable = true;
 
       # Remove all default bindings
       mappings = {
