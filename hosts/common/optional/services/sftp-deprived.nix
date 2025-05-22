@@ -1,4 +1,6 @@
-{...}: {
+{...}: let
+  jailDir = "/srv/ssh/jail/deprived";
+in {
   users.groups.sftponly = {};
   users.users.deprivedslave = {
     home = "/srv/ssh/jail/deprived";
@@ -17,10 +19,10 @@
     ];
   };
   system.activationScripts."createslavehome" = ''
-    mkdir -p /srv/ssh/jail/deprived/assets
-    chown root:root /srv/ssh/jail/deprived
-    chmod -R 775 /srv/ssh/jail/deprived/assets
-    chgrp -R sftponly /srv/ssh/jail/deprived/assets
+    mkdir -p ${jailDir}/assets
+    chown root:root ${jailDir}
+    chmod -R 775 ${jailDir}/assets
+    chgrp -R sftponly ${jailDir}/assets
   '';
 
   services.openssh.extraConfig = ''
@@ -31,4 +33,16 @@
      PasswordAuthentication yes
      ForceCommand internal-sftp
   '';
+
+  # NGINX
+  # services.nginx.virtualHosts."deprived.dev" = {
+  #   forceSSL = true;
+  #   enableACME = true;
+  #   root = "${jailDir}/assets";
+  #   extraConfig = ''
+  #     # Remove trailing slash
+  #     rewrite ^/(.*)/$ /$1 permanent;
+  #     try_files $uri $uri.html $uri/index.html =404;
+  #   '';
+  # };
 }
