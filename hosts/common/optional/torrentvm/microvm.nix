@@ -11,6 +11,7 @@
   transmissionWebPort = 9091;
   proto = "virtiofs"; # NOTE: use virtiofs for performance
   internetFacingInterface = "enp6s0";
+  peer-port = 65535;
 in {
   # HOST IMPORTS
   imports = [
@@ -38,15 +39,23 @@ in {
     iptables -t nat -A POSTROUTING -o ${internetFacingInterface} -j MASQUERADE
 
     # NAT
+    # peers
+    iptables -t nat -A PREROUTING -i ${internetFacingInterface} -p tcp --dport ${toString peer-port} -j DNAT --to-destination 10.0.0.${toString vm-index}
+    iptables -t nat -A POSTROUTING -o vm${toString vm-index} -p tcp --dport ${toString peer-port} -d 10.0.0.${toString vm-index}
+    iptables -t nat -A PREROUTING -i ${internetFacingInterface} -p udp --dport ${toString peer-port} -j DNAT --to-destination 10.0.0.${toString vm-index}
+    iptables -t nat -A POSTROUTING -o vm${toString vm-index} -p udp --dport ${toString peer-port} -d 10.0.0.${toString vm-index}
+
+    # jackett
     iptables -t nat -A PREROUTING -i ${internetFacingInterface} -p tcp --dport ${toString jackettPort} -j DNAT --to-destination 10.0.0.${toString vm-index}
     iptables -t nat -A POSTROUTING -o vm${toString vm-index} -p tcp --dport ${toString jackettPort} -d 10.0.0.${toString vm-index}
 
+    # transmission
     iptables -t nat -A PREROUTING -i ${internetFacingInterface} -p tcp --dport ${toString transmissionWebPort} -j DNAT --to-destination 10.0.0.${toString vm-index}
     iptables -t nat -A POSTROUTING -o vm${toString vm-index} -p tcp --dport ${toString transmissionWebPort} -d 10.0.0.${toString vm-index}
   '';
 
-  networking.firewall.allowedTCPPorts = [jackettPort transmissionWebPort];
-  networking.firewall.allowedUDPPorts = [jackettPort transmissionWebPort];
+  networking.firewall.allowedTCPPorts = [jackettPort transmissionWebPort peer-port];
+  networking.firewall.allowedUDPPorts = [jackettPort transmissionWebPort peer-port];
 
   users.users.microvm.extraGroups = ["data"];
   users.groups.data.gid = 991;
@@ -89,8 +98,17 @@ in {
           inherit pkgs;
         })
         (import ./jackett.nix {port = jackettPort;})
-        ./transmission.nix
+        # (import ./transmission.nix { inherit pkgs; inherit peer-port;})
+        ./qbittorrent.nix
       ];
+
+      services.qbittorrent = {
+        enable = true;
+        openFirewall = true;
+        group = "data";
+        dataDir = "/buffer";
+        port = transmissionWebPort;
+      };
 
       microvm.shares = [
         {

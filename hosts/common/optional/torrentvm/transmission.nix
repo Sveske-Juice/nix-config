@@ -1,4 +1,4 @@
-{pkgs, ...}: let
+{pkgs, peer-port, ...}: let
   downloadDir = "/buffer/torrents";
   incompleteDir = "/buffer/torrents/.incomplete";
 in {
@@ -13,9 +13,8 @@ in {
     settings = {
       download-dir = downloadDir;
       incomplete-dir = incompleteDir;
-      peer-port-random-low = 65500;
-      peer-port-random-high = 65535;
-      peer-port-random-on-start = true;
+      inherit peer-port;
+      peer-port-random-on-start = false;
       download-queue-enabled = false;
 
       rpc-authentication-required = false;
@@ -26,4 +25,7 @@ in {
     downloadDirPermissions = "775";
     performanceNetParameters = true;
   };
+
+  # HACK: workaround for https://github.com/NixOS/nixpkgs/issues/98904#issuecomment-716656576
+  systemd.services.transmission.serviceConfig."BindReadOnlyPaths" = "/run/systemd/resolve/stub-resolv.conf";
 }
