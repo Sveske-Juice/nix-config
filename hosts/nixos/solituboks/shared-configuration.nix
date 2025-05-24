@@ -22,6 +22,7 @@
     })
 
     ../../../hosts/common/optional/services/greetd.nix
+    ../../../hosts/common/optional/services/lact.nix
     ../../../hosts/common/optional/services/syncthing/solituboks.nix
     ../../../hosts/common/optional/programs/dolphin.nix
 
