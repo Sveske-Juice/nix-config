@@ -1,13 +1,10 @@
 # This file will be included in EVERY user's home manager configuration
 {
-  config,
-  lib,
   pkgs,
   ...
 }: {
   imports = [
-    ../../../modules/common/host-spec.nix
-
+    ./bar-spec.nix
     ./fish.nix
     ./fonts.nix
   ];

@@ -1,7 +1,7 @@
 {lib, ...}: {
   imports = [
-    ../../../modules/common
-
+    ./en_dk.nix
+    ./host-spec.nix
     ./tmux.nix
     ./sops.nix
   ];
