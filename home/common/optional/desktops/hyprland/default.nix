@@ -1,7 +1,6 @@
 {
-  lib,
-  config,
   pkgs,
+  hyprlandSpec,
   ...
 }: {
   home.packages = with pkgs; [
@@ -49,9 +48,7 @@
         disable_splash_rendering = true;
         disable_hyprland_logo = true;
       };
-      monitor = [
-        ",preffered,auto,1"
-      ];
+      monitor = hyprlandSpec.monitors;
       input = {
         kb_layout = "dk";
         follow_mouse = true;

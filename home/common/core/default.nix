@@ -5,6 +5,7 @@
 }: {
   imports = [
     ./bar-spec.nix
+    ./hyprland-spec.nix
     ./fish.nix
     ./fonts.nix
   ];

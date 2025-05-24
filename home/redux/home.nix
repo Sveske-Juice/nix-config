@@ -22,11 +22,19 @@
     ../common/optional/programs/ocr.nix
     ../common/optional/programs/librewolf.nix
 
-    ../common/optional/desktops/hyprland
-    (import ../common/optional/desktops/waybar { inherit lib; barSpec = config.barSpec; })
+    (import ../common/optional/desktops/hyprland { inherit pkgs; inherit (config) hyprlandSpec; })
+    (import ../common/optional/desktops/waybar { inherit lib; inherit (config) barSpec; })
 
     ./sops.nix
   ];
+
+  hyprlandSpec = {
+    monitors = [
+      "HDMI-A-1, preffered, 0x0, 1"
+      "DP-3, preffered, auto, 2"
+      ", preffered, auto, 1" # plug in random monitors
+    ];
+  };
 
   barSpec = {
     battery = false;
