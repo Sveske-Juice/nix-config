@@ -1,7 +1,5 @@
 {
-  lib,
-  config,
-  pkgs,
+  barSpec,
   ...
 }: {
   programs.waybar = {
@@ -12,9 +10,7 @@
       height = 30;
       layer = "top";
       position = "top";
-      output = [
-        "eDP-1"
-      ];
+      output = barSpec.displayDevices;
       modules-left = [
         "tray"
         "hyprland/workspaces"

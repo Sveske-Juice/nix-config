@@ -2,6 +2,7 @@
   pkgs,
   inputs,
   lib,
+  config,
   hostSpec,
   ...
 }: {
@@ -14,7 +15,6 @@
     ../common/optional/desktops/services/dunst.nix
     ../common/optional/desktops/gtk.nix
 
-    ../common/optional/desktops/waybar
     ../common/optional/desktops/tofi.nix
     ../common/optional/desktops/wlogout.nix
     ../common/optional/programs/alacritty.nix
@@ -23,9 +23,15 @@
     ../common/optional/programs/librewolf.nix
 
     ../common/optional/desktops/hyprland
+    (import ../common/optional/desktops/waybar { barSpec = config.barSpec; })
 
     ./sops.nix
   ];
+
+  barSpec = {
+    battery = false;
+    displayDevices = [ "DP-3" "HDMI-A-1" ];
+  };
 
   home.username = hostSpec.username;
   home.homeDirectory = hostSpec.home;

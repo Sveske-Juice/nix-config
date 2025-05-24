@@ -2,19 +2,19 @@
   pkgs,
   inputs,
   lib,
+  config,
   hostSpec,
   ...
 }: {
   imports = [
     # Required
-    ../common/core/default.nix
+    ../common/core
 
     inputs.spicetify-nix.homeManagerModules.default
 
     ../common/optional/desktops/services/dunst.nix
     ../common/optional/desktops/gtk.nix
 
-    ../common/optional/desktops/waybar
     ../common/optional/desktops/tofi.nix
     ../common/optional/desktops/wlogout.nix
     ../common/optional/programs/alacritty.nix
@@ -23,9 +23,15 @@
     ../common/optional/programs/librewolf.nix
 
     ../common/optional/desktops/hyprland
+    (import ../common/optional/desktops/waybar { barSpec = config.barSpec; })
 
     ./sops.nix
   ];
+
+  barSpec = {
+    battery = true;
+    displayDevices = [ "eDP-1" ];
+  };
 
   home.username = hostSpec.username;
   home.homeDirectory = hostSpec.home;
