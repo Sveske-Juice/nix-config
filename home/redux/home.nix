@@ -34,6 +34,9 @@
       "DP-3, preffered, auto, 1.5"
       ", preffered, auto, 1" # plug in random monitors
     ];
+    workspaces = [
+      "3, monitor:HDMI-A-1"
+    ];
   };
 
   barSpec = {

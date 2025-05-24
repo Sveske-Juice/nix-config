@@ -49,6 +49,7 @@
         disable_hyprland_logo = true;
       };
       monitor = hyprlandSpec.monitors;
+      workspace = hyprlandSpec.workspaces;
       input = {
         kb_layout = "dk";
         follow_mouse = true;
