@@ -28,7 +28,6 @@
     ../../../hosts/common/optional/programs/libreoffice.nix
 
     ../../../home/common/optional/stylix
-    ../../../home/common/optional/desktops/qt.nix
     # ../../home/common/optional/desktops/gtk.nix
 
     ../../common/optional/hyprland.nix

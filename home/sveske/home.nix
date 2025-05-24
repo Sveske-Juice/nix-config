@@ -14,6 +14,7 @@
 
     ../common/optional/desktops/services/dunst.nix
     ../common/optional/desktops/gtk.nix
+    ../common/optional/desktops/qt.nix
 
     ../common/optional/desktops/tofi.nix
     ../common/optional/desktops/wlogout.nix
