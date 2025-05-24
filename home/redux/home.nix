@@ -31,7 +31,7 @@
   hyprlandSpec = {
     monitors = [
       "HDMI-A-1, preffered, 0x0, 1"
-      "DP-3, preffered, auto, 2"
+      "DP-3, preffered, auto, 1.5"
       ", preffered, auto, 1" # plug in random monitors
     ];
   };
