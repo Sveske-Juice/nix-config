@@ -23,7 +23,7 @@
     ../common/optional/programs/librewolf.nix
 
     ../common/optional/desktops/hyprland
-    (import ../common/optional/desktops/waybar { barSpec = config.barSpec; })
+    (import ../common/optional/desktops/waybar { inherit lib; barSpec = config.barSpec; })
 
     ./sops.nix
   ];

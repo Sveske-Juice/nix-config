@@ -1,4 +1,5 @@
 {
+  lib,
   barSpec,
   ...
 }: {
@@ -25,7 +26,7 @@
         "cpu"
         "memory"
         "temperature"
-        "battery"
+        (lib.optionalString barSpec.battery "battery")
         "clock"
         "custom/powermenu"
       ];
