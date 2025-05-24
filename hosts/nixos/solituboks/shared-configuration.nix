@@ -27,7 +27,6 @@
     ../../../hosts/common/optional/programs/dolphin.nix
 
     ../../../home/common/optional/stylix
-    ../../../home/common/optional/desktops/qt.nix
 
     ../../common/optional/hyprland.nix
 

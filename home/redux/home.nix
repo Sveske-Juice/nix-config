@@ -14,6 +14,7 @@
 
     ../common/optional/desktops/services/dunst.nix
     ../common/optional/desktops/gtk.nix
+    ../common/optional/desktops/qt.nix
 
     ../common/optional/desktops/tofi.nix
     ../common/optional/desktops/wlogout.nix
@@ -35,6 +36,8 @@
       ", preffered, auto, 1" # plug in random monitors
     ];
     workspaces = [
+      "1, monitor:DP-3"
+      "2, monitor:DP-3"
       "3, monitor:HDMI-A-1"
     ];
   };

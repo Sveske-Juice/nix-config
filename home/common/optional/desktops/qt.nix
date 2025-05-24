@@ -1,6 +1,5 @@
 {
   lib,
-  config,
   pkgs,
   ...
 }:
@@ -24,14 +23,9 @@
 }
 */
 {
-  # idk why nothing works
   qt = {
     enable = true;
-    style = lib.mkForce "gtk2";
-    platformTheme = lib.mkForce "gtk2";
+    style.name = lib.mkForce "gtk2";
+    style.package = pkgs.libsForQt5.qtstyleplugins;
   };
-  environment.systemPackages = with pkgs; [
-    libsForQt5.qtstyleplugins
-    #other stuff
-  ];
 }
