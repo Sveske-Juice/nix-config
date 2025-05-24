@@ -29,8 +29,9 @@ in {
     settings = {
       devices = builtins.trace deviceIds deviceIds;
       gui = {
-        user = "test";
-        password = "$2b$05$DTs1vYGpJnO3NMA3JyfCaudoi8.vfUuB0D4pfZOoXi69m5s/HXIiK";
+        user = config.hostSpec.username;
+        # TODO: once password file PR is merged use sops-nix
+        password = "$2b$05$3CAJfvW.hPw9l76.D0HLTu39YoSgdyoLg66zvicutMGzdP.99jUna";
       };
     };
   };

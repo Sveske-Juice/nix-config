@@ -63,12 +63,12 @@
           "$mod, E, exec, thunar"
           "$mod SHIFT, S, exec, grimblast --freeze copy area"
           "$mod SHIFT, E, exec, hyprctl dispatch exit"
-          "$mod, V, exec, cliphist list | tofi | cliphist decode | wl-copy"
+          "$mod, C, exec, cliphist list | tofi | cliphist decode | wl-copy"
           "$mod, P, exec, hyprpicker -a | wl-copy" # Hex -> clipboard
 
           # Window Management
           "$mod, Q, killactive"
-          "$mod SHIFT, V, togglefloating"
+          "$mod, V, togglefloating"
           "$mod, F, fullscreen"
 
           "$mod, H, movefocus, l"

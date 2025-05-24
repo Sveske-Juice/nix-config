@@ -1,4 +1,0 @@
-{
-  name = "sussybox";
-  value = {id = "3KS2XFI-4GT3RJU-R5EJKFD-XKIJ2SO-EHGH35R-MT4YFDK-SF7SF34-KBCRJAM";};
-}

@@ -7,15 +7,15 @@
   idFiles = lib.attrNames (builtins.readDir ./devices);
   deviceIds = builtins.listToAttrs (map (file: import (./devices + "/${file}")) idFiles);
 in {
-  # sops.secrets."syncthing/certpem" = {
-  #   owner = config.services.syncthing.user;
-  #   group = config.services.syncthing.group;
-  # };
-  #
-  # sops.secrets."syncthing/keypem" = {
-  #   owner = config.services.syncthing.user;
-  #   group = config.services.syncthing.group;
-  # };
+  sops.secrets."syncthing/certpem" = {
+    owner = config.services.syncthing.user;
+    group = config.services.syncthing.group;
+  };
+
+  sops.secrets."syncthing/keypem" = {
+    owner = config.services.syncthing.user;
+    group = config.services.syncthing.group;
+  };
 
   services.syncthing = {
     enable = true;
@@ -31,7 +31,7 @@ in {
       gui = {
         user = config.hostSpec.username;
         # TODO: once password file PR is merged use sops-nix
-        password = "$2b$05$DTs1vYGpJnO3NMA3JyfCaudoi8.vfUuB0D4pfZOoXi69m5s/HXIiK";
+        password = "$2b$05$I0ofnse7HEEVqyvgjwD3FOLGiXHbobSUURvud3iR3z6LKi461puyS";
       };
     };
   };
