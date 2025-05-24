@@ -223,7 +223,7 @@ if [[ $(sops -d "$hostname_sops_secret_file" | yq ".age-keys") != "null" ]]; the
     sops set "$hostname_sops_secret_file" "[\"age-keys\"]" "{\"$target_user\": \"$private_user_age_key\"}"
 else
     decrypted=$(sops -d "$hostname_sops_secret_file")
-    decrypted+=$(echo -e "\nage-keys:\n  age-key: ${private_user_age_key}")
+    decrypted+=$(echo -e "\nage-keys:\n  $target_user: ${private_user_age_key}")
     echo "${decrypted}" > $hostname_sops_secret_file
     # re-encrypt
     encrypted=$(sops encrypt "$hostname_sops_secret_file")
