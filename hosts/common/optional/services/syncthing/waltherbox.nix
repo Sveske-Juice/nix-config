@@ -24,12 +24,13 @@ in {
     guiAddress = "0.0.0.0:${toString guiPort}";
     overrideDevices = true;
     overrideFolders = true;
+    # Wait for: https://github.com/NixOS/nixpkgs/issues/244059
     cert = config.sops.secrets."syncthing/certpem".path;
     key = config.sops.secrets."syncthing/keypem".path;
     settings = {
-      devices = builtins.trace deviceIds deviceIds;
+      devices = deviceIds;
       gui = {
-        user = "admin";
+        user = config.hostSpec.username;
         password = "$2a$10$GQACCCfDo.BOWCh3nwL4C.PbP220YtqUwStGhgXRIxfjusCmIF4sy";
       };
     };
