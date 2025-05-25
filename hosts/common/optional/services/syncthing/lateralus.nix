@@ -27,10 +27,10 @@ in {
     user = config.hostSpec.username;
     group = config.users.users.${config.hostSpec.username}.group;
     # Wait for: https://github.com/NixOS/nixpkgs/issues/244059
-    # cert = config.sops.secrets."syncthing/certpem".path;
-    # key = config.sops.secrets."syncthing/keypem".path;
+    cert = config.sops.secrets."syncthing/certpem".path;
+    key = config.sops.secrets."syncthing/keypem".path;
     settings = {
-      devices = builtins.trace deviceIds deviceIds;
+      devices = deviceIds;
       gui = {
         user = config.hostSpec.username;
         # TODO: once password file PR is merged use sops-nix
