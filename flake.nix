@@ -2,8 +2,8 @@
   description = "Flake for my NixOS configurations and programs";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    #nixpkgs.url = "github:Sveske-Juice/nixpkgs/update-syncthing";
+    # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:Sveske-Juice/nixpkgs/update-syncthing";
 
     home-manager = {
       url = "github:nix-community/home-manager";

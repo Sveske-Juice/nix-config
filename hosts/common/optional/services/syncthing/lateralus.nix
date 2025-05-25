@@ -23,9 +23,9 @@ in {
     guiAddress = "127.0.0.1:${toString guiPort}";
     overrideDevices = true;
     overrideFolders = true;
-    dataDir = "/home/sveske";
-    user = "sveske";
-    group = "users";
+    dataDir = config.hostSpec.home;
+    user = config.hostSpec.username;
+    group = config.users.users.${config.hostSpec.username}.group;
     # Wait for: https://github.com/NixOS/nixpkgs/issues/244059
     # cert = config.sops.secrets."syncthing/certpem".path;
     # key = config.sops.secrets."syncthing/keypem".path;
