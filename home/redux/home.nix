@@ -57,6 +57,7 @@
     mpv
     keepassxc
     kooha
+    obsidian
 
     wl-clipboard
     libnotify
@@ -64,6 +65,7 @@
     python3
     blender
   ];
+  nixpkgs.config.allowUnfree = true;
 
   stylix.targets.waybar.enable = false;
   stylix.targets.neovim.enable = false;

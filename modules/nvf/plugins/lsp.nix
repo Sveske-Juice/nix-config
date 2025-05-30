@@ -10,6 +10,7 @@
       # Languages
       nix.enable = true;
       bash.enable = true;
+      svelte.enable = true;
 
       python.enable = true;
       ts.enable = true;
