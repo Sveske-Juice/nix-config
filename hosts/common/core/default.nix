@@ -1,29 +1,42 @@
-{lib, ...}: {
-  imports = [
-    ./en_dk.nix
-    ./host-spec.nix
-    ./tmux.nix
-    ./sops.nix
-  ];
+{
+    lib,
+    pkgs,
+    ...
+}: {
+    imports = [
+        ./en_dk.nix
+        ./host-spec.nix
+        ./tmux.nix
+        ./sops.nix
+    ];
 
-  # Automatic GC
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 30d";
-  };
+    # Automatic GC
+    nix.gc = {
+        automatic = true;
+        dates = "weekly";
+        options = "--delete-older-than 30d";
+    };
 
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+    environment.systemPackages = [
+        pkgs.dotnetCorePackages.dotnet_9.sdk # required for omnisharp
+    ];
 
-  nixpkgs.config.allowBroken = true;
-  nixpkgs.config.allowUnfree = true;
+    # https://nixos.wiki/wiki/DotNET
+    environment.sessionVariables = {
+        DOTNET_ROOT = "${pkgs.dotnetCorePackages.dotnet_9.sdk}/share/dotnet";
+    };
 
-  security.sudo.extraConfig = ''
-    Defaults lecture = never # rollback results in sudo lectures after each reboot, it's somewhat useless anyway
-    Defaults pwfeedback # password input feedback - makes typed password visible as asterisks
-    Defaults timestamp_timeout=120 # only ask for password every 2h
-  '';
+    nix.settings.experimental-features = ["nix-command" "flakes"];
 
-  # Takes forever on rebuild, don't need it
-  documentation.man.generateCaches = false;
+    nixpkgs.config.allowBroken = true;
+    nixpkgs.config.allowUnfree = true;
+
+    security.sudo.extraConfig = ''
+        Defaults lecture = never # rollback results in sudo lectures after each reboot, it's somewhat useless anyway
+        Defaults pwfeedback # password input feedback - makes typed password visible as asterisks
+        Defaults timestamp_timeout=120 # only ask for password every 2h
+    '';
+
+    # Takes forever on rebuild, don't need it
+    documentation.man.generateCaches = false;
 }

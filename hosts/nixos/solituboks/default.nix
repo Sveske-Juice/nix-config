@@ -11,4 +11,6 @@
     ../../common/optional/drivers/amdgpu.nix
     ./disko.nix
   ];
+
+  programs.nix-ld.enable = true;
 }
