@@ -11,8 +11,10 @@
     "Stuen"
     "Alexander"
     "Christopher"
-    "guacamole"
+    "Kathrine"
     "gags5"
+    "guacamole"
+    "alex"
   ];
 
   # Set `HashedPasswordFile` foreach user
@@ -32,12 +34,6 @@ in {
     pkgs.jellyfin-ffmpeg
   ];
 
-  services.jellyfin = {
-    enable = true;
-    openFirewall = true;
-    group = group;
-  };
-
   # AMD VA-API and VDPAU should work out of the box with mesa
   hardware.graphics.enable = true;
   users.users.${config.services.jellyfin.user}.extraGroups = ["video" "render"];
@@ -52,11 +48,10 @@ in {
     })
     jellyfinUsers);
 
-  system.activationScripts.create-db.deps = ["setupSecrets"];
-
   # DECLARATIVE-JELLYFIN
   services.declarative-jellyfin = {
     enable = true;
+    inherit group;
     system = {
       IsStartupWizardCompleted = true;
       TrickplayOptions = {
@@ -79,10 +74,23 @@ in {
             IsAdministrator = true;
           };
         };
+        "gags5" = {
+          Permissions.EnableAllFolders = false;
+          Preferences.EnabledLibraries = [ "Movies" "Shows" ];
+        };
+        "guacamole" = {
+          Permissions.EnableAllFolders = false;
+          Preferences.EnabledLibraries = [ "Movies" "Shows" ];
+        };
+        "alex" = {
+          Permissions.EnableAllFolders = false;
+          Preferences.EnabledLibraries = [ "Movies" "Shows" ];
+        };
       };
     libraries = {
       "Movies" = {
         Enabled = true;
+        ContentType = "movies";
         PathInfos = ["/data/Movies"];
         EnableChapterImageExtraction = true;
         ExtractChapterImagesDuringLibraryScan = true;
@@ -92,7 +100,18 @@ in {
       };
       "Shows" = {
         Enabled = true;
+        ContentType = "tvshows";
         PathInfos = ["/data/Shows"];
+        EnableChapterImageExtraction = true;
+        ExtractChapterImagesDuringLibraryScan = true;
+        EnableTrickplayImageExtraction = true;
+        ExtractTrickplayImagesDuringLibraryScan = true;
+        SaveTrickplayWithMedia = true;
+      };
+      "Photos" = {
+        Enabled = true;
+        ContentType = "homevideos";
+        PathInfos = ["/data/Photos"];
         EnableChapterImageExtraction = true;
         ExtractChapterImagesDuringLibraryScan = true;
         EnableTrickplayImageExtraction = true;
