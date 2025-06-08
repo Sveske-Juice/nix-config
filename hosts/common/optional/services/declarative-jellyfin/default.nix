@@ -61,6 +61,7 @@ in {
         EnableHwAcceleration = true;
         EnableHwEncoding = true;
       };
+      UICulture = "da"; # danish
     };
     Users =
       pkgs.lib.recursiveUpdate hashedPasswordDefinitions

@@ -39,6 +39,7 @@
     ../../common/optional/services/syncthing/waltherbox.nix
 
     ../../common/optional/services/deprived-site.nix
+    ../../common/optional/services/shadowsocks.nix
 
     ../../common/optional/services/declarative-jellyfin
 
