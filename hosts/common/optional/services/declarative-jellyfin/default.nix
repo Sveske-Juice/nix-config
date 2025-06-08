@@ -28,6 +28,7 @@ in {
     inputs.declarative-jellyfin.nixosModules.default
   ];
 
+
   environment.systemPackages = [
     pkgs.jellyfin
     pkgs.jellyfin-web
@@ -46,7 +47,9 @@ in {
         group = config.services.jellyfin.group;
       };
     })
-    jellyfinUsers);
+    jellyfinUsers) // {
+    "jellyfin/jellyseerr-api-key" = {};
+  };
 
   # DECLARATIVE-JELLYFIN
   services.declarative-jellyfin = {
@@ -133,6 +136,9 @@ in {
         "vp9"
         "av1"
       ];
+    };
+    apikeys = {
+      Jellyseerr.keyPath = config.sops.secrets."jellyfin/jellyseerr-api-key".path;
     };
   };
 
