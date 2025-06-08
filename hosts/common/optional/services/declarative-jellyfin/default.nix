@@ -6,24 +6,25 @@
 }: let
   group = "data";
   jellyfinUsers = [
-    "CasdAdmin"
-    "Benjamin"
-    "Stuen"
-    "Alexander"
-    "Christopher"
-    "Kathrine"
-    "gags5"
-    "guacamole"
-    "alex"
+    # "CasdAdmin"
+    # "Benjamin"
+    # "Stuen"
+    # "Alexander"
+    # "Christopher"
+    # "Kathrine"
+    # "gags5"
+    # "guacamole"
+    # "alex"
   ];
 
   # Set `HashedPasswordFile` foreach user
   hashedPasswordDefinitions = builtins.listToAttrs (map (user: {
       name = "${user}";
-      value = {HashedPasswordFile = config.sops.secrets."jellyfin/${user}".path;};
+      value = {hashedPasswordFile = config.sops.secrets."jellyfin/${user}".path;};
     })
     jellyfinUsers);
 in {
+  users.groups.data = {};
   imports = [
     inputs.declarative-jellyfin.nixosModules.default
   ];
@@ -56,80 +57,81 @@ in {
     enable = true;
     inherit group;
     system = {
-      IsStartupWizardCompleted = true;
-      TrickplayOptions = {
-        EnableHwAcceleration = true;
-        EnableHwEncoding = true;
+      isStartupWizardCompleted = true;
+      trickplayOptions = {
+        enableHwAcceleration = true;
+        enableHwEncoding = true;
       };
       UICulture = "da"; # danish
     };
-    Users =
+    users =
       pkgs.lib.recursiveUpdate hashedPasswordDefinitions
       {
         CasdAdmin = {
-          Mutable = false;
-          Permissions = {
-            IsAdministrator = true;
+          mutable = false;
+          permissions = {
+            isAdministrator = true;
           };
+          password = "1234";
         };
-        Benjamin = {
-          Mutable = false;
-          Permissions = {
-            IsAdministrator = true;
-          };
-        };
-        "gags5" = {
-          Permissions.EnableAllFolders = false;
-          Preferences.EnabledLibraries = [ "Movies" "Shows" ];
-        };
-        "guacamole" = {
-          Permissions.EnableAllFolders = false;
-          Preferences.EnabledLibraries = [ "Movies" "Shows" ];
-        };
-        "alex" = {
-          Permissions.EnableAllFolders = false;
-          Preferences.EnabledLibraries = [ "Movies" "Shows" ];
-        };
+        # Benjamin = {
+        #   mutable = false;
+        #   permissions = {
+        #     isAdministrator = true;
+        #   };
+        # };
+        # "gags5" = {
+        #   permissions.enableAllFolders = false;
+        #   preferences.enabledLibraries = [ "Movies" "Shows" ];
+        # };
+        # "guacamole" = {
+        #   permissions.enableAllFolders = false;
+        #   preferences.enabledLibraries = [ "Movies" "Shows" ];
+        # };
+        # "alex" = {
+        #   permissions.enableAllFolders = false;
+        #   preferences.enabledLibraries = [ "Movies" "Shows" ];
+        # };
       };
     libraries = {
       "Movies" = {
-        Enabled = true;
-        ContentType = "movies";
-        PathInfos = ["/data/Movies"];
-        EnableChapterImageExtraction = true;
-        ExtractChapterImagesDuringLibraryScan = true;
-        EnableTrickplayImageExtraction = true;
-        ExtractTrickplayImagesDuringLibraryScan = true;
-        SaveTrickplayWithMedia = true;
+        enabled = true;
+        contentType = "movies";
+        pathInfos = ["/data/Movies"];
+        enableChapterImageExtraction = true;
+        extractChapterImagesDuringLibraryScan = true;
+        enableTrickplayImageExtraction = true;
+        extractTrickplayImagesDuringLibraryScan = true;
+        saveTrickplayWithMedia = true;
       };
       "Shows" = {
-        Enabled = true;
-        ContentType = "tvshows";
-        PathInfos = ["/data/Shows"];
-        EnableChapterImageExtraction = true;
-        ExtractChapterImagesDuringLibraryScan = true;
-        EnableTrickplayImageExtraction = true;
-        ExtractTrickplayImagesDuringLibraryScan = true;
-        SaveTrickplayWithMedia = true;
+        enabled = true;
+        contentType = "tvshows";
+        pathInfos = ["/data/Shows"];
+        enableChapterImageExtraction = true;
+        extractChapterImagesDuringLibraryScan = true;
+        enableTrickplayImageExtraction = true;
+        extractTrickplayImagesDuringLibraryScan = true;
+        saveTrickplayWithMedia = true;
       };
       "Photos" = {
-        Enabled = true;
-        ContentType = "homevideos";
-        PathInfos = ["/data/Photos"];
-        EnableChapterImageExtraction = true;
-        ExtractChapterImagesDuringLibraryScan = true;
-        EnableTrickplayImageExtraction = true;
-        ExtractTrickplayImagesDuringLibraryScan = true;
-        SaveTrickplayWithMedia = true;
+        enabled = true;
+        contentType = "homevideos";
+        pathInfos = ["/data/Photos"];
+        enableChapterImageExtraction = true;
+        extractChapterImagesDuringLibraryScan = true;
+        enableTrickplayImageExtraction = true;
+        extractTrickplayImagesDuringLibraryScan = true;
+        saveTrickplayWithMedia = true;
       };
     };
     encoding = {
-      EnableHardwareEncoding = true;
-      HardwareAccelerationType = "vaapi";
-      EnableDecodingColorDepth10Hevc = true;
-      AllowHevcEncoding = true;
-      AllowAv1Encoding = true;
-      HardwareDecodingCodecs = [
+      enableHardwareEncoding = true;
+      hardwareAccelerationType = "vaapi";
+      enableDecodingColorDepth10Hevc = true;
+      allowHevcEncoding = true;
+      allowAv1Encoding = true;
+      hardwareDecodingCodecs = [
         "h264"
         "hevc"
         "mpeg2video"
