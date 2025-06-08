@@ -21,8 +21,6 @@ in {
     enable = true;
     openDefaultPorts = true;
     guiAddress = "127.0.0.1:${toString guiPort}";
-    overrideDevices = true;
-    overrideFolders = true;
     dataDir = config.hostSpec.home;
     user = config.hostSpec.username;
     group = config.users.users.${config.hostSpec.username}.group;

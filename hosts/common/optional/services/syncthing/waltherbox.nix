@@ -23,7 +23,6 @@ in {
     openDefaultPorts = true;
     guiAddress = "0.0.0.0:${toString guiPort}";
     overrideDevices = true;
-    overrideFolders = true;
     # Wait for: https://github.com/NixOS/nixpkgs/issues/244059
     cert = config.sops.secrets."syncthing/certpem".path;
     key = config.sops.secrets."syncthing/keypem".path;
