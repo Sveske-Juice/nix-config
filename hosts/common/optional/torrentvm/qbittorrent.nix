@@ -1,7 +1,10 @@
-{ config, lib, pkgs, ... }:
-
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-
 let
   cfg = config.services.qbittorrent;
   UID = 888;
@@ -62,9 +65,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    networking.firewall = mkIf cfg.openFirewall {
-      allowedTCPPorts = [ cfg.port ];
-    };
+    networking.firewall = mkIf cfg.openFirewall { allowedTCPPorts = [ cfg.port ]; };
 
     systemd.services.qbittorrent = {
       # based on the plex.nix service module and
@@ -81,17 +82,18 @@ in
 
         # Run the pre-start script with full permissions (the "!" prefix) so it
         # can create the data directory if necessary.
-        ExecStartPre = let
-          preStartScript = pkgs.writeScript "qbittorrent-run-prestart" ''
-            #!${pkgs.bash}/bin/bash
+        ExecStartPre =
+          let
+            preStartScript = pkgs.writeScript "qbittorrent-run-prestart" ''
+              #!${pkgs.bash}/bin/bash
 
-            # Create data directory if it doesn't exist
-            if ! test -d "$QBT_PROFILE"; then
-              echo "Creating initial qBittorrent data directory in: $QBT_PROFILE"
-              install -d -m 0755 -o "${cfg.user}" -g "${cfg.group}" "$QBT_PROFILE"
-            fi
-         '';
-        in
+              # Create data directory if it doesn't exist
+              if ! test -d "$QBT_PROFILE"; then
+                echo "Creating initial qBittorrent data directory in: $QBT_PROFILE"
+                install -d -m 0755 -o "${cfg.user}" -g "${cfg.group}" "$QBT_PROFILE"
+              fi
+            '';
+          in
           "!${preStartScript}";
 
         #ExecStart = "${pkgs.qbittorrent-nox}/bin/qbittorrent-nox";
@@ -104,8 +106,8 @@ in
       };
 
       environment = {
-        QBT_PROFILE=cfg.dataDir;
-        QBT_WEBUI_PORT=toString cfg.port;
+        QBT_PROFILE = cfg.dataDir;
+        QBT_WEBUI_PORT = toString cfg.port;
       };
     };
 
@@ -117,8 +119,9 @@ in
     };
 
     users.groups = mkIf (cfg.group == "qbittorrent") {
-      qbittorrent = { gid = GID; };
+      qbittorrent = {
+        gid = GID;
+      };
     };
   };
-
 }

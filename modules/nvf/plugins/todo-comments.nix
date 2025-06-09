@@ -1,4 +1,5 @@
-{...}: {
+{ ... }:
+{
   vim.notes.todo-comments = {
     enable = true;
     setupOpts = {
@@ -15,7 +16,12 @@
         FIX = {
           icon = " ";
           color = "error";
-          alt = ["FIXME" "BUG" "FIXIT" "ISSUE"];
+          alt = [
+            "FIXME"
+            "BUG"
+            "FIXIT"
+            "ISSUE"
+          ];
         };
         TODO = {
           icon = " ";
@@ -24,26 +30,47 @@
         HACK = {
           icon = " ";
           color = "warning";
-          alt = ["GARBAGE" "SHIT" "DISGUSTING"];
+          alt = [
+            "GARBAGE"
+            "SHIT"
+            "DISGUSTING"
+          ];
         };
         WARN = {
           icon = " ";
           color = "warning";
-          alt = ["WARNING" "XXX" "BRACEYOURSELF"];
+          alt = [
+            "WARNING"
+            "XXX"
+            "BRACEYOURSELF"
+          ];
         };
         PERF = {
           icon = " ";
-          alt = ["OPTIM" "OPTIMIZE" "PERFORMANCE"];
+          alt = [
+            "OPTIM"
+            "OPTIMIZE"
+            "PERFORMANCE"
+          ];
         };
         NOTE = {
           icon = " ";
           color = "hint";
-          alt = ["INFO" "INFORMATION"];
+          alt = [
+            "INFO"
+            "INFORMATION"
+          ];
         };
         TEST = {
           icon = "⏲ ";
           color = "test";
-          alt = ["TESTING" "PASSED" "PASS" "FAILED" "FAIL"];
+          alt = [
+            "TESTING"
+            "PASSED"
+            "PASS"
+            "FAILED"
+            "FAIL"
+          ];
         };
       };
     };

@@ -3,10 +3,12 @@
   inputs,
   config,
   ...
-}: let
+}:
+let
   passwd = "passwords/${config.hostSpec.username}";
   rootpasswd = "passwords/root";
-in {
+in
+{
   sops.secrets.${passwd}.neededForUsers = true;
   sops.secrets.${rootpasswd}.neededForUsers = true;
   users.mutableUsers = false;

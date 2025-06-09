@@ -1,8 +1,5 @@
+{ pkgs, config, ... }:
 {
-  pkgs,
-  config,
-  ...
-}: {
   programs.git = {
     enable = true;
     package = pkgs.gitFull;
@@ -12,9 +9,7 @@
         name = config.hostSpec.handle;
         email = config.hostSpec.email;
       };
-      safe.directory = [
-        "/etc/nixos"
-      ];
+      safe.directory = [ "/etc/nixos" ];
     };
   };
 }

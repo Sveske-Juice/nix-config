@@ -3,10 +3,9 @@
   pkgs,
   lib,
   ...
-}: {
-  imports = [
-    ./services/msmtp.nix
-  ];
+}:
+{
+  imports = [ ./services/msmtp.nix ];
 
   services.zfs.zed = {
     enableMail = true;
@@ -22,7 +21,7 @@
       ZED_SYSLOG_TAG = "zed";
 
       # Mail
-      ZED_EMAIL_ADDR = ["root"]; # mail to root gets redirected
+      ZED_EMAIL_ADDR = [ "root" ]; # mail to root gets redirected
       ZED_EMAIL_PROG = "${pkgs.msmtp}/bin/sendmail";
       ZED_EMAIL_OPTS = " @ADDRESS@";
     };

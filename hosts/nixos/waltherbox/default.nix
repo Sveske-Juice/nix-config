@@ -4,7 +4,8 @@
   inputs,
   lib,
   ...
-}: {
+}:
+{
   imports = [
     ./shared-configuration.nix
     ./hardware-configuration.nix

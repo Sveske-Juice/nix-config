@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   wayland.windowManager.hyprland.settings.exec = [
     "pkill -f ${pkgs.hyprpaper}/bin/hyprpaper;${pkgs.hyprpaper}/bin/hyprpaper & disown"
   ];

@@ -1,7 +1,12 @@
-{port ? throw "no port", ...}: let
+{
+  port ? throw "no port",
+  ...
+}:
+let
   user = "jackett";
   group = "data";
-in {
+in
+{
   services.jackett = {
     enable = true;
 

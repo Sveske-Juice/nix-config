@@ -1,7 +1,5 @@
+{ lib, ... }:
 {
-  lib,
-  ...
-}: {
   options.barSpec = {
     battery = lib.mkOption {
       type = lib.types.bool;

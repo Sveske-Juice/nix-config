@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   programs.firefox = {
     enable = true;
     package = pkgs.librewolf;
@@ -6,7 +7,10 @@
       DisableTelemetry = true;
       DisableFirefoxStudies = true;
       PasswordManagerEnabled = false; # We have Keepassxc, firefox's password manager is just anoying
-      RequestedLocales = ["da" "en-US"];
+      RequestedLocales = [
+        "da"
+        "en-US"
+      ];
       SearchEngines = {
         Default = "DuckDuckGo";
       };

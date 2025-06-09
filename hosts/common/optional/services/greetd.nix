@@ -3,7 +3,8 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   swayConfig = pkgs.writeText "greetd-sway-config" ''
     exec "${pkgs.greetd.regreet}/bin/regreet; ${pkgs.sway}/bin/swaymsg exit"
     include /etc/sway/config.d/*
@@ -11,10 +12,9 @@
   hyprlandRun = pkgs.writeShellScriptBin "hyprland-run" ''
     dbus-run-session ${pkgs.sway}/bin/sway --unsupported-gpu --config ${swayConfig}
   '';
-in {
-  imports = [
-    ./regreet.nix
-  ];
+in
+{
+  imports = [ ./regreet.nix ];
 
   services.greetd = {
     enable = true;

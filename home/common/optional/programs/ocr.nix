@@ -3,7 +3,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   xdg.desktopEntries.ocr = {
     name = "OCR tesseract";
     exec = "${pkgs.writeScript "ocr" ''

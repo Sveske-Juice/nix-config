@@ -1,11 +1,6 @@
+{ config, pkgs, ... }:
 {
-  config,
-  pkgs,
-  ...
-}: {
-  imports = [
-    ./docker.nix
-  ];
+  imports = [ ./docker.nix ];
 
   sops.secrets.forgejo-registration-token = {
     owner = config.services.forgejo.user;
@@ -20,12 +15,9 @@
         name = "kartoffel";
         url = "http://127.0.0.1:${toString config.services.forgejo.settings.server.HTTP_PORT}";
         tokenFile = config.sops.secrets.forgejo-registration-token.path;
-        labels = [
-          "native:host"
-        ];
+        labels = [ "native:host" ];
         hostPackages = pkgs.lib.attrValues {
-          inherit
-            (pkgs)
+          inherit (pkgs)
             nix
             nodejs
             git
@@ -49,7 +41,7 @@
     };
   };
 
-  system.activationScripts."make-gitea-runner-dir" = pkgs.lib.stringAfter ["var"] ''
+  system.activationScripts."make-gitea-runner-dir" = pkgs.lib.stringAfter [ "var" ] ''
     mkdir -p /var/lib/gitea-runner/
   '';
 }

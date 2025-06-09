@@ -3,7 +3,8 @@
   config,
   hostSpec,
   ...
-}: {
+}:
+{
   imports = [
     # Required
     ../common/core

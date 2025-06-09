@@ -3,11 +3,10 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   # Kernel boot parameters
-  boot.kernelParams = [
-    "quit"
-  ];
+  boot.kernelParams = [ "quit" ];
 
   # Systemd-boot Bootloader.
   boot.loader.systemd-boot.enable = true;

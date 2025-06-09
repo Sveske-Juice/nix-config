@@ -3,7 +3,8 @@
   inputs,
   config,
   ...
-}: let
+}:
+let
   group = "data";
   jellyfinUsers = [
     # "CasdAdmin"
@@ -18,17 +19,18 @@
   ];
 
   # Set `HashedPasswordFile` foreach user
-  hashedPasswordDefinitions = builtins.listToAttrs (map (user: {
+  hashedPasswordDefinitions = builtins.listToAttrs (
+    map (user: {
       name = "${user}";
-      value = {hashedPasswordFile = config.sops.secrets."jellyfin/${user}".path;};
-    })
-    jellyfinUsers);
-in {
-  users.groups.data = {};
-  imports = [
-    inputs.declarative-jellyfin.nixosModules.default
-  ];
-
+      value = {
+        hashedPasswordFile = config.sops.secrets."jellyfin/${user}".path;
+      };
+    }) jellyfinUsers
+  );
+in
+{
+  users.groups.data = { };
+  imports = [ inputs.declarative-jellyfin.nixosModules.default ];
 
   environment.systemPackages = [
     pkgs.jellyfin
@@ -38,19 +40,25 @@ in {
 
   # AMD VA-API and VDPAU should work out of the box with mesa
   hardware.graphics.enable = true;
-  users.users.${config.services.jellyfin.user}.extraGroups = ["video" "render"];
+  users.users.${config.services.jellyfin.user}.extraGroups = [
+    "video"
+    "render"
+  ];
 
   # SOPS -- Extract secrets foreach user
-  sops.secrets = builtins.listToAttrs (map (user: {
-      name = "jellyfin/${user}";
-      value = {
-        owner = config.services.jellyfin.user;
-        group = config.services.jellyfin.group;
-      };
-    })
-    jellyfinUsers) // {
-    "jellyfin/jellyseerr-api-key" = {};
-  };
+  sops.secrets =
+    builtins.listToAttrs (
+      map (user: {
+        name = "jellyfin/${user}";
+        value = {
+          owner = config.services.jellyfin.user;
+          group = config.services.jellyfin.group;
+        };
+      }) jellyfinUsers
+    )
+    // {
+      "jellyfin/jellyseerr-api-key" = { };
+    };
 
   # DECLARATIVE-JELLYFIN
   services.declarative-jellyfin = {
@@ -64,40 +72,38 @@ in {
       };
       UICulture = "da"; # danish
     };
-    users =
-      pkgs.lib.recursiveUpdate hashedPasswordDefinitions
-      {
-        CasdAdmin = {
-          mutable = false;
-          permissions = {
-            isAdministrator = true;
-          };
-          password = "1234";
+    users = pkgs.lib.recursiveUpdate hashedPasswordDefinitions {
+      CasdAdmin = {
+        mutable = false;
+        permissions = {
+          isAdministrator = true;
         };
-        # Benjamin = {
-        #   mutable = false;
-        #   permissions = {
-        #     isAdministrator = true;
-        #   };
-        # };
-        # "gags5" = {
-        #   permissions.enableAllFolders = false;
-        #   preferences.enabledLibraries = [ "Movies" "Shows" ];
-        # };
-        # "guacamole" = {
-        #   permissions.enableAllFolders = false;
-        #   preferences.enabledLibraries = [ "Movies" "Shows" ];
-        # };
-        # "alex" = {
-        #   permissions.enableAllFolders = false;
-        #   preferences.enabledLibraries = [ "Movies" "Shows" ];
-        # };
+        password = "1234";
       };
+      # Benjamin = {
+      #   mutable = false;
+      #   permissions = {
+      #     isAdministrator = true;
+      #   };
+      # };
+      # "gags5" = {
+      #   permissions.enableAllFolders = false;
+      #   preferences.enabledLibraries = [ "Movies" "Shows" ];
+      # };
+      # "guacamole" = {
+      #   permissions.enableAllFolders = false;
+      #   preferences.enabledLibraries = [ "Movies" "Shows" ];
+      # };
+      # "alex" = {
+      #   permissions.enableAllFolders = false;
+      #   preferences.enabledLibraries = [ "Movies" "Shows" ];
+      # };
+    };
     libraries = {
       "Movies" = {
         enabled = true;
         contentType = "movies";
-        pathInfos = ["/data/Movies"];
+        pathInfos = [ "/data/Movies" ];
         enableChapterImageExtraction = true;
         extractChapterImagesDuringLibraryScan = true;
         enableTrickplayImageExtraction = true;
@@ -107,7 +113,7 @@ in {
       "Shows" = {
         enabled = true;
         contentType = "tvshows";
-        pathInfos = ["/data/Shows"];
+        pathInfos = [ "/data/Shows" ];
         enableChapterImageExtraction = true;
         extractChapterImagesDuringLibraryScan = true;
         enableTrickplayImageExtraction = true;
@@ -117,7 +123,7 @@ in {
       "Photos" = {
         enabled = true;
         contentType = "homevideos";
-        pathInfos = ["/data/Photos"];
+        pathInfos = [ "/data/Photos" ];
         enableChapterImageExtraction = true;
         extractChapterImagesDuringLibraryScan = true;
         enableTrickplayImageExtraction = true;

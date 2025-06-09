@@ -1,6 +1,8 @@
-{config, ...}: let
+{ config, ... }:
+let
   port = 5232;
-in {
+in
+{
   sops.secrets.radicale-htpasswd = {
     owner = "radicale";
   };
@@ -9,7 +11,10 @@ in {
     enable = true;
     settings = {
       server = {
-        hosts = ["0.0.0.0:${toString port}" "[::]:${toString port}"];
+        hosts = [
+          "0.0.0.0:${toString port}"
+          "[::]:${toString port}"
+        ];
       };
       auth = {
         type = "htpasswd";
@@ -32,5 +37,5 @@ in {
     };
   };
 
-  networking.firewall.allowedTCPPorts = [port];
+  networking.firewall.allowedTCPPorts = [ port ];
 }

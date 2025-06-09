@@ -3,10 +3,9 @@
   config,
   pkgs,
   ...
-}: {
-  imports = [
-    inputs.sops-nix.nixosModules.sops
-  ];
+}:
+{
+  imports = [ inputs.sops-nix.nixosModules.sops ];
 
   environment.systemPackages = with pkgs; [
     sops
@@ -22,7 +21,7 @@
       # Generate the age key from the ssh host key
       # This generated age key was added to the list
       # of valid age keys in the bootstrap script
-      sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
+      sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
       keyFile = "/var/lib/sops-nix/key.txt";
       generateKey = true;
     };
@@ -51,12 +50,11 @@
   # Generate the primary user's public ssh key if the private exists
   system.activationScripts = {
     genUserPublicSSHKey = {
-      text = let
-        keyPath = "${config.hostSpec.home}/.ssh/id_ed25519";
-      in
-        /*
-        bash
-        */
+      text =
+        let
+          keyPath = "${config.hostSpec.home}/.ssh/id_ed25519";
+          # bash
+        in
         ''
           # Make sure there is a private key
           if [ -f "${keyPath}" ]; then
@@ -69,12 +67,14 @@
 
   # The containing folders are created as root in the .config dir
   # so we need to change the perms
-  system.activationScripts.sopsSetAgeKeyOwnership = let
-    ageFolder = "${config.hostSpec.home}/.config/sops/age";
-    user = config.users.users.${config.hostSpec.username}.name;
-    group = config.users.users.${config.hostSpec.username}.group;
-  in ''
-    mkdir -p ${ageFolder} || true
-    chown -R ${user}:${group} ${config.hostSpec.home}/.config
-  '';
+  system.activationScripts.sopsSetAgeKeyOwnership =
+    let
+      ageFolder = "${config.hostSpec.home}/.config/sops/age";
+      user = config.users.users.${config.hostSpec.username}.name;
+      group = config.users.users.${config.hostSpec.username}.group;
+    in
+    ''
+      mkdir -p ${ageFolder} || true
+      chown -R ${user}:${group} ${config.hostSpec.home}/.config
+    '';
 }

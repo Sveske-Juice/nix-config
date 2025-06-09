@@ -1,4 +1,5 @@
-{lib, ...}: {
+{ lib, ... }:
+{
   imports = [
     ./mini.nix
     ./telescope.nix

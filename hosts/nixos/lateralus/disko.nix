@@ -3,8 +3,8 @@
   root-disk ? throw "no root disk",
   swap-size ? -1,
   ...
-}: {
-  
+}:
+{
   disko.devices = {
     disk = {
       main = {
@@ -20,7 +20,7 @@
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
-                mountOptions = ["umask=0077"];
+                mountOptions = [ "umask=0077" ];
               };
             };
             swap = lib.mkIf (swap-size != -1) {

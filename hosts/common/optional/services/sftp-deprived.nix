@@ -1,7 +1,9 @@
-{...}: let
+{ ... }:
+let
   jailDir = "/srv/ssh/jail/deprived";
-in {
-  users.groups.sftponly = {};
+in
+{
+  users.groups.sftponly = { };
   users.users.deprivedslave = {
     home = "/srv/ssh/jail/deprived";
     createHome = false;

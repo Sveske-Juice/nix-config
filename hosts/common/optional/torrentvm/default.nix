@@ -1,5 +1,4 @@
-{...}: {
-  imports = [
-    ./microvm.nix
-  ];
+{ ... }:
+{
+  imports = [ ./microvm.nix ];
 }

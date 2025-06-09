@@ -1,6 +1,7 @@
-{config, ...}: {
+{ config, ... }:
+{
   # Extract secret
-  sops.secrets."msmtp/gmail" = {};
+  sops.secrets."msmtp/gmail" = { };
 
   programs.msmtp = {
     enable = true;

@@ -1,12 +1,10 @@
-{pkgs, ...}: let
+{ pkgs, ... }:
+let
   port = 56565;
-in {
-  imports = [
-    ./gitea-actions-runner.nix
-  ];
-  environment.systemPackages = with pkgs; [
-    util-linux
-  ];
+in
+{
+  imports = [ ./gitea-actions-runner.nix ];
+  environment.systemPackages = with pkgs; [ util-linux ];
   services.forgejo = {
     enable = true;
 

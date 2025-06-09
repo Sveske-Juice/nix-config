@@ -5,7 +5,8 @@
   lib,
   config,
   ...
-}: {
+}:
+{
   imports = [
     # Required
     ../../common/core
@@ -21,7 +22,9 @@
 
     (import ../../common/optional/torrentvm)
 
-    (import ../../common/optional/networking-shared.nix {hostname = config.hostSpec.hostName;})
+    (import ../../common/optional/networking-shared.nix {
+      hostname = config.hostSpec.hostName;
+    })
 
     ../../common/optional/neovim.nix
 

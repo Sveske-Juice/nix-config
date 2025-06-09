@@ -2,11 +2,13 @@
   vm-index ? throw "no index",
   pkgs,
   ...
-}: let
+}:
+let
   mac = "00:00:00:00:00:01";
   vpnendpoint = "placeholder";
   host = "10.0.0.1";
-in {
+in
+{
   networking.useNetworkd = true;
   networking.wireguard.enable = true;
 
@@ -35,9 +37,9 @@ in {
 
   systemd.services."start-wireguard" = {
     description = "Start wireguard mullvad";
-    after = ["network-online.target"];
-    wants = ["network-online.target"];
-    wantedBy = ["multi-user.target"];
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
 
     serviceConfig = {
       type = "oneshot";
@@ -59,7 +61,7 @@ in {
   systemd.network.networks."10-eth" = {
     matchConfig.MACAddress = mac;
     # This VM's local ip
-    address = ["10.0.0.${toString vm-index}/24"];
+    address = [ "10.0.0.${toString vm-index}/24" ];
 
     # The default route goes through the VPN endpoint
     # meaning that if the vpn server or a config error
@@ -102,9 +104,7 @@ in {
     };
   };
 
-  users.users.root.openssh.authorizedKeys.keys = [
-    (builtins.readFile ../../keys/id_walther.pub)
-  ];
+  users.users.root.openssh.authorizedKeys.keys = [ (builtins.readFile ../../keys/id_walther.pub) ];
 
   services.openssh = {
     enable = true;

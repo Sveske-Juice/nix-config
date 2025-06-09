@@ -1,4 +1,5 @@
-{lib, ...}: {
+{ lib, ... }:
+{
   options.hyprlandSpec = {
     monitors = lib.mkOption {
       type = lib.types.listOf lib.types.str;
@@ -7,7 +8,7 @@
     };
     workspaces = lib.mkOption {
       type = lib.types.listOf lib.types.str;
-      default = [];
+      default = [ ];
       description = "Workspaces hyprland config";
     };
   };

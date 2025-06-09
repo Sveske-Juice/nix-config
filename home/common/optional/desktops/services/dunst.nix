@@ -3,7 +3,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   services.dunst = {
     enable = true;
     settings = {
@@ -32,7 +33,9 @@
 
         sort = "yes";
 
-        format = "<b>%s</b>\n%b";
+        format = ''
+          <b>%s</b>
+          %b'';
 
         alignment = "right";
         vertical_alignment = "center";
@@ -44,17 +47,19 @@
       };
       "[spotify-album-art-waybar]" = {
         appname = "Spotify";
-        script = builtins.toString (pkgs.writeShellScript "album_art.sh" ''
-          #!/bin/bash
-          album_art=$(${pkgs.playerctl}/bin/playerctl -p spotify metadata mpris:artUrl)
-          if [[ -z $album_art ]]
-          then
-              # spotify is dead, we should die too.
-              exit
-          fi
-          ${pkgs.curl}/bin/curl -s  "''${album_art}" --output "/dev/stdout"
-          #echo "/tmp/cover.jpeg"
-        '');
+        script = builtins.toString (
+          pkgs.writeShellScript "album_art.sh" ''
+            #!/bin/bash
+            album_art=$(${pkgs.playerctl}/bin/playerctl -p spotify metadata mpris:artUrl)
+            if [[ -z $album_art ]]
+            then
+                # spotify is dead, we should die too.
+                exit
+            fi
+            ${pkgs.curl}/bin/curl -s  "''${album_art}" --output "/dev/stdout"
+            #echo "/tmp/cover.jpeg"
+          ''
+        );
       };
     };
   };

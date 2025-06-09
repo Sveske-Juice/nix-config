@@ -3,7 +3,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   stylix.fonts = {
     serif = {
       package = pkgs.dejavu_fonts;

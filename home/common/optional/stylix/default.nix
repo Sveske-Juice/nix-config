@@ -3,10 +3,9 @@
   config,
   pkgs,
   ...
-}: {
-  imports = [
-    ./fonts.nix
-  ];
+}:
+{
+  imports = [ ./fonts.nix ];
 
   stylix.enable = true;
   stylix.image = ../../../../wallpapers/wallhaven-l8x1pr.jpg;

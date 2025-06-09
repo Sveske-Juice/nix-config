@@ -1,4 +1,5 @@
-{...}: {
+{ ... }:
+{
   vim.options = {
     termguicolors = true;
     relativenumber = true;

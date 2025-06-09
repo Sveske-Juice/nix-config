@@ -1,6 +1,8 @@
-{...}: let
+{ ... }:
+let
   port = 3000;
-in {
+in
+{
   imports = [
     ./nginx.nix
     ./prometheus.nix
@@ -22,6 +24,6 @@ in {
       recommendedProxySettings = true;
     };
   };
-  networking.firewall.allowedTCPPorts = [port];
-  networking.firewall.allowedUDPPorts = [port];
+  networking.firewall.allowedTCPPorts = [ port ];
+  networking.firewall.allowedUDPPorts = [ port ];
 }

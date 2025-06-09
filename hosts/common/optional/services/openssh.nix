@@ -1,4 +1,5 @@
-{...}: {
+{ ... }:
+{
   services.openssh = {
     enable = true;
     settings = {
@@ -7,7 +8,7 @@
       AllowUsers = null;
       PermitRootLogin = "no";
     };
-    banner = '''';
+    banner = "";
 
     # Generate RSA key. Ed25519 key comes from sops
     hostKeys = [

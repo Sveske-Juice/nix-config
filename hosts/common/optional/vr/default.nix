@@ -1,15 +1,10 @@
+{ inputs, pkgs, ... }:
 {
-  inputs,
-  pkgs,
-  ...
-}: {
   environment.systemPackages = with pkgs; [
     monado-vulkan-layers
     opencomposite
   ];
-  imports = [
-    inputs.nixpkgs-xr.nixosModules.nixpkgs-xr
-  ];
+  imports = [ inputs.nixpkgs-xr.nixosModules.nixpkgs-xr ];
 
   services.wivrn = {
     enable = true;

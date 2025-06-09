@@ -5,7 +5,8 @@
   config,
   hostSpec,
   ...
-}: {
+}:
+{
   imports = [
     # Required
     ../common/core/default.nix
@@ -23,8 +24,14 @@
     ../common/optional/programs/ocr.nix
     ../common/optional/programs/librewolf.nix
 
-    (import ../common/optional/desktops/hyprland { inherit pkgs; inherit (config) hyprlandSpec; })
-    (import ../common/optional/desktops/waybar { inherit lib; inherit (config) barSpec; })
+    (import ../common/optional/desktops/hyprland {
+      inherit pkgs;
+      inherit (config) hyprlandSpec;
+    })
+    (import ../common/optional/desktops/waybar {
+      inherit lib;
+      inherit (config) barSpec;
+    })
 
     ./sops.nix
   ];
@@ -44,7 +51,10 @@
 
   barSpec = {
     battery = false;
-    displayDevices = [ "DP-3" "HDMI-A-1" ];
+    displayDevices = [
+      "DP-3"
+      "HDMI-A-1"
+    ];
   };
 
   home.username = hostSpec.username;
@@ -70,10 +80,7 @@
   stylix.targets.waybar.enable = false;
   stylix.targets.neovim.enable = false;
 
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [
-      "spotify"
-    ];
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "spotify" ];
 
   home.sessionVariables = {
     EDITOR = "vim";

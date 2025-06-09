@@ -1,21 +1,21 @@
 {
   pkgs,
   root-disk ? throw "Expected a mf disk brother",
-  raid-disks ? [],
+  raid-disks ? [ ],
   swap-size ? -1,
   ...
-}: let
+}:
+let
   lib = pkgs.lib;
-in {
+in
+{
   imports = [
     ./zed.nix # Notification daemon
   ];
 
   boot.zfs.devNodes = "/dev/disk/by-path";
 
-  environment.systemPackages = with pkgs; [
-    zfs
-  ];
+  environment.systemPackages = with pkgs; [ zfs ];
 
   disko.devices = {
     disk =
@@ -33,7 +33,7 @@ in {
                   type = "filesystem";
                   format = "vfat";
                   mountpoint = "/boot";
-                  mountOptions = ["umask=0077"];
+                  mountOptions = [ "umask=0077" ];
                 };
               };
               swap = lib.mkIf (swap-size != -1) {
@@ -137,7 +137,7 @@ in {
   # it's to stop both zfs and systemd of trying
   # to mount /data, see here:
   # https://github.com/nix-community/disko/issues/581
-  fileSystems."/data".options = ["noauto"];
+  fileSystems."/data".options = [ "noauto" ];
 
   # HACK: For some reason `raid5` is not auto-imported,
   # see here:
@@ -147,10 +147,10 @@ in {
     ${pkgs.zfs}/bin/zpool import -fa
   '';
 
-  users.groups.data = {};
+  users.groups.data = { };
 
   system.activationScripts."datadir" = {
-    deps = ["importzfs"];
+    deps = [ "importzfs" ];
     text = ''
       chgrp -R data /data
       chmod -R u=rwx,g=rwx,o= /data

@@ -1,7 +1,6 @@
-{...}: {
-  imports = [
-    ./fidget.nix
-  ];
+{ ... }:
+{
+  imports = [ ./fidget.nix ];
   vim = {
     languages = {
       enableLSP = true;

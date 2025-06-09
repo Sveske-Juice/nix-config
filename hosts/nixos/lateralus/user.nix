@@ -4,10 +4,12 @@
   inputs,
   config,
   ...
-}: let
+}:
+let
   passwd = "passwords/${config.hostSpec.username}";
   rootpasswd = "passwords/root";
-in {
+in
+{
   sops.secrets.${passwd}.neededForUsers = true;
   sops.secrets.${rootpasswd}.neededForUsers = true;
   users.mutableUsers = false;
@@ -25,7 +27,12 @@ in {
   users.users.${config.hostSpec.username} = {
     isNormalUser = true;
     hashedPasswordFile = config.sops.secrets.${passwd}.path;
-    extraGroups = ["networkmanager" "wheel" "audio" "libvirtd"];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "audio"
+      "libvirtd"
+    ];
     shell = pkgs.fish;
   };
 

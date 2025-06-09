@@ -1,8 +1,5 @@
+{ inputs, pkgs, ... }:
 {
-  inputs,
-  pkgs,
-  ...
-}: {
   home.packages = with pkgs; [
     monado-vulkan-layers
     opencomposite
@@ -10,9 +7,7 @@
     openxr-loader
     wlx-overlay-s
   ];
-  imports = [
-    inputs.nixpkgs-xr.nixosModules.nixpkgs-xr
-  ];
+  imports = [ inputs.nixpkgs-xr.nixosModules.nixpkgs-xr ];
 
   services.monado = {
     enable = true;

@@ -1,12 +1,13 @@
-{
-  pkgs,
-  config,
-  ...
-}: let
-  allowedBranches = ["main" "dev"];
+{ pkgs, config, ... }:
+let
+  allowedBranches = [
+    "main"
+    "dev"
+  ];
   srcUrl = "https://git.deprived.dev/DeprivedDevs/deprived-main-website.git";
-in {
-  users.groups.www = {};
+in
+{
+  users.groups.www = { };
 
   users.users.deprivedbuilder = {
     createHome = true;
@@ -20,92 +21,94 @@ in {
 
   security.sudo.extraRules = [
     {
-      users = ["deprivedbuilder"];
-      commands = pkgs.lib.lists.forEach allowedBranches (
-        branch: {
-          command = "/run/current-system/sw/bin/systemctl start build-deprived-website-${branch}";
-          options = ["SETENV" "NOPASSWD"];
-        }
-      );
+      users = [ "deprivedbuilder" ];
+      commands = pkgs.lib.lists.forEach allowedBranches (branch: {
+        command = "/run/current-system/sw/bin/systemctl start build-deprived-website-${branch}";
+        options = [
+          "SETENV"
+          "NOPASSWD"
+        ];
+      });
     }
   ];
 
   system.activationScripts."www dir" = ''
     mkdir -p /var/www/
     # Create directory for each branch of deprived website
-    ${pkgs.lib.concatStringsSep "\n" (pkgs.lib.lists.forEach allowedBranches (branch: "mkdir -p /var/www/deprived/${branch}"))}
+    ${pkgs.lib.concatStringsSep "\n" (
+      pkgs.lib.lists.forEach allowedBranches (branch: "mkdir -p /var/www/deprived/${branch}")
+    )}
     chown root:www -R /var/www
     chmod 775 -R /var/www
   '';
 
   systemd.services =
-    pkgs.lib.attrsets.genAttrs (pkgs.lib.lists.forEach allowedBranches (branch: "build-deprived-website-${branch}"))
-    (serviceName: {
-      enable = true;
-      wants = ["network-online.target"];
-      after = ["network-online.target"];
-      path = with pkgs; [
-        bash
-        nodejs
-      ];
+    pkgs.lib.attrsets.genAttrs
+      (pkgs.lib.lists.forEach allowedBranches (branch: "build-deprived-website-${branch}"))
+      (serviceName: {
+        enable = true;
+        wants = [ "network-online.target" ];
+        after = [ "network-online.target" ];
+        path = with pkgs; [
+          bash
+          nodejs
+        ];
 
-      serviceConfig = {
-        Type = "oneshot";
-        User = "deprivedbuilder";
-        Group = "www";
-        StandardOutput = "file:/home/deprivedbuilder/latest_build.log";
-        StandardError = "inherit";
+        serviceConfig = {
+          Type = "oneshot";
+          User = "deprivedbuilder";
+          Group = "www";
+          StandardOutput = "file:/home/deprivedbuilder/latest_build.log";
+          StandardError = "inherit";
 
-        RemainAfterExit = false;
-      };
+          RemainAfterExit = false;
+        };
 
-      script =
-        /*
-        bash
-        */
-        ''
-          # Clear log
-          truncate -s 0 /home/deprivedbuilder/latest_build.log
+        script =
+          # bash
+          ''
+            # Clear log
+            truncate -s 0 /home/deprivedbuilder/latest_build.log
 
-          branch=$(echo "${serviceName}" | cut -d'-' -f4)
-          echo "Building branch: $branch"
+            branch=$(echo "${serviceName}" | cut -d'-' -f4)
+            echo "Building branch: $branch"
 
-          # Build project in temp dir and move later
-          tmpdir=$(mktemp -d)
-          trap "rm -rf $tmpdir" exit
-          cd $tmpdir
+            # Build project in temp dir and move later
+            tmpdir=$(mktemp -d)
+            trap "rm -rf $tmpdir" exit
+            cd $tmpdir
 
-          mkdir repo
-          cd repo
-          ${pkgs.git}/bin/git clone ${srcUrl} .
-          ${pkgs.git}/bin/git checkout "$branch"
+            mkdir repo
+            cd repo
+            ${pkgs.git}/bin/git clone ${srcUrl} .
+            ${pkgs.git}/bin/git checkout "$branch"
 
-          HOME=$(mktemp -d) ${pkgs.nodejs}/bin/npm ci --loglevel=verbose
-          ${pkgs.nodejs}/bin/npx ./node_modules/vite build
+            HOME=$(mktemp -d) ${pkgs.nodejs}/bin/npm ci --loglevel=verbose
+            ${pkgs.nodejs}/bin/npx ./node_modules/vite build
 
-          # Move result
-          cp -r build/* "/var/www/deprived/$branch"
-        '';
-    });
+            # Move result
+            cp -r build/* "/var/www/deprived/$branch"
+          '';
+      });
   services.nginx.virtualHosts."deprived.dev" = {
     forceSSL = true;
     enableACME = true;
     locations."/" = {
       root = "/var/www/deprived/main";
       extraConfig = ''
-      # Remove trailing slash
-      rewrite ^/(.*)/$ /$1 permanent;
-      try_files $uri $uri.html $uri/index.html =404;
+        # Remove trailing slash
+        rewrite ^/(.*)/$ /$1 permanent;
+        try_files $uri $uri.html $uri/index.html =404;
       '';
     };
 
     locations."/assets" = {
       root = "/srv/ssh/jail/deprived";
       extraConfig = ''
-          index index.html;
-          autoindex on;
-          autoindex_exact_size on;
-          autoindex_localtime on;
+        index index.html;
+        autoindex on;
+        autoindex_exact_size on;
+        autoindex_localtime on;
       '';
     };
   };

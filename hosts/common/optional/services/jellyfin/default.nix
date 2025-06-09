@@ -1,8 +1,10 @@
-{pkgs, ...}: let
+{ pkgs, ... }:
+let
   # configDir = "jellyfin"; # Relative from /etc/
   # configDirAbsolute = "/etc/${configDir}";
   group = "data";
-in {
+in
+{
   environment.systemPackages = [
     pkgs.jellyfin
     pkgs.jellyfin-web
@@ -24,7 +26,10 @@ in {
   # environment."${configDir}/system.xml".text = builtins.readFile ./system.xml;
   # environment."${configDir}/network.xml".text = builtins.readFile ./network.xml;
 
-  users.users.jellyfin.extraGroups = ["video" "render"];
+  users.users.jellyfin.extraGroups = [
+    "video"
+    "render"
+  ];
 
   # NGINX
   services.nginx.virtualHosts."jellyfin.casdnas.deprived.dev" = {

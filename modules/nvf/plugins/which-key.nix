@@ -1,4 +1,5 @@
-{lib, ...}: {
+{ lib, ... }:
+{
   vim.binds.whichKey = {
     enable = true;
     setupOpts = {

@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   home.packages = [
     pkgs.oh-my-fish # dep for plugins
   ];

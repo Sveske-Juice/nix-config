@@ -1,8 +1,5 @@
+{ pkgs, hyprlandSpec, ... }:
 {
-  pkgs,
-  hyprlandSpec,
-  ...
-}: {
   home.packages = with pkgs; [
     playerctl
     cliphist
@@ -78,19 +75,22 @@
         ]
         ++ (
           # Auto generate workspace switching from [0-9] and shift + [0-9]
-          builtins.concatLists (builtins.genList
-            (
-              x: let
-                ws = let
-                  c = (x + 1) / 10;
-                in
+          builtins.concatLists (
+            builtins.genList (
+              x:
+              let
+                ws =
+                  let
+                    c = (x + 1) / 10;
+                  in
                   builtins.toString (x + 1 - (c * 10));
-              in [
+              in
+              [
                 "$mod, ${ws}, workspace, ${toString (x + 1)}"
                 "$mod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}"
               ]
-            )
-            10)
+            ) 10
+          )
         );
       bindm = [
         "$mod, mouse:272, movewindow"

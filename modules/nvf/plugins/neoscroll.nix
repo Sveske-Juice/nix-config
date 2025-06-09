@@ -1,8 +1,5 @@
+{ config, pkgs, ... }:
 {
-  config,
-  pkgs,
-  ...
-}: {
   config.vim.lazy.plugins = {
     "neoscroll.nvim" = {
       package = pkgs.vimPlugins.neoscroll-nvim;

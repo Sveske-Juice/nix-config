@@ -1,8 +1,5 @@
+{ config, pkgs, ... }:
 {
-  config,
-  pkgs,
-  ...
-}: {
   config.vim = {
     lazy.plugins = {
       "zen-mode.nvim" = {
@@ -11,20 +8,19 @@
         setupOpts = {
           plugins = {
             tmux.enabled = true; # Hide tmux status line
-              todo.enabled = true; # Hide todo highlights (todo-comments.nvim)
+            todo.enabled = true; # Hide todo highlights (todo-comments.nvim)
           };
         };
       };
     };
     keymaps = [
-    {
-      key = "<leader>z";
-      mode = "n";
-      silent = true;
-      action = ":ZenMode<CR>";
-      desc = "Toggle zen-mode";
-    }
+      {
+        key = "<leader>z";
+        mode = "n";
+        silent = true;
+        action = ":ZenMode<CR>";
+        desc = "Toggle zen-mode";
+      }
     ];
   };
-
 }

@@ -1,6 +1,8 @@
-{config, ...}: let
+{ config, ... }:
+let
   port = 9090;
-in {
+in
+{
   services.prometheus = {
     enable = true;
     inherit port;
@@ -8,16 +10,16 @@ in {
     scrapeConfigs = [
       {
         job_name = "prometheus";
-        static_configs = [
-          {
-            targets = ["localhost:${toString port}"];
-          }
-        ];
+        static_configs = [ { targets = [ "localhost:${toString port}" ]; } ];
       }
       {
         job_name = "node";
         static_configs = [
-          {targets = ["localhost:${toString config.services.prometheus.exporters.node.port}"];}
+          {
+            targets = [
+              "localhost:${toString config.services.prometheus.exporters.node.port}"
+            ];
+          }
         ];
       }
     ];
@@ -37,8 +39,11 @@ in {
       "uname"
       "xfs"
     ];
-    enabledCollectors = ["systemd" "processes"];
+    enabledCollectors = [
+      "systemd"
+      "processes"
+    ];
   };
 
-  networking.firewall.allowedTCPPorts = [port];
+  networking.firewall.allowedTCPPorts = [ port ];
 }

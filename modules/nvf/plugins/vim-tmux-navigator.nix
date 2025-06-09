@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   config.vim.lazy.plugins = {
     "vim-tmux-navigator" = {
       package = pkgs.vimPlugins.vim-tmux-navigator;

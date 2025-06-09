@@ -1,8 +1,10 @@
 # Networking configuration for the host
-{lib, ...}: let
+{ lib, ... }:
+let
   maxVMs = 32;
   hostInterface = "enp6s0";
-in {
+in
+{
   networking.useNetworkd = true;
 
   # Create network foreach VM
@@ -14,13 +16,9 @@ in {
       value = {
         matchConfig.Name = "vm${toString index}";
         # Host's addresses
-        address = ["10.0.0.1/32"];
+        address = [ "10.0.0.1/32" ];
         # Routes to the VM
-        routes = [
-          {
-            Destination = "10.0.0.${toString index}/32";
-          }
-        ];
+        routes = [ { Destination = "10.0.0.${toString index}/32"; } ];
 
         networkConfig = {
           IPv4Forwarding = true;
@@ -38,13 +36,13 @@ in {
   networking.nat = {
     enable = true;
     # The new LAN for VMs
-    internalIPs = ["10.0.0.0/24"]; # subnet mask 255.255.255.0
+    internalIPs = [ "10.0.0.0/24" ]; # subnet mask 255.255.255.0
     externalInterface = hostInterface;
   };
 
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [];
-    allowedUDPPortRanges = [];
+    allowedTCPPorts = [ ];
+    allowedUDPPortRanges = [ ];
   };
 }

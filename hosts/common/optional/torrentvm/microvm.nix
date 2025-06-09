@@ -4,7 +4,8 @@
   inputs,
   lib,
   ...
-}: let
+}:
+let
   inherit (inputs) microvm;
   vm-index = 2; # 1 reserved for host 10.0.0.1
   jackettPort = 9117;
@@ -12,7 +13,8 @@
   proto = "virtiofs"; # NOTE: use virtiofs for performance
   internetFacingInterface = "enp6s0";
   peer-port = 65535;
-in {
+in
+{
   # HOST IMPORTS
   imports = [
     microvm.nixosModules.host
@@ -54,10 +56,18 @@ in {
     iptables -t nat -A POSTROUTING -o vm${toString vm-index} -p tcp --dport ${toString transmissionWebPort} -d 10.0.0.${toString vm-index}
   '';
 
-  networking.firewall.allowedTCPPorts = [jackettPort transmissionWebPort peer-port];
-  networking.firewall.allowedUDPPorts = [jackettPort transmissionWebPort peer-port];
+  networking.firewall.allowedTCPPorts = [
+    jackettPort
+    transmissionWebPort
+    peer-port
+  ];
+  networking.firewall.allowedUDPPorts = [
+    jackettPort
+    transmissionWebPort
+    peer-port
+  ];
 
-  users.users.microvm.extraGroups = ["data"];
+  users.users.microvm.extraGroups = [ "data" ];
   users.groups.data.gid = 991;
   microvm.vms.torrentvm.config.users.groups.data = {
     gid = config.users.groups.data.gid;
@@ -97,7 +107,7 @@ in {
           inherit vm-index;
           inherit pkgs;
         })
-        (import ./jackett.nix {port = jackettPort;})
+        (import ./jackett.nix { port = jackettPort; })
         # (import ./transmission.nix { inherit pkgs; inherit peer-port;})
         ./qbittorrent.nix
       ];

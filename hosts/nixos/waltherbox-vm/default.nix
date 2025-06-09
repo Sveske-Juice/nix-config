@@ -4,7 +4,8 @@
   inputs,
   lib,
   ...
-}: {
+}:
+{
   imports = [
     ../waltherbox/shared-configuration.nix
     ../../common/optional/vm-hardware-configuration.nix

@@ -1,8 +1,10 @@
-{pkgs, peer-port, ...}: let
+{ pkgs, peer-port, ... }:
+let
   downloadDir = "/buffer/torrents";
   incompleteDir = "/buffer/torrents/.incomplete";
-in {
-  users.groups.data = {};
+in
+{
+  users.groups.data = { };
   services.transmission = {
     enable = true;
     group = "data";
@@ -18,7 +20,10 @@ in {
       download-queue-enabled = false;
 
       rpc-authentication-required = false;
-      rpc-whitelist = ["10.*.*.*" "192.168.*.*"];
+      rpc-whitelist = [
+        "10.*.*.*"
+        "192.168.*.*"
+      ];
       rpc-bind-address = "0.0.0.0";
       rpc-whitelist-enabled = "1";
     };
@@ -27,5 +32,6 @@ in {
   };
 
   # HACK: workaround for https://github.com/NixOS/nixpkgs/issues/98904#issuecomment-716656576
-  systemd.services.transmission.serviceConfig."BindReadOnlyPaths" = "/run/systemd/resolve/stub-resolv.conf";
+  systemd.services.transmission.serviceConfig."BindReadOnlyPaths" =
+    "/run/systemd/resolve/stub-resolv.conf";
 }

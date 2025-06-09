@@ -1,8 +1,6 @@
 # This file will be included in EVERY user's home manager configuration
+{ pkgs, ... }:
 {
-  pkgs,
-  ...
-}: {
   imports = [
     ./bar-spec.nix
     ./hyprland-spec.nix

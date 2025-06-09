@@ -3,7 +3,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   programs.hyprlock = {
     enable = true;
     settings = {
@@ -20,7 +21,7 @@
         fade_on_empty = false;
         fade_timeout = 4000;
 
-        placeholder_text = "<span foreground=\"##e0def4\">Input Password...</span>";
+        placeholder_text = ''<span foreground="##e0def4">Input Password...</span>'';
         hide_input = false;
         rounding = 0;
 
@@ -38,7 +39,7 @@
 
       label = [
         {
-          text = "cmd[update:1000] echo \"<span>$(date +%H:%M:%S)</span>\"";
+          text = ''cmd[update:1000] echo "<span>$(date +%H:%M:%S)</span>"'';
           color = "rgb(200, 200, 200)";
           font_size = 15;
           font_family = "Noto Sans";

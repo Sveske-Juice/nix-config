@@ -1,5 +1,6 @@
-{...}: {
-  users.groups.www = {};
+{ ... }:
+{
+  users.groups.www = { };
 
   services.nginx = {
     enable = true;
@@ -15,6 +16,12 @@
   security.acme.defaults.email = "carl.benjamin.dreyer@gmail.com";
   security.acme.defaults.group = "www";
 
-  networking.firewall.allowedTCPPorts = [80 443];
-  networking.firewall.allowedUDPPorts = [80 443];
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
+  networking.firewall.allowedUDPPorts = [
+    80
+    443
+  ];
 }

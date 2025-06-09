@@ -3,7 +3,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   home.packages = with pkgs; [
     papirus-folders
     #(tela-icon-theme.override { colorVariants = [ "black" ]; })

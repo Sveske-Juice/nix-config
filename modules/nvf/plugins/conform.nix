@@ -1,15 +1,11 @@
-{
-  config,
-  pkgs,
-  ...
-}:
+{ config, pkgs, ... }:
 {
   vim.keymaps = [
     {
       key = "<leader>f";
       mode = "n";
       silent = true;
-      action = ":lua require(\"conform\").format()<CR>";
+      action = '':lua require("conform").format()<CR>'';
     }
   ];
 

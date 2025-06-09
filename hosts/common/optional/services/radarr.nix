@@ -1,8 +1,10 @@
-{...}: let
+{ ... }:
+let
   user = "radarr";
   group = "data";
-in {
-  users.groups.media.members = [user];
+in
+{
+  users.groups.media.members = [ user ];
 
   services.radarr = {
     enable = true;

@@ -1,8 +1,5 @@
+{ lib, barSpec, ... }:
 {
-  lib,
-  barSpec,
-  ...
-}: {
   programs.waybar = {
     enable = true;
   };
@@ -16,9 +13,7 @@
         "tray"
         "hyprland/workspaces"
       ];
-      modules-center = [
-        "hyprland/window"
-      ];
+      modules-center = [ "hyprland/window" ];
       modules-right = [
         "idle_inhibitor"
         "wireplumber"
@@ -66,7 +61,11 @@
           phone = "";
           portable = "";
           car = "";
-          default = ["" "" ""];
+          default = [
+            ""
+            ""
+            ""
+          ];
         };
       };
       network = {
@@ -89,7 +88,11 @@
         critical-threshold = "50";
         format = "{temperatureC}°C {icon}";
         format-critical = "{temperatureC}°C {icon} ";
-        format-icons = ["" "" ""];
+        format-icons = [
+          ""
+          ""
+          ""
+        ];
       };
       battery = {
         interval = "10";
@@ -104,12 +107,20 @@
         format-charging = " {capacity}%";
         format-plugged = " {capacity}%";
         format-discharging = "{icon}  {capacity}%";
-        format-icons = ["" "" "" "" ""];
+        format-icons = [
+          ""
+          ""
+          ""
+          ""
+          ""
+        ];
       };
       clock = {
         format = "{:%H:%M | %e. %B} ";
         format-alt = "{:%d-%m-%Y}";
-        tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+        tooltip-format = ''
+          <big>{:%Y %B}</big>
+          <tt><small>{calendar}</small></tt>'';
       };
       "custom/powermenu" = {
         on-click = "wlogout";

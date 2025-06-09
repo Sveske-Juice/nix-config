@@ -3,11 +3,11 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   programs.alacritty = {
     enable = true;
-    settings = {
-    };
+    settings = { };
   };
 
   home.sessionVariables = {
