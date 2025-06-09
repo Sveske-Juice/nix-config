@@ -2,7 +2,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   vim.keymaps = [
     {
       key = "<leader>f";
@@ -21,37 +22,40 @@
       };
 
       formatters_by_ft = {
-        lua = ["stylua"];
-        nix = ["alejandra"];
-        python = ["isort" "black"];
-        sh = ["beautysh"];
-        cs = ["astyle"];
-        java = ["astyle"];
-        js = ["prettier"];
-        ts = ["prettier"];
+        lua = [ "stylua" ];
+        nix = [ "nixfmt" ];
+        python = [
+          "isort"
+          "black"
+        ];
+        sh = [ "beautysh" ];
+        cs = [ "astyle" ];
+        java = [ "astyle" ];
+        js = [ "prettier" ];
+        ts = [ "prettier" ];
 
-        c = ["clang-format"];
-        cpp = ["clang-format"];
-        h = ["clang-format"];
-        hpp = ["clang-format"];
+        c = [ "clang-format" ];
+        cpp = [ "clang-format" ];
+        h = [ "clang-format" ];
+        hpp = [ "clang-format" ];
 
         # Markup languages
-        json = ["prettier"];
-        yaml = ["prettier"];
-        html = ["prettier"];
-        css = ["prettier"];
-        md = ["prettier"];
-        tex = ["tex-fmt"];
+        json = [ "prettier" ];
+        yaml = [ "prettier" ];
+        html = [ "prettier" ];
+        css = [ "prettier" ];
+        md = [ "prettier" ];
+        tex = [ "tex-fmt" ];
 
-        just = ["just"];
-        cmake = ["cmake_format"];
+        just = [ "just" ];
+        cmake = [ "cmake_format" ];
       };
-      
+
       # We have to specify the command, otherwise conform
       # doesn't know where to find the formatter executable
       formatters = {
         stylua.command = "${pkgs.stylua}/bin/stylua";
-        alejandra.command = "${pkgs.alejandra}/bin/alejandra";
+        nixfmt.command = "${pkgs.nixfmt-rfc-style}/bin/nixfmt";
         isort.command = "${pkgs.isort}/bin/isort";
         black.command = "${pkgs.black}/bin/black";
         beautysh.command = "${pkgs.beautysh}/bin/beautysh";
