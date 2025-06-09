@@ -59,6 +59,11 @@
       url = "github:nix-community/nixpkgs-xr";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    minimal-tmux = {
+      url = "github:niksingh710/minimal-tmux-status";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -104,7 +109,7 @@
       });
 
       # Custom packages
-      packages = eachSystem {
+      packages."x86_64-linux" = {
         "neovim" =
           (nvf.lib.neovimConfiguration {
             pkgs = nixpkgs.legacyPackages.x86_64-linux;

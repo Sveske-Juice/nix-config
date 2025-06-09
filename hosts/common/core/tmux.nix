@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 let
   # Workaround when neovim gets run as a subprocess (NVF gets run under .nvim-wrapped), see:
   # https://github.com/christoomey/vim-tmux-navigator/issues/418#issuecomment-2527057771
@@ -47,6 +47,12 @@ in
   programs.tmux = {
     enable = true;
     clock24 = true;
+    baseIndex = 1;
+    terminal = "screen-256color";
+    escapeTime = 0;
+    # plugins = with pkgs; [
+    #   { plugin = inputs.minimal-tmux.packages.${pkgs.system}.default; }
+    # ];
     extraConfig = ''
       # Prefix binding
       unbind C-b
@@ -59,6 +65,12 @@ in
       # Clear screen shortcut
       bind C-l send-keys 'C-l'
 
+      set-option -g automatic-rename on
+
+      # Color support
+      set-option -ga terminal-overrides ",alacritty:Tc"
+      set-option -g default-terminal "tmux-256color"
+
       bind-key -n 'C-h' if-shell '${is_vim}/bin/is_vim.sh' 'send-keys C-h' 'select-pane -L'
       bind-key -n 'C-j' if-shell '${is_vim}/bin/is_vim.sh' 'send-keys C-j' 'select-pane -D'
       bind-key -n 'C-k' if-shell '${is_vim}/bin/is_vim.sh' 'send-keys C-k' 'select-pane -U'
@@ -68,6 +80,14 @@ in
       bind-key -T copy-mode-vi 'C-j' select-pane -D
       bind-key -T copy-mode-vi 'C-k' select-pane -U
       bind-key -T copy-mode-vi 'C-l' select-pane -R
+
+      # Theming
+      set -g @minimal-tmux-fg "#101010"
+      set -g @minimal-tmux-bg "#AAAAAA"
+
+      run-shell ${
+        inputs.minimal-tmux.packages.${pkgs.system}.default
+      }/share/tmux-plugins/minimal-tmux-status/minimal.tmux
     '';
   };
 }
