@@ -1,4 +1,4 @@
-{lib, ...}: {
+{lib, pkgs, ...}: {
   imports = [
     ./colorful-menu.nix # Uses treesitter for highlighting completion menu
   ];
@@ -16,11 +16,32 @@
     #   scrollDocsDown = "<C-d>";
     #   scrollDocsUp = "<C-u>";
     # };
+    sourcePlugins.lsp = {
+      enable = true;
+      package = pkgs.vimPlugins.blink-cmp;
+      module = "blink.cmp.sources.lsp";
+    };
+    sourcePlugins.buffer = {
+      enable = true;
+      package = pkgs.vimPlugins.blink-cmp;
+      module = "blink.cmp.sources.buffer";
+    };
+    sourcePlugins.path = {
+      enable = true;
+      package = pkgs.vimPlugins.blink-cmp;
+      module = "blink.cmp.sources.path";
+    };
+    sourcePlugins.emoji.enable = true;
 
     setupOpts = {
       signature.enabled = true;
 
       completion.ghost_text.enabled = true;
+      sources.default = [
+        "lsp"
+        "path"
+        "buffer"
+      ];
 
       # Use colorful-menu
       completion.menu.draw = lib.generators.mkLuaInline /* lua */ '' {
