@@ -25,6 +25,7 @@
     ../../../hosts/common/optional/services/lact.nix
     ../../../hosts/common/optional/services/syncthing/solituboks.nix
     ../../../hosts/common/optional/programs/dolphin.nix
+    ../../../hosts/common/optional/programs/steam.nix
 
     ../../../home/common/optional/stylix
 
