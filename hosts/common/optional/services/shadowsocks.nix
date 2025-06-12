@@ -12,7 +12,7 @@ in
     passwordFile = config.sops.secrets."shadowsocks".path;
     encryptionMethod = "chacha20-ietf-poly1305";
     plugin = "${pkgs.shadowsocks-v2ray-plugin}/bin/v2ray-plugin";
-    pluginOpts = "server;path=/v2ray;host=deprived.dev;tls;cert=/var/lib/acme/deprived.dev/fullchain.pem;key=/var/lib/acme/deprived.dev/key.pem";
+    pluginOpts = "server;path=/postgres;host=deprived.dev;tls;cert=/var/lib/acme/deprived.dev/fullchain.pem;key=/var/lib/acme/deprived.dev/key.pem";
   };
 
   networking.firewall.allowedTCPPorts = [ port ];
