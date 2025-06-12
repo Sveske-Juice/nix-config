@@ -16,7 +16,6 @@
     scrolloff = 8;
 
     updatetime = 50;
-    colorcolumn = "100";
     wrap = false;
 
     hlsearch = false;
