@@ -50,9 +50,13 @@ in
     baseIndex = 1;
     terminal = "screen-256color";
     escapeTime = 0;
-    # plugins = with pkgs; [
-    #   { plugin = inputs.minimal-tmux.packages.${pkgs.system}.default; }
-    # ];
+    plugins = with pkgs; [
+      # { plugin = inputs.minimal-tmux.packages.${pkgs.system}.default; }
+      # {
+      #   plugin = inputs.tmux-sessionx.packages.${pkgs.system}.default;
+      #   extraConfig = '''';
+      # }
+    ];
     extraConfig = ''
       # Prefix binding
       unbind C-b
@@ -85,9 +89,12 @@ in
       set -g @minimal-tmux-fg "#101010"
       set -g @minimal-tmux-bg "#AAAAAA"
 
+      set -g @sessionx-bind 'o'
+
       run-shell ${
         inputs.minimal-tmux.packages.${pkgs.system}.default
       }/share/tmux-plugins/minimal-tmux-status/minimal.tmux
+      run-shell ${inputs.tmux-sessionx.packages.${pkgs.system}.default}/share/tmux-plugins/sessionx/sessionx.tmux
     '';
   };
 }

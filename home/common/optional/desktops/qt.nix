@@ -21,7 +21,7 @@
 {
   qt = {
     enable = true;
-    style.name = lib.mkForce "gtk2";
-    style.package = pkgs.libsForQt5.qtstyleplugins;
+    style.name = lib.mkForce "adwaita-dark";
+    style.package = pkgs.adwaita-qt;
   };
 }

@@ -74,6 +74,8 @@
     grimblast
     python3
     blender
+    gimp
+    obs-studio
   ];
   nixpkgs.config.allowUnfree = true;
 
@@ -86,6 +88,6 @@
     EDITOR = "vim";
   };
 
-  home.stateVersion = "24.05";
+  home.stateVersion = "24.11";
   programs.home-manager.enable = true;
 }
