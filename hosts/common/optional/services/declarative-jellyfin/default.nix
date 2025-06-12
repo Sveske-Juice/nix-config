@@ -7,15 +7,16 @@
 let
   group = "data";
   jellyfinUsers = [
-    # "CasdAdmin"
-    # "Benjamin"
-    # "Stuen"
-    # "Alexander"
-    # "Christopher"
-    # "Kathrine"
-    # "gags5"
-    # "guacamole"
-    # "alex"
+    "CasdAdmin"
+    "Benjamin"
+    "Stuen"
+    "Alexander"
+    "Christopher"
+    "Kathrine"
+    "gags5"
+    "guacamole"
+    "alex"
+    "rams"
   ];
 
   # Set `HashedPasswordFile` foreach user
@@ -64,6 +65,7 @@ in
   services.declarative-jellyfin = {
     enable = true;
     inherit group;
+    serverId = "50549af6c9344827a98a0dc85e0a1c97";
     system = {
       isStartupWizardCompleted = true;
       trickplayOptions = {
@@ -78,26 +80,29 @@ in
         permissions = {
           isAdministrator = true;
         };
-        password = "1234";
       };
-      # Benjamin = {
-      #   mutable = false;
-      #   permissions = {
-      #     isAdministrator = true;
-      #   };
-      # };
-      # "gags5" = {
-      #   permissions.enableAllFolders = false;
-      #   preferences.enabledLibraries = [ "Movies" "Shows" ];
-      # };
-      # "guacamole" = {
-      #   permissions.enableAllFolders = false;
-      #   preferences.enabledLibraries = [ "Movies" "Shows" ];
-      # };
-      # "alex" = {
-      #   permissions.enableAllFolders = false;
-      #   preferences.enabledLibraries = [ "Movies" "Shows" ];
-      # };
+      Benjamin = {
+        mutable = false;
+        permissions = {
+          isAdministrator = true;
+        };
+      };
+      "gags5" = {
+        permissions.enableAllFolders = false;
+        preferences.enabledLibraries = [ "Movies" "Shows" ];
+      };
+      "rams" = {
+        permissions.enableAllFolders = false;
+        preferences.enabledLibraries = [ "Movies" "Shows" ];
+      };
+      "guacamole" = {
+        permissions.enableAllFolders = false;
+        preferences.enabledLibraries = [ "Movies" "Shows" ];
+      };
+      "alex" = {
+        permissions.enableAllFolders = false;
+        preferences.enabledLibraries = [ "Movies" "Shows" ];
+      };
     };
     libraries = {
       "Movies" = {
