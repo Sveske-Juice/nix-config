@@ -8,6 +8,12 @@
     enable = true;
     shellAbbrs = {
       "nrb" = "sudo nixos-rebuild switch --flake /etc/nixos";
+
+      "gp" = "git push";
+      "gu" = "git pull";
+      "gc" = "git commit -m";
+      "ga" = "git add";
+      "gs" = "git status";
     };
 
     interactiveShellInit = ''
