@@ -20,6 +20,11 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
+  boot.kernelParams = [
+    "video=DP-3:3840x2160@60"
+    "video=HDMI-A-1:1920x1080@60"
+  ];
+
   fileSystems."/data/primary" = {
     label = "SUSBOX";
     fsType = "ext4";
