@@ -35,8 +35,9 @@
 
     ../../common/optional/git.nix
     ../../common/optional/neovim.nix
+    ../../common/optional/adb.nix
 
-    ../../../hosts/common/optional/services/ollama.nix
+    # ../../../hosts/common/optional/services/ollama.nix
 
     ./user.nix
     ./boot.nix
