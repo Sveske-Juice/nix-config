@@ -89,19 +89,31 @@ in
       };
       "gags5" = {
         permissions.enableAllFolders = false;
-        preferences.enabledLibraries = [ "Movies" "Shows" ];
+        preferences.enabledLibraries = [
+          "Movies"
+          "Shows"
+        ];
       };
       "rams" = {
         permissions.enableAllFolders = false;
-        preferences.enabledLibraries = [ "Movies" "Shows" ];
+        preferences.enabledLibraries = [
+          "Movies"
+          "Shows"
+        ];
       };
       "guacamole" = {
         permissions.enableAllFolders = false;
-        preferences.enabledLibraries = [ "Movies" "Shows" ];
+        preferences.enabledLibraries = [
+          "Movies"
+          "Shows"
+        ];
       };
       "alex" = {
         permissions.enableAllFolders = false;
-        preferences.enabledLibraries = [ "Movies" "Shows" ];
+        preferences.enabledLibraries = [
+          "Movies"
+          "Shows"
+        ];
       };
     };
     libraries = {

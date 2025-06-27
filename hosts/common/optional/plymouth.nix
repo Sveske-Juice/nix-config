@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   stylix.targets.plymouth.enable = false;
 
   boot = {
@@ -29,4 +30,3 @@
     loader.timeout = 0;
   };
 }
-

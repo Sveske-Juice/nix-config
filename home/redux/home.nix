@@ -6,6 +6,9 @@
   hostSpec,
   ...
 }:
+let
+  scaling = 1.5;
+in
 {
   imports = [
     # Required
@@ -36,10 +39,20 @@
     ./sops.nix
   ];
 
+  xresources.extraConfig = ''
+    Xft.dpi: ${toString (builtins.floor (96 * scaling))}
+    Xft.autohint: 0
+    Xft.lcdfilter:  lcddefault
+    Xft.hintstyle:  hintfull
+    Xft.hinting: 1
+    Xft.antialias: 1
+    Xft.rgba: rgb
+  '';
+
   hyprlandSpec = {
     monitors = [
       "HDMI-A-1, preffered, 0x0, 1"
-      "DP-3, preffered, auto, 1.5"
+      "DP-3, preffered, auto, ${toString scaling}"
       ", preffered, auto, 1" # plug in random monitors
     ];
     workspaces = [
@@ -70,6 +83,7 @@
     obsidian
 
     wl-clipboard
+
     libnotify
     grimblast
     python3

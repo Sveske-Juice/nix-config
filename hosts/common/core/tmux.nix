@@ -94,7 +94,9 @@ in
       run-shell ${
         inputs.minimal-tmux.packages.${pkgs.system}.default
       }/share/tmux-plugins/minimal-tmux-status/minimal.tmux
-      run-shell ${inputs.tmux-sessionx.packages.${pkgs.system}.default}/share/tmux-plugins/sessionx/sessionx.tmux
+      run-shell ${
+        inputs.tmux-sessionx.packages.${pkgs.system}.default
+      }/share/tmux-plugins/sessionx/sessionx.tmux
     '';
   };
 }
