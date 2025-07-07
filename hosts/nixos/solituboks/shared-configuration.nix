@@ -28,6 +28,7 @@
     ../../../hosts/common/optional/programs/dolphin.nix
     ../../../hosts/common/optional/programs/steam.nix
     ../../../hosts/common/optional/programs/wine.nix
+    ../../../hosts/common/optional/programs/thunderbird.nix
 
     ../../../home/common/optional/stylix
 
