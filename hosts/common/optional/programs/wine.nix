@@ -3,5 +3,6 @@
     winetricks
     protontricks
     wineWowPackages.waylandFull
+    protonup-qt
   ];
 }

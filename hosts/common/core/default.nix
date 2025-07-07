@@ -15,12 +15,12 @@
   };
 
   environment.systemPackages = [
-    pkgs.dotnetCorePackages.dotnet_9.sdk # required for omnisharp
+    pkgs.dotnetCorePackages.dotnet_8.sdk # required for omnisharp
   ];
 
   # https://nixos.wiki/wiki/DotNET
   environment.sessionVariables = {
-    DOTNET_ROOT = "${pkgs.dotnetCorePackages.dotnet_9.sdk}/share/dotnet";
+    DOTNET_ROOT = "${pkgs.dotnetCorePackages.dotnet_8.sdk}/share/dotnet";
   };
 
   nix.settings.experimental-features = [
