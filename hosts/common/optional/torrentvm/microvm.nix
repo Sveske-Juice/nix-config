@@ -40,7 +40,10 @@ in
     # Allow VM to reach the internet without an established connection
     iptables -t nat -A POSTROUTING -o ${internetFacingInterface} -j MASQUERADE
 
-    # NAT
+    # ---- NAT -----
+    # DNS
+    # iptables -t nat -A POSTROUTING -p udp --dport 53 -s 10.0.0.${toString vm-index} ${internetFacingInterface} -j MASQUERADE
+
     # peers
     iptables -t nat -A PREROUTING -i ${internetFacingInterface} -p tcp --dport ${toString peer-port} -j DNAT --to-destination 10.0.0.${toString vm-index}
     iptables -t nat -A POSTROUTING -o vm${toString vm-index} -p tcp --dport ${toString peer-port} -d 10.0.0.${toString vm-index}
@@ -60,11 +63,13 @@ in
     jackettPort
     transmissionWebPort
     peer-port
+    53
   ];
   networking.firewall.allowedUDPPorts = [
     jackettPort
     transmissionWebPort
     peer-port
+    53
   ];
 
   users.users.microvm.extraGroups = [ "data" ];
@@ -80,7 +85,7 @@ in
     config = {
       system.stateVersion = "24.11";
 
-      microvm.mem = 1024;
+      microvm.mem = 2000;
       microvm.vcpu = 2;
 
       time.timeZone = "Europe/Copenhagen";

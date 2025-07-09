@@ -5,6 +5,7 @@
   ...
 }:
 let
+  language = "da";
   group = "data";
   jellyfinUsers = [
     "CasdAdmin"
@@ -121,16 +122,19 @@ in
         enabled = true;
         contentType = "movies";
         pathInfos = [ "/data/Movies" ];
+        preferredMetadataLanguage = language;
         enableChapterImageExtraction = true;
         extractChapterImagesDuringLibraryScan = true;
         enableTrickplayImageExtraction = true;
         extractTrickplayImagesDuringLibraryScan = true;
         saveTrickplayWithMedia = true;
+
       };
       "Shows" = {
         enabled = true;
         contentType = "tvshows";
         pathInfos = [ "/data/Shows" ];
+        preferredMetadataLanguage = language;
         enableChapterImageExtraction = true;
         extractChapterImagesDuringLibraryScan = true;
         enableTrickplayImageExtraction = true;
