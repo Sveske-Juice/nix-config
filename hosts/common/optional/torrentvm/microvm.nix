@@ -114,15 +114,19 @@ in
         })
         (import ./jackett.nix { port = jackettPort; })
         # (import ./transmission.nix { inherit pkgs; inherit peer-port;})
-        ./qbittorrent.nix
+        # ./qbittorrent.nix
       ];
 
       services.qbittorrent = {
         enable = true;
         openFirewall = true;
         group = "data";
-        dataDir = "/buffer";
-        port = transmissionWebPort;
+        profileDir = "/buffer";
+        webuiPort = transmissionWebPort;
+        serverConfig = {
+          LegalNotice.Accepted = true;
+        };
+        extraArgs = [ "--confirm-legal-notice" ];
       };
 
       microvm.shares = [
