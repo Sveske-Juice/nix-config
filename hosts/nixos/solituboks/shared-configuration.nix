@@ -3,6 +3,7 @@
   lib,
   pkgs,
   inputs,
+  config,
   ...
 }:
 {
@@ -29,6 +30,7 @@
     ../../../hosts/common/optional/programs/steam.nix
     ../../../hosts/common/optional/programs/wine.nix
     ../../../hosts/common/optional/programs/thunderbird.nix
+    ../../../hosts/common/optional/programs/mullvad-vpn.nix
 
     ../../../home/common/optional/stylix
 
@@ -38,6 +40,13 @@
     ../../common/optional/git.nix
     ../../common/optional/neovim.nix
     ../../common/optional/adb.nix
+
+    (import ../../../hosts/common/optional/deploy-gpg.nix {
+      sopsKeyPath = "gpg/key";
+      sopsPasswdPath = "gpg/passwd";
+      inherit pkgs;
+      inherit config;
+    })
 
     # ../../../hosts/common/optional/services/ollama.nix
 
