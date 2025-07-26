@@ -63,7 +63,7 @@
     email = "carl.benjamin.dreyer@gmail.com";
     domain = "deprived.dev";
     userFullName = "Sveske Juice";
-    publicGPGKey = "16358F10F6704AA1A632178A455EA929B0BAD0EB";
+    publicGPGKey = "B84B7BB6657C51049AFDA0D944BD32B6FA3B5DB0";
   };
 
   # kernel
