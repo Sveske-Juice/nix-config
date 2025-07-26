@@ -30,6 +30,10 @@
       type = lib.types.str;
       description = "The handle of the user (eg: github user)";
     };
+    publicGPGKey = lib.mkOption {
+      type = lib.types.str;
+      description = "The public GPG key of the user";
+    };
     home = lib.mkOption {
       type = lib.types.str;
       description = "The home directory of the user";
