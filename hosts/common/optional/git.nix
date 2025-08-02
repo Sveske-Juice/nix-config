@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+lib,
   ...
 }:
 {
@@ -12,11 +13,11 @@
       user = {
         name = config.hostSpec.handle;
         email = config.hostSpec.email;
-        signingkey = config.hostSpec.publicGPGKey;
+        signingkey = lib.mkIf (config.hostSpec.publicGPGKey != null) config.hostSpec.publicGPGKey;
       };
       safe.directory = [ "/etc/nixos" ];
       commit = {
-        gpgsign = true;
+        gpgsign = lib.mkIf (config.hostSpec.publicGPGKey != null) true;
       };
 
       core = {
