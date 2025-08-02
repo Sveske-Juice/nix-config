@@ -24,7 +24,7 @@ in
   # PORT FORWARDING
   # See:
   # https://github.com/NixOS/nixpkgs/issues/28721
-  networking.firewall.extraCommands = lib.mkForce ''
+  networking.firewall.extraCommands = ''
     # By default don't forward anything, unless explicitly accepted
     iptables -P FORWARD DROP
     # Accept new connection requests

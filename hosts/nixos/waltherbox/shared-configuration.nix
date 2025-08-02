@@ -46,6 +46,7 @@
     ../../common/optional/services/shadowsocks.nix
 
     ../../common/optional/services/declarative-jellyfin
+    ../../common/optional/services/wireguard/wireguard-server.nix
 
     # Waltherbox specifics
     ./user.nix

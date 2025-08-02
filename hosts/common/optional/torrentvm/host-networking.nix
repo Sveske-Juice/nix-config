@@ -29,9 +29,9 @@ in
 
   # HACK: For some reason nnetworking.nat.enable does not correctly
   # setup NAT so we add this mf
-  networking.firewall.extraCommands = ''
-    sudo iptables -t nat -A POSTROUTING -s 10.0.0.2 -o ${hostInterface} -j MASQUERADE
-  '';
+  # networking.firewall.extraCommands = ''
+  #   sudo iptables -t nat -A POSTROUTING -s 10.0.0.2 -o ${hostInterface} -j MASQUERADE
+  # '';
 
   networking.nat = {
     enable = true;
