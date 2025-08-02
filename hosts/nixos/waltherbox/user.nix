@@ -46,5 +46,7 @@ in
   users.extraUsers.${config.hostSpec.username}.openssh.authorizedKeys.keys = [
     (builtins.readFile ../../common/keys/id_sveske.pub)
     (builtins.readFile ../../common/keys/id_redux.pub)
+    (builtins.readFile ../../common/keys/id_pixel8a.pub)
   ];
 }
+
