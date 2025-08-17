@@ -10,6 +10,7 @@
     isNormalUser = true;
     useDefaultShell = false;
     openssh.authorizedKeys.keys = [
+      (builtins.readFile ../../keys/id_botserver.pub)
       (builtins.readFile ../../keys/id_botserverroot.pub)
       (builtins.readFile ../../keys/id_redux.pub)
     ];
