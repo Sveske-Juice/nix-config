@@ -20,6 +20,8 @@ in
       (builtins.readFile ../../keys/id_botalex.pub)
       (builtins.readFile ../../keys/id_botlap.pub)
       (builtins.readFile ../../keys/id_pixel8a.pub)
+      (builtins.readFile ../../keys/id_botmain.pub)
+      (builtins.readFile ../../keys/id_botlap_nixos.pub)
     ];
   };
   system.activationScripts."createslavehome" = ''
