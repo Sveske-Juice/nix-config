@@ -6,6 +6,8 @@
     hyprpicker
   ];
   imports = [
+    ./apps/steam.nix
+
     ./exec.nix
     ./hyprlock.nix
     ./hypridle.nix

@@ -31,6 +31,7 @@ in
       "networkmanager"
       "wheel"
       "audio"
+      "libvirt"
     ];
     shell = pkgs.fish;
   };

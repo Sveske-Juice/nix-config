@@ -7,7 +7,7 @@
   ...
 }:
 let
-  scaling = 1.5;
+  scaling = 1.666667;
 in
 {
   imports = [
@@ -26,6 +26,8 @@ in
     ../common/optional/programs/spicetify.nix
     ../common/optional/programs/ocr.nix
     ../common/optional/programs/librewolf.nix
+
+    ../common/optional/programs/lutris.nix
 
     (import ../common/optional/desktops/hyprland {
       inherit pkgs;
@@ -49,6 +51,9 @@ in
     Xft.rgba: rgb
   '';
 
+  home.sessionVariables = {
+    GDK_SCALE = (toString scaling);
+  };
   hyprlandSpec = {
     monitors = [
       "HDMI-A-1, preffered, 0x0, 1"
@@ -68,6 +73,12 @@ in
       "DP-3"
       "HDMI-A-1"
     ];
+  };
+  dconf.settings = {
+    "org/virt-manager/virt-manager/connections" = {
+      autoconnect = [ "qemu:///system" ];
+      uris = [ "qemu:///system" ];
+    };
   };
 
   home.username = hostSpec.username;
