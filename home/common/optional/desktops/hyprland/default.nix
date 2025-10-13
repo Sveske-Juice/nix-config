@@ -58,14 +58,20 @@
         follow_mouse = true;
         touchpad.natural_scroll = true;
       };
+      dwindle = {
+        preserve_split = true;
+      };
       "$mod" = "super";
       bind =
         [
-          "$mod, Return, exec, alacritty"
+          "$mod, Return, exec, uwsm app -- ${pkgs.alacritty}/bin/alacritty"
+          "$mod, G, layoutmsg, togglesplit"
           "$mod, D, exec, tofi-drun | /bin/sh"
-          "$mod, E, exec, thunar"
+          "$mod, E, exec, uwsm app -- ${pkgs.nautilus}/bin/nautilus"
+          "$mod, B, exec, uwsm app -- ${pkgs.librewolf}/bin/librewolf"
+          "$mod SHIFT, B, exec, uwsm app -- ${pkgs.librewolf}/bin/librewolf --private-window"
           "$mod SHIFT, S, exec, ${pkgs.hyprshot}/bin/hyprshot -m region --raw | ${pkgs.satty}/bin/satty --filename - --early-exit --actions-on-enter save-to-clipboard --copy-command 'wl-copy'"
-          "$mod SHIFT, E, exec, hyprctl dispatch exit"
+          "$mod SHIFT, E, exec, uswm stop"
           "$mod, C, exec, cliphist list | tofi | cliphist decode | wl-copy"
           "$mod, P, exec, hyprpicker -a | wl-copy" # Hex -> clipboard
           "$mod, Z, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle; notify-send \"$(wpctl get-volume @DEFAULT_AUDIO_SOURCE@)\""
