@@ -1,11 +1,15 @@
-{ lib, barSpec, ... }:
+{
+  pkgs,
+  barSpec,
+  ...
+}:
 {
   programs.waybar = {
     enable = true;
   };
   programs.waybar.settings = {
     mainBar = {
-      height = 30;
+      height = 26;
       layer = "top";
       position = "top";
       output = barSpec.displayDevices;
@@ -13,16 +17,13 @@
         "tray"
         "hyprland/workspaces"
       ];
-      modules-center = [ "hyprland/window" ];
+      modules-center = [ "clock" ];
       modules-right = [
         "idle_inhibitor"
         "wireplumber"
         "network"
         "cpu"
-        "memory"
-        "temperature"
-        (lib.optionalString barSpec.battery "battery")
-        "clock"
+        (pkgs.lib.optionalString barSpec.battery "battery")
         "custom/powermenu"
       ];
       tray = {
@@ -50,10 +51,10 @@
       };
       wireplumber = {
         on-click = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; # Toggle mute
-        on-click-right = "pwvucontrol";
+        on-click-right = "${pkgs.pwvucontrol}/bin/pwvucontrol";
         reverse-scrolling = "1";
-        format = "{volume}% {icon} ";
-        format-muted = "{volume}%  ";
+        format = "{icon} ";
+        format-muted = " ";
         format-icons = {
           headphone = "";
           hands-free = "";
@@ -69,15 +70,17 @@
         };
       };
       network = {
-        format-wifi = "   {essid} ({signalStrength}%)";
-        format-ethernet = "{ipaddr}/{cidr} ";
+        justify = "center";
+        format-wifi = " ";
+        format-ethernet = " ";
         tooltip-format = "{ifname} via {gwaddr}";
         format-linked = "{ifname} (No IP)";
-        format-disconnected = "Disconnected ⚠";
+        format-disconnected = "󰖪 ";
       };
       cpu = {
-        format = "  {}%";
+        format = " ";
         tooltip = "true";
+        on-click = "$TERMINAL -e btop";
       };
       memory = {
         format = "  {}%";
@@ -116,8 +119,8 @@
         ];
       };
       clock = {
-        format = "{:%H:%M | %e. %B} ";
-        format-alt = "{:%d-%m-%Y}";
+        format = "{:L%A %H:%M}";
+        format-alt = "{:L%d %B W%V %Y}";
         tooltip-format = ''
           <big>{:%Y %B}</big>
           <tt><small>{calendar}</small></tt>'';

@@ -25,7 +25,7 @@
     ../common/optional/programs/librewolf.nix
 
     (import ../common/optional/desktops/waybar {
-      inherit lib;
+      inherit pkgs;
       inherit (config) barSpec;
     })
     (import ../common/optional/desktops/hyprland {

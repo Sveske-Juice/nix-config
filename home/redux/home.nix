@@ -34,7 +34,7 @@ in
       inherit (config) hyprlandSpec;
     })
     (import ../common/optional/desktops/waybar {
-      inherit lib;
+      inherit pkgs;
       inherit (config) barSpec;
     })
 
