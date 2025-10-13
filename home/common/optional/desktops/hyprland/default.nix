@@ -64,7 +64,7 @@
           "$mod, Return, exec, alacritty"
           "$mod, D, exec, tofi-drun | /bin/sh"
           "$mod, E, exec, thunar"
-          "$mod SHIFT, S, exec, grimblast --freeze copy area"
+          "$mod SHIFT, S, exec, ${pkgs.hyprshot}/bin/hyprshot -m region --raw | ${pkgs.satty}/bin/satty --filename - --early-exit --actions-on-enter save-to-clipboard --copy-command 'wl-copy'"
           "$mod SHIFT, E, exec, hyprctl dispatch exit"
           "$mod, C, exec, cliphist list | tofi | cliphist decode | wl-copy"
           "$mod, P, exec, hyprpicker -a | wl-copy" # Hex -> clipboard
