@@ -1,6 +1,4 @@
 {
-  lib,
-  config,
   pkgs,
   ...
 }:
@@ -11,7 +9,7 @@
     settings = {
       general = {
         lock_cmd = "dunstctl set-paused true; pidof hyprlock || hyprlock"; # avoid starting multiple hyprlock instances.
-        unlock_cmd = "dunstctl set-paused false";
+        on_unlock_cmd = "dunstctl set-paused false";
         before_sleep_cmd = "loginctl lock-session"; # lock before suspend.
         after_sleep_cmd = "hyprctl dispatch dpms on"; # to avoid having to press a key twice to turn on the display.
       };
