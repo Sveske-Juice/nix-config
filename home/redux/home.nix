@@ -92,11 +92,11 @@ in
     keepassxc
     kooha
     obsidian
+    nautilus
 
     wl-clipboard
 
     libnotify
-    grimblast
     python3
     blender
     gimp
