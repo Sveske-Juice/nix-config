@@ -16,5 +16,6 @@
     ./todo-comments.nix
     ./trouble.nix
     ./vim-tmux-navigator.nix
+    ./smartyank.nix
   ];
 }
