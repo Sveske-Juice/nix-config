@@ -6,6 +6,7 @@
     hyprpicker
   ];
   imports = [
+    ../services/swayosd
     ./apps/steam.nix
 
     ./exec.nix
@@ -74,7 +75,7 @@
           "$mod SHIFT, E, exec, uswm stop"
           "$mod, C, exec, cliphist list | tofi | cliphist decode | wl-copy"
           "$mod, P, exec, hyprpicker -a | wl-copy" # Hex -> clipboard
-          "$mod, Z, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle; notify-send \"$(wpctl get-volume @DEFAULT_AUDIO_SOURCE@)\""
+          "$mod, Z, exec, swayosd-client --input-volume mute-toggle"
 
           # Window Management
           "$mod, Q, killactive"
@@ -111,17 +112,21 @@
       ];
       bindel = [
         # Media controls
-        ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
-        ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-        ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+        ", XF86AudioRaiseVolume, exec, swayosd-client --output-volume raise"
+        ", XF86AudioLowerVolume, exec, swayosd-client --output-volume lower"
+        ", XF86AudioMute, exec, swayosd-client --output-volume mute-toggle"
+        ", XF86AudioMicMute, exec, swayosd-client --input-volume mute-toggle"
 
-        ", XF86AudioPlay, exec, playerctl play-pause"
-        ", XF86AudioPrev, exec, playerctl previous"
-        ", XF86AudioNext, exec, playerctl next"
+        ", XF86AudioPlay, exec, swayosd-client --playerctl play-pause"
+        ", XF86AudioPrev, exec, swayosd-client --playerctl prev"
+        ", XF86AudioNext, exec, swayosd-client --playerctl next"
+
         # Backlight Controls
-        ", XF86MonBrightnessUp, exec, brightnessctl set +10%"
-        ", XF86MonBrightnessDown, exec, brightnessctl set 10%-"
-        # KBD backlight
+        ", XF86MonBrightnessUp, exec, swayosd-client --brightness raise"
+        ", XF86MonBrightnessDown, exec, swayosd-client --brightness lower"
+
+        # KBD backlight NOTE: it looks like swayosd doesn't work with keyboard brightness
+        ", XF86KbdBrightnessUp, exec, brightnessctl -d '*kbd_backlight*' set +10%"
         ", XF86KbdBrightnessUp, exec, brightnessctl -d '*kbd_backlight*' set +10%"
         ", XF86KbdBrightnessDown, exec, brightnessctl -d '*kbd_backlight*' set 10%-"
       ];
