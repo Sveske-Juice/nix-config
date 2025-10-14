@@ -66,6 +66,10 @@ in
       # Enable mouse support
       set -g mouse on
 
+      # OSC52
+      set -g allow-passthrough on
+      set -g set-clipboard on
+
       # Clear screen shortcut
       bind C-l send-keys 'C-l'
 
@@ -73,7 +77,7 @@ in
 
       # Color support
       set-option -ga terminal-overrides ",alacritty:Tc"
-      set-option -g default-terminal "tmux-256color"
+      set-option -g default-terminal "screen-256color"
 
       bind-key -n 'C-h' if-shell '${is_vim}/bin/is_vim.sh' 'send-keys C-h' 'select-pane -L'
       bind-key -n 'C-j' if-shell '${is_vim}/bin/is_vim.sh' 'send-keys C-j' 'select-pane -D'
