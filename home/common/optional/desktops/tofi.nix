@@ -18,7 +18,7 @@
     result-spacing = 16;
     num-results = 7;
     prompt-background-padding = 5;
-    text-cursor-tyle = "underscore";
+    text-cursor-style = "underscore";
     text-cursor-corner-radius = 1;
     hide-cursor = false;
     text-cursor = true;

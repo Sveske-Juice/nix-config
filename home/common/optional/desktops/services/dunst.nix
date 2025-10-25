@@ -20,6 +20,8 @@
         progress_bar_corner_radius = 5;
         icon_corner_radius = 0;
 
+        dmenu = "tofi --prompt-text dunst";
+
         seperator_height = 2;
 
         padding = 8;
