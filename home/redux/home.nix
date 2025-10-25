@@ -28,6 +28,7 @@ in
     ../common/optional/programs/librewolf.nix
 
     ../common/optional/programs/lutris.nix
+    ../common/optional/programs/mangohud.nix
 
     (import ../common/optional/desktops/hyprland {
       inherit pkgs;
