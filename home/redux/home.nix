@@ -57,7 +57,7 @@ in
   };
   hyprlandSpec = {
     monitors = [
-      "HDMI-A-1, preffered, 0x0, 1"
+      "HDMI-A-1, highrr, 0x0, 1"
       "DP-3, preffered, auto, ${toString scaling}"
       ", preffered, auto, 1" # plug in random monitors
     ];
