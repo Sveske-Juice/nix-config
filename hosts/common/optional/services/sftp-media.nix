@@ -1,15 +1,37 @@
 { ... }:
 let
-  jailDir = "/srv/ssh/jail/deprived";
+  jailDir = "/srv/ssh/jail/media";
 in
 {
-  users.groups.sftponly = { };
-  users.users.deprivedslave = {
-    home = jailDir;
+  system.activationScripts."createmediaslavehome" = ''
+    mkdir -p ${jailDir}/data
+    chown root:root ${jailDir}
+    chmod 755 ${jailDir}
+  '';
+
+  # Bind mount /data to mediaslave jail dir
+  fileSystems."${jailDir}/data" = {
+    device = "/data";
+    fsType = "non";
+    options = [ "bind" "ro" ];
+  };
+  # systemd.mounts = [
+  #   {
+  #     name = "srv-chroot_data.mount";
+  #     what = "/data";
+  #     where = jailDir;
+  #     type = "none";
+  #     options = [
+  #       "bind"
+  #       "ro"
+  #     ];
+  #   }
+  # ];
+
+  users.users.mediaslave = {
     createHome = false;
-    homeMode = "755";
     shell = "/run/current-system/sw/bin/nologin";
-    group = "sftponly";
+    group = "data";
     isNormalUser = true;
     useDefaultShell = false;
     openssh.authorizedKeys.keys = [
@@ -24,31 +46,14 @@ in
       (builtins.readFile ../../keys/id_botlap_nixos.pub)
     ];
   };
-  system.activationScripts."createslavehome" = ''
-    mkdir -p ${jailDir}/assets
-    chown root:root ${jailDir}
-    chmod -R 775 ${jailDir}/assets
-    chgrp -R sftponly ${jailDir}/assets
-  '';
 
+  # SFTP read only
   services.openssh.extraConfig = ''
-    Match group sftponly
-     ChrootDirectory %h
+    Match User mediaslave
+     ChrootDirectory ${jailDir}
      X11Forwarding no
      AllowTcpForwarding no
      PasswordAuthentication no
-     ForceCommand internal-sftp
+     ForceCommand internal-sftp -R
   '';
-
-  # NGINX
-  # services.nginx.virtualHosts."deprived.dev" = {
-  #   forceSSL = true;
-  #   enableACME = true;
-  #   root = "${jailDir}/assets";
-  #   extraConfig = ''
-  #     # Remove trailing slash
-  #     rewrite ^/(.*)/$ /$1 permanent;
-  #     try_files $uri $uri.html $uri/index.html =404;
-  #   '';
-  # };
 }
