@@ -1,10 +1,11 @@
 { pkgs, config, ... }:
 let
+  mainBranch = "main";
   allowedBranches = [
     "main"
     "dev"
   ];
-  srcUrl = "https://git.deprived.dev/DeprivedDevs/deprived-main-website.git";
+  srcUrl = "ssh://forgejo@git.deprived.dev/DeprivedDevs/deprived-main-website.git";
 in
 {
   users.groups.www = { };
@@ -14,11 +15,37 @@ in
     group = "www";
     isNormalUser = true;
     password = "123";
+    # So that the git action can signal to rebuild over ssh
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH8f0teq3MqGLflBZ+cwXRquTY/WEWRRewJjTjrx1rkb builder@server"
     ];
   };
 
+  sops.secrets."deprivedbuilder-ssh-key" = {
+    owner = "deprivedbuilder";
+    sopsFile = ../../../../secrets/shared.yaml;
+    path = "/home/deprivedbuilder/.ssh/id_ed25519";
+  };
+
+  # Deploy deprivedbuilder's ssh key for access to private git repo
+  system.activationScripts.genBuilderPublicSSHKey = {
+    text =
+      let
+        keyPath = "/home/deprivedbuilder/.ssh/id_ed25519";
+        # bash
+      in
+      ''
+        mkdir -p "/home/deprivedbuilder/.ssh"
+
+        # Make sure there is a private key
+        if [ -f "${keyPath}" ]; then
+          ${pkgs.openssh}/bin/ssh-keygen -y -f "${keyPath}" > "${keyPath}.pub"
+        fi
+        chown -R deprivedbuilder "/home/deprivedbuilder/.ssh"
+      '';
+  };
+
+  # No need for auth to rebuild site
   security.sudo.extraRules = [
     {
       users = [ "deprivedbuilder" ];
@@ -64,6 +91,7 @@ in
           RemainAfterExit = false;
         };
 
+        # Rebuild script foreach branch
         script =
           # bash
           ''
@@ -80,9 +108,10 @@ in
 
             mkdir repo
             cd repo
-            ${pkgs.git}/bin/git clone ${srcUrl} .
+            GIT_SSH_COMMAND="${pkgs.openssh}/bin/ssh -o StrictHostKeyChecking=accept-new" ${pkgs.git}/bin/git clone ${srcUrl} .
             ${pkgs.git}/bin/git checkout "$branch"
 
+            HOME=$(mktemp -d) ${pkgs.nodejs}/bin/npm i --loglevel=verbose
             HOME=$(mktemp -d) ${pkgs.nodejs}/bin/npm ci --loglevel=verbose
             ${pkgs.nodejs}/bin/npx ./node_modules/vite build
 
@@ -90,26 +119,57 @@ in
             cp -r build/* "/var/www/deprived/$branch"
           '';
       });
-  services.nginx.virtualHosts."deprived.dev" = {
-    forceSSL = true;
-    enableACME = true;
-    locations."/" = {
-      root = "/var/www/deprived/main";
-      extraConfig = ''
-        # Remove trailing slash
-        rewrite ^/(.*)/$ /$1 permanent;
-        try_files $uri $uri.html $uri/index.html =404;
-      '';
-    };
 
-    locations."/assets" = {
-      root = "/srv/ssh/jail/deprived";
-      extraConfig = ''
-        index index.html;
-        autoindex on;
-        autoindex_exact_size on;
-        autoindex_localtime on;
-      '';
+  # subdomain foreach other branch
+  services.nginx.virtualHosts =
+    (pkgs.lib.attrsets.mapAttrs'
+      (branch: serviceCfg: pkgs.lib.attrsets.nameValuePair (branch + ".deprived.dev") serviceCfg)
+      (
+        pkgs.lib.attrsets.genAttrs (pkgs.lib.lists.remove mainBranch allowedBranches) (branch: {
+          forceSSL = true;
+          enableACME = true;
+          locations."/" = {
+            root = "/var/www/deprived/${branch}";
+            extraConfig = ''
+              # Remove trailing slash
+              rewrite ^/(.*)/$ /$1 permanent;
+              try_files $uri $uri.html $uri/index.html =404;
+            '';
+          };
+          locations."/assets" = {
+            root = "/srv/ssh/jail/deprived";
+            extraConfig = ''
+              index index.html;
+              autoindex on;
+              autoindex_exact_size on;
+              autoindex_localtime on;
+            '';
+          };
+        })
+      )
+    )
+    // {
+      # Main version
+      "deprived.dev" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/" = {
+          root = "/var/www/deprived/${mainBranch}";
+          extraConfig = ''
+            # Remove trailing slash
+            rewrite ^/(.*)/$ /$1 permanent;
+            try_files $uri $uri.html $uri/index.html =404;
+          '';
+        };
+        locations."/assets" = {
+          root = "/srv/ssh/jail/deprived";
+          extraConfig = ''
+            index index.html;
+            autoindex on;
+            autoindex_exact_size on;
+            autoindex_localtime on;
+          '';
+        };
+      };
     };
-  };
 }

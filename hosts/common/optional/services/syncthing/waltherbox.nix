@@ -2,6 +2,7 @@
 {
   imports = [ ./core.nix ];
   services.syncthing = {
+    group = lib.mkForce "data";
     guiAddress = lib.mkForce "0.0.0.0:8384";
     overrideDevices = true;
     settings = {
