@@ -34,8 +34,8 @@ in
         # TODO: once password file PR is merged use sops-nix
       };
       folders = {
-        benj-mobilmedia = {
-          path = "${config.hostSpec.home}/Pictures/Mobilmedie";
+        pictures = {
+          path = "${config.hostSpec.home}/Pictures";
           devices = devices;
         };
         benj-next = {
