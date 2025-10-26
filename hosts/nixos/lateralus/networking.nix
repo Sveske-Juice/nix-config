@@ -11,5 +11,6 @@
   networking.firewall.allowedUDPPorts = [
     53
     67
+    5353 # spotify: Google cast + Spotity Connect
   ];
 }
