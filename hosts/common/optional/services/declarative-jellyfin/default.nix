@@ -18,6 +18,7 @@ let
     "guacamole"
     "alex"
     "rams"
+    "honore"
   ];
 
   # Set `HashedPasswordFile` foreach user
