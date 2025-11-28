@@ -6,7 +6,9 @@
     ./dressing.nix
     ./lsp.nix
     ./cmp.nix
-    ./conform.nix
+    # FIXME: broken - some justbuild error
+    #
+    # ./conform.nix
     ./lualine.nix
     ./otter.nix
     ./wilder.nix
