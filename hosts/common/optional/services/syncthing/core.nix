@@ -35,19 +35,19 @@ in
       };
       folders = {
         pictures = {
-          path = "${config.hostSpec.home}/Pictures";
+          path = "${config.services.syncthing.dataDir}/Pictures";
           devices = devices;
         };
         benj-next = {
-          path = "${config.hostSpec.home}/Documents/NEXT";
+          path = "${config.services.syncthing.dataDir}/Documents/NEXT";
           devices = devices;
         };
         notes = {
-          path = "${config.hostSpec.home}/Documents/Notes";
+          path = "${config.services.syncthing.dataDir}/Documents/Notes";
           devices = devices;
         };
         benj-secrets = {
-          path = "${config.hostSpec.home}/Documents/Secrets";
+          path = "${config.services.syncthing.dataDir}/Documents/Secrets";
           devices = devices;
         };
       };
