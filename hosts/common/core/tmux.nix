@@ -51,9 +51,9 @@ in
     terminal = "screen-256color";
     escapeTime = 0;
     plugins = with pkgs; [
-      # { plugin = inputs.minimal-tmux.packages.${pkgs.system}.default; }
+      # { plugin = inputs.minimal-tmux.packages.${pkgs.stdenv.hostPlatform.system}.default; }
       # {
-      #   plugin = inputs.tmux-sessionx.packages.${pkgs.system}.default;
+      #   plugin = inputs.tmux-sessionx.packages.${pkgs.stdenv.hostPlatform.system}.default;
       #   extraConfig = '''';
       # }
     ];
@@ -96,10 +96,10 @@ in
       set -g @sessionx-bind 'o'
 
       run-shell ${
-        inputs.minimal-tmux.packages.${pkgs.system}.default
+        inputs.minimal-tmux.packages.${pkgs.stdenv.hostPlatform.system}.default
       }/share/tmux-plugins/minimal-tmux-status/minimal.tmux
       run-shell ${
-        inputs.tmux-sessionx.packages.${pkgs.system}.default
+        inputs.tmux-sessionx.packages.${pkgs.stdenv.hostPlatform.system}.default
       }/share/tmux-plugins/sessionx/sessionx.tmux
     '';
   };

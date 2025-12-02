@@ -6,7 +6,7 @@
 }:
 let
   swayConfig = pkgs.writeText "greetd-sway-config" ''
-    exec "${pkgs.greetd.regreet}/bin/regreet; ${pkgs.sway}/bin/swaymsg exit"
+    exec "${pkgs.regreet}/bin/regreet; ${pkgs.sway}/bin/swaymsg exit"
     include /etc/sway/config.d/*
   '';
   hyprlandRun = pkgs.writeShellScriptBin "hyprland-run" ''

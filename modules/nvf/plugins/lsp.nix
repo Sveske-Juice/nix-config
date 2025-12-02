@@ -3,7 +3,6 @@
   imports = [ ./fidget.nix ];
   vim = {
     languages = {
-      enableLSP = true;
       enableTreesitter = true;
 
       # Languages
@@ -28,6 +27,7 @@
     };
 
     lsp = {
+      enable = true;
       lightbulb.enable = true;
 
       # Remove all default bindings

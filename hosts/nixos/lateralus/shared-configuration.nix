@@ -27,8 +27,11 @@
     ../../../hosts/common/optional/programs/thunar.nix
     ../../../hosts/common/optional/programs/mullvad-vpn.nix
     ../../../hosts/common/optional/programs/libreoffice.nix
+    ../../../hosts/common/optional/services/lact.nix
 
     ../../../home/common/optional/stylix
+
+    ../../../hosts/common/optional/programs/steam.nix
     # ../../home/common/optional/desktops/gtk.nix
 
     ../../common/optional/hyprland.nix

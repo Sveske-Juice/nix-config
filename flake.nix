@@ -45,10 +45,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-hardware = {
-      url = "github:NixOS/nixos-hardware/master";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     declarative-jellyfin = {
       # url = "git+https://git.spoodythe.one/spoody/declarative-jellyfin.git?rev=cf31b92927a530d0842e7451e9bb51f9e76f238d";
@@ -109,7 +106,7 @@
     in
     {
       # nix fmt
-      formatter = eachSystem (pkgs: treefmtEval.${pkgs.system}.config.build.wrapper);
+      formatter = eachSystem (pkgs: treefmtEval.${pkgs.stdenv.hostPlatform.system}.config.build.wrapper);
       # nix flake check
       checks = eachSystem (pkgs: {
         formatting = treefmtEval.${pkgs.system}.config.build.check self;

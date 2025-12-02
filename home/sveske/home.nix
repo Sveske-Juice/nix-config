@@ -24,6 +24,8 @@
     ../common/optional/programs/ocr.nix
     ../common/optional/programs/librewolf.nix
 
+    ../common/optional/programs/mangohud.nix
+
     (import ../common/optional/desktops/waybar {
       inherit pkgs;
       inherit (config) barSpec;
