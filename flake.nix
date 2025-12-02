@@ -51,7 +51,9 @@
     };
 
     declarative-jellyfin = {
+      # url = "git+https://git.spoodythe.one/spoody/declarative-jellyfin.git?rev=cf31b92927a530d0842e7451e9bb51f9e76f238d";
       url = "git+https://git.spoodythe.one/spoody/declarative-jellyfin.git";
+      # url = "git+https://git.spoodythe.one/spoody/declarative-jellyfin.git?ref=fix-root";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

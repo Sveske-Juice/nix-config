@@ -78,11 +78,11 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1763343993,
-        "narHash": "sha256-x8C3fZ3zEZr8yhlCQEREFGYqUPPPl8NuFEd+YEhPzNU=",
+        "lastModified": 1764454619,
+        "narHash": "sha256-EoKc6g/IcL1QQ6X9qTKO/oGk8yVvVxe7DKun2NIMeac=",
         "ref": "refs/heads/main",
-        "rev": "fecd01c952138f174e1c9ab30eb16dd225b1886d",
-        "revCount": 254,
+        "rev": "95288cd227f9befe7c986d5b5cbe7851ef1778a9",
+        "revCount": 259,
         "type": "git",
         "url": "https://git.spoodythe.one/spoody/declarative-jellyfin.git"
       },
