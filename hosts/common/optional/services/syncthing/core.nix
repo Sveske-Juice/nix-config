@@ -36,19 +36,23 @@ in
       folders = {
         pictures = {
           path = "${config.services.syncthing.dataDir}/Pictures";
-          devices = devices;
+          inherit devices;
+        };
+        docs = {
+          path = "${config.services.syncthing.dataDir}/docs";
+          inherit devices;
         };
         benj-next = {
           path = "${config.services.syncthing.dataDir}/Documents/NEXT";
-          devices = devices;
+          inherit devices;
         };
         notes = {
           path = "${config.services.syncthing.dataDir}/Documents/Notes";
-          devices = devices;
+          inherit devices;
         };
         benj-secrets = {
           path = "${config.services.syncthing.dataDir}/Documents/Secrets";
-          devices = devices;
+          inherit devices;
         };
       };
     };
