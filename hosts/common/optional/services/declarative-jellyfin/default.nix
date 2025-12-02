@@ -60,7 +60,10 @@ in
       }) jellyfinUsers
     )
     // {
-      "jellyfin/jellyseerr-api-key" = { };
+      "jellyfin/jellyseerr-api-key" = {
+        owner = config.services.jellyfin.user;
+        group = config.services.jellyfin.group;
+      };
     };
 
   # DECLARATIVE-JELLYFIN
@@ -68,6 +71,7 @@ in
     enable = true;
     inherit group;
     serverId = "50549af6c9344827a98a0dc85e0a1c97";
+    backups = false;
     system = {
       isStartupWizardCompleted = true;
       trickplayOptions = {
@@ -143,7 +147,7 @@ in
         saveTrickplayWithMedia = true;
       };
       "Photos" = {
-        enabled = true;
+        enabled = false; # FIXME: fix photo libs
         contentType = "homevideos";
         pathInfos = [ "/data/Photos" ];
         enableChapterImageExtraction = true;
