@@ -132,7 +132,9 @@
       decoration = {
         rounding = "5";
       };
-      gesture = "3, horizontal, workspace";
+      # FIXME: currently broken in v0.51
+      #
+      # gesture = "3, horizontal, workspace";
     };
   };
 }
