@@ -96,12 +96,13 @@ in
     nautilus
 
     wl-clipboard
-
     libnotify
     python3
+
     blender
     gimp
     obs-studio
+    prismlauncher
   ];
   nixpkgs.config.allowUnfree = true;
 

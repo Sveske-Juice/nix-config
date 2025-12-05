@@ -10,4 +10,18 @@
       pkgs.proton-ge-bin
     ];
   };
+
+  # Steam game traffic for Open NAT
+  networking.firewall.allowedUDPPortRanges = [
+    {
+      from = 27014;
+      to = 27050;
+    }
+  ];
+  networking.firewall.allowedTCPPortRanges = [
+    {
+      from = 27014;
+      to = 27050;
+    }
+  ];
 }

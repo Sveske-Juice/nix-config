@@ -7,7 +7,6 @@
   ];
   imports = [
     ../services/swayosd
-    ./apps/steam.nix
 
     ./exec.nix
     ./hyprlock.nix
