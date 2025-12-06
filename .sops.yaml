@@ -1,4 +1,5 @@
 keys:
+  - &master age14xhxangjf6vv5tlu4w77fqyy08s97c7cs25tlrhzhy53rthu8qtqfh4j02
   - users:
       - &walther age1hqdgs3f0vz4vmzcplu87zkypltk663sdu4660h4czrx5739y4p7sv97nwg
       - &sveske age1xx02tc8pj9v6hd3vctw5pnm7840alzdz8t88qaefd4e7gddl9yhsdplsp7
@@ -14,18 +15,21 @@ creation_rules:
   - path_regex: secrets/waltherbox.yaml
     key_groups:
       - age:
+        - *master
         - *waltherbox
         - *walther
 
   - path_regex: secrets/lateralus.yaml
     key_groups:
       - age:
+        - *master
         - *lateralus
         - *sveske
 
   - path_regex: secrets/solituboks.yaml
     key_groups:
       - age:
+        - *master
         - *solituboks
         - *redux
 
@@ -33,6 +37,7 @@ creation_rules:
   - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
     key_groups:
       - age:
+          - *master
           - *waltherbox
           - *walther
           - *lateralus
