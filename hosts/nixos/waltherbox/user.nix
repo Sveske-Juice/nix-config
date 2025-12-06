@@ -47,6 +47,7 @@ in
     (builtins.readFile ../../common/keys/id_sveske.pub)
     (builtins.readFile ../../common/keys/id_redux.pub)
     (builtins.readFile ../../common/keys/id_pixel8a.pub)
+    (builtins.readFile ../../common/keys/id_cybervpl.pub)
   ];
 }
 
