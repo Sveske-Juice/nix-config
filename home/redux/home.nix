@@ -7,7 +7,7 @@
   ...
 }:
 let
-  scaling = 1.666667;
+  scaling = 1.6667;
 in
 {
   imports = [
@@ -55,24 +55,37 @@ in
   home.sessionVariables = {
     GDK_SCALE = (toString scaling);
   };
+
+  wayland.windowManager.hyprland.settings = {
+    monitorv2 = {
+      output = "DP-1";
+      mode = "3440x1440@164.90";
+      position = "auto";
+      scale = 1;
+      bitdepth = 10;
+      supports_wide_color = true;
+      supports_hdr = true;
+      cm = "wide";
+      sdrsaturation = 1.05;
+    };
+  };
   hyprlandSpec = {
     monitors = [
-      "HDMI-A-1, highrr, 0x0, 1"
-      "DP-3, preffered, auto, ${toString scaling}"
+      "DP-2, preffered, 0x0, ${toString scaling}, transform, 1"
       ", preffered, auto, 1" # plug in random monitors
     ];
     workspaces = [
-      "1, monitor:DP-3"
-      "2, monitor:DP-3"
-      "3, monitor:HDMI-A-1"
+      "1, monitor:DP-1"
+      "2, monitor:DP-1"
+      "3, monitor:DP-2"
     ];
   };
 
   barSpec = {
     battery = false;
     displayDevices = [
-      "DP-3"
-      "HDMI-A-1"
+      "DP-1"
+      "DP-2"
     ];
   };
   dconf.settings = {
