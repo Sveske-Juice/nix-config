@@ -4,7 +4,7 @@ keys:
       - &walther age1hqdgs3f0vz4vmzcplu87zkypltk663sdu4660h4czrx5739y4p7sv97nwg
       - &sveske age1xx02tc8pj9v6hd3vctw5pnm7840alzdz8t88qaefd4e7gddl9yhsdplsp7
       - &redux age1uq632m6453wy0ftd95wxxpay6ezvrvxk3647nyl2yvmz2wm5yehs6px3jl
-      - &cybervpl age1v4tly6rgf2z2egslnyvt24dyvtgac9k6etsf3r9y6awtq254335s9cntcn
+      - &cybervpl age1tnng7p5k7pwy0kwaj0wrcswavmhecklj3r0rgnskk6mpspevkqpqnc24te
   - hosts:
       - &waltherbox age1u3cls43238kr2v0gkgjfezzrcr3lqa2sfkkzw46ey6md6gnln30quhelg8
       - &lateralus age1643av82yp0gahkvhp46ffdzv9tlrn7we9460pdlspg2p9rm7cs5sqssjps
