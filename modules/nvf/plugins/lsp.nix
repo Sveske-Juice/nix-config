@@ -1,6 +1,9 @@
 { ... }:
 {
   imports = [ ./fidget.nix ];
+  vim.visuals.nvim-web-devicons = {
+    enable = true;
+  };
   vim = {
     languages = {
       enableTreesitter = true;
@@ -22,8 +25,16 @@
 
       css.enable = true;
       html.enable = true;
-      markdown.enable = true;
       sql.enable = true;
+      markdown = {
+        enable = true;
+        extensions.markview-nvim = {
+          enable = true;
+          setupOpts = {
+            preview.icon_provider = "devicons";
+          };
+        };
+      };
     };
 
     lsp = {
