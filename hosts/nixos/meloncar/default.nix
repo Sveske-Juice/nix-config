@@ -35,8 +35,14 @@
     email = "carl.benjamin.dreyer@gmail.com";
   };
 
+  sops.secrets."cybervpl-passwd" = {
+    neededForUsers = true;
+  };
+
+  users.mutableUsers = false;
   users.users."${config.hostSpec.username}" = {
     isNormalUser = true;
+    hashedPasswordFile = config.sops.secrets."cybervpl-passwd".path;
     extraGroups = [
       "networkmanager"
       "wheel"
