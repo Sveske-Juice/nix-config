@@ -60,7 +60,7 @@ in
     monitorv2 = {
       output = "DP-1";
       mode = "3440x1440@164.90";
-      position = "auto";
+      position = "0x0";
       scale = 1;
       bitdepth = 10;
       supports_wide_color = true;
@@ -71,7 +71,7 @@ in
   };
   hyprlandSpec = {
     monitors = [
-      "DP-2, preffered, 0x0, ${toString scaling}, transform, 1"
+      "DP-2, preffered, auto, ${toString scaling}, transform, 1"
       ", preffered, auto, 1" # plug in random monitors
     ];
     workspaces = [
@@ -116,6 +116,9 @@ in
     gimp
     obs-studio
     prismlauncher
+    libreoffice-qt-fresh
+    jellyfin-media-player
+    orca-slicer
   ];
   nixpkgs.config.allowUnfree = true;
 
