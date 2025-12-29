@@ -2,10 +2,14 @@
 {
   imports = [ ./core.nix ];
 
-  system.activationScripts.createsyncdir = ''
-    install -d -m 771 -o ${config.services.syncthing.user} -g ${config.services.syncthing.group} ${config.services.syncthing.dataDir}
-    chmod -R 771 /sync
-  '';
+  systemd.tmpfiles.settings."syncdir" = {
+    "${config.services.syncthing.dataDir}" = {
+      d = {
+        inherit (config.services.syncthing) user group;
+        mode = "0770";
+      };
+    };
+  };
 
   services.syncthing = {
     dataDir = lib.mkForce "/sync";
