@@ -30,6 +30,7 @@
     ../../../hosts/common/optional/programs/thunderbird.nix
     ../../../hosts/common/optional/programs/mullvad-vpn.nix
     ../../../hosts/common/optional/services/virt-manager.nix
+    ../../../hosts/common/optional/services/kdeconnect.nix
 
     ../../../home/common/optional/stylix
 
