@@ -45,6 +45,7 @@
 
     ../../common/optional/services/declarative-jellyfin
     ../../common/optional/services/wireguard/wireguard-server.nix
+    ../../common/optional/services/minecraft-server
 
     # Waltherbox specifics
     ./user.nix
