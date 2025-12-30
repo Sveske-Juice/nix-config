@@ -194,7 +194,7 @@ in {
     servers.alex-world = {
       enable = true;
       jvmOpts = "-Xmx6G -Xms1G";
-      package = pkgs.fabricServers.fabric-1_21_4;
+      package = pkgs.fabricServers.fabric-1_21_11;
 
       serverProperties.server-port = alexworld-port;
 
@@ -205,20 +205,24 @@ in {
         mods = pkgs.linkFarmFromDrvs "mods" (
           builtins.attrValues {
             Fabric-API = pkgs.fetchurl {
-              url = "https://cdn.modrinth.com/data/P7dR8mSH/versions/p96k10UR/fabric-api-0.119.4%2B1.21.4.jar";
-              sha256 = "sha256-0YO6y4RRZ/CSZML5AyK37P/ogm3r2m9g5ZeIkmS+9K8=";
-            };
-            DH = pkgs.fetchurl {
-              url = "https://cdn.modrinth.com/data/uCdwusMi/versions/NhMXwQCV/DistantHorizons-2.4.5-b-1.21.4-fabric-neoforge.jar";
-              sha256 = "sha256-qk4c3J12Kb/+C1g0wiahEwhioVgLb4f1EI2tAQdhPX0=";
+              url = "https://cdn.modrinth.com/data/P7dR8mSH/versions/gB6TkYEJ/fabric-api-0.140.2%2B1.21.11.jar";
+              sha256 = "sha256-t8RYO3/EihF5gsxZuizBDFO3K+zQHSXkAnCUgSb4QyE=";
             };
             Chunky = pkgs.fetchurl {
-              url = "https://cdn.modrinth.com/data/fALzjamp/versions/VkAgASL1/Chunky-Fabric-1.4.27.jar";
-              sha256 = "sha256-A8kKcLIzQWvZZziUm+kJ0eytrHQ/fBVZQ18uQXN9Qf0=";
+              url = "https://cdn.modrinth.com/data/fALzjamp/versions/1CpEkmcD/Chunky-Fabric-1.4.55.jar";
+              sha256 = "sha256-M8vZvODjNmhRxLWYYQQzNOt8GJIkjx7xFAO77bR2vRU=";
+            };
+            Lithium = pkgs.fetchurl {
+              url = "https://cdn.modrinth.com/data/gvQqBUqZ/versions/gl30uZvp/lithium-fabric-0.21.2%2Bmc1.21.11.jar";
+              sha256 = "sha256-MQZjnHPuI/RL++Xl56gVTf460P1ISR5KhXZ1mO17Bzk=";
             };
             C2ME = pkgs.fetchurl {
-              url = "https://cdn.modrinth.com/data/VSNURh3q/versions/EzvMx6b2/c2me-fabric-mc1.21.4-0.3.1.3.0.jar";
-              sha256 = "sha256-i3r6jdtLW10kpZ70s+OvAxchpVdrRZ+6O06AvR99MZE=";
+              url = "https://cdn.modrinth.com/data/VSNURh3q/versions/lYSxkbzC/c2me-fabric-mc1.21.11-0.3.6%2Brc.1.0.jar";
+              sha256 = "sha256-pcvM0y05Iul3OPrHHMZ9k4EDT5vwj/0B9gjEIA/R/b8=";
+            };
+            DH = pkgs.fetchurl {
+              url = "https://cdn.modrinth.com/data/uCdwusMi/versions/GT3Bm3GN/DistantHorizons-2.4.5-b-1.21.11-fabric-neoforge.jar";
+              sha256 = "sha256-dpTHoX5V9b7yG0VsIqKxxOSAYLN0Z97itx1MEuWGvD8=";
             };
           }
         );
