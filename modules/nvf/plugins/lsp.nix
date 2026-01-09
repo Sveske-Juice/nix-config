@@ -17,7 +17,9 @@
       ts.enable = true;
 
       rust.enable = true;
-      clang.enable = true;
+      clang = {
+        lsp.enable = true;
+      };
       csharp = {
         enable = true;
         lsp.server = "omnisharp"; # csharp_ls doesn't seem to work (dll problems)
@@ -38,6 +40,11 @@
     };
 
     lsp = {
+      servers.clangd = {
+        enable = true;
+        cmd = [ "clangd" ]; # use clang from env
+      };
+
       enable = true;
       lightbulb.enable = true;
 
