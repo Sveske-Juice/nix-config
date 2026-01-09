@@ -67,4 +67,14 @@
 
   # https://unix.stackexchange.com/questions/643583/tmux-wont-start-under-wsl2
   environment.variables.TMUX_TMPDIR = lib.mkForce "/tmp";
+
+  programs.ssh.hostKeyAlgorithms = [
+    "ssh-rsa"
+    "rsa-sha2-512"
+  ];
+  programs.ssh.kexAlgorithms = [
+    "diffie-hellman-group1-sha1"
+    "diffie-hellman-group14-sha1"
+    "curve25519-sha256"
+  ];
 }
