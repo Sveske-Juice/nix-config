@@ -117,7 +117,6 @@ in
     obs-studio
     prismlauncher
     libreoffice-qt-fresh
-    jellyfin-media-player
     orca-slicer
   ];
   nixpkgs.config.allowUnfree = true;
