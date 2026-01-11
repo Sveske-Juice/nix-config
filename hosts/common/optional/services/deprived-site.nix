@@ -17,7 +17,7 @@ in
     password = "123";
     # So that the git action can signal to rebuild over ssh
     openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH8f0teq3MqGLflBZ+cwXRquTY/WEWRRewJjTjrx1rkb builder@server"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPlnzjNApgvTzL+wPrkQhMbO/yC59F5FrndLTJ5U9oij builder@server"
     ];
   };
 
