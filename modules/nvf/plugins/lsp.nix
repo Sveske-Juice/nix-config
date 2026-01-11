@@ -42,7 +42,10 @@
     lsp = {
       servers.clangd = {
         enable = true;
-        cmd = [ "clangd" ]; # use clang from env
+        # Use clang from environment
+        # this fixes alot of things from using the wrapped clangd,
+        # so it will properly find stdlib and deps from compile_commands.json
+        cmd = [ "clangd" ];
       };
 
       enable = true;
@@ -107,6 +110,13 @@
         action = "vim.lsp.buf.definition";
         lua = true;
         desc = "Go to definition";
+      }
+      {
+        key = "gh";
+        mode = "n";
+        silent = true;
+        action = ":LspClangdSwitchSourceHeader<CR>";
+        desc = "Clangd: Switch Source/Header file";
       }
       {
         key = "gD";
